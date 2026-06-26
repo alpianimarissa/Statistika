@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Data Detective: Misi Statistika Elit</title>
+    <!-- Tailwind CSS for elegant design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- KaTeX CSS and JS for ultra-clean mathematical rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <!-- Google Fonts: Fredoka & Orbitron for sci-fi/gaming aesthetic -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Orbitron:wght@500;700;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        tech: ['Orbitron', 'sans-serif'],
+                        fun: ['Fredoka', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Smooth transitions for slide state changes */
+        .fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Custom neon scrollbar for immersive gaming dashboard feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #38bdf8;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0ea5e9;
+        }
+    </style>
+</head>
+<body class="bg-[#0b0f19] text-slate-100 min-h-screen flex flex-col justify-between overflow-x-hidden">
+
+    <!-- Top Cyber Deck Header -->
+    <header class="border-b border-sky-950 bg-[#0f172a]/90 backdrop-blur sticky top-0 z-50 px-4 py-3">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3">
+            <div class="flex items-center gap-3">
+                <span class="p-2 bg-sky-500/10 rounded-xl border border-sky-500/30 text-sky-400">
+                    <svg class="w-6 h-6 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z"></path></svg>
+                </span>
+                <div>
+                    <h2 class="font-tech font-black text-sm tracking-widest text-sky-400">OPERASI CYBER-DATA</h2>
+                    <p class="text-xs text-slate-400">Sertifikasi Intelijen Statistika Elit</p>
+                </div>
+            </div>
+            
+            <!-- Progress Tracker -->
+            <div class="flex items-center gap-4 w-full sm:w-auto justify-end">
+                <div class="w-full sm:w-48 bg-slate-800 rounded-full h-3 overflow-hidden border border-slate-700/50">
+                    <div id="progressBar" class="bg-gradient-to-r from-sky-400 to-emerald-400 h-full transition-all duration-300" style="width: 2.8%"></div>
+                </div>
+                <span class="text-xs font-tech text-sky-300 bg-sky-950/40 px-3 py-1 rounded-md border border-sky-500/20 whitespace-nowrap">
+                    SLIDE <span id="currentSlideNumber">1</span> / 35
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Interactive Display Screen -->
+    <main class="flex-grow max-w-5xl w-full mx-auto p-4 sm:p-6 flex items-center justify-center">
+        <div id="slideContent" class="fade-in w-full bg-slate-900/40 border border-slate-800/80 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden backdrop-blur-md">
+            <!-- Content will be injected dynamically here -->
+        </div>
+    </main>
+
+    <!-- Bottom Dashboard Navigation Controls -->
+    <footer class="border-t border-sky-950 bg-[#0f172a]/90 backdrop-blur px-4 py-4 sticky bottom-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <button id="prevBtn" onclick="prevSlide()" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 font-semibold rounded-xl border border-slate-700 transition-all flex items-center gap-2 text-sm disabled:opacity-30 disabled:pointer-events-none">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                Kembali
+            </button>
+            
+            <div id="badgeDisplay" class="hidden md:flex items-center gap-2 text-xs text-amber-400 font-tech bg-amber-950/20 px-4 py-1.5 rounded-full border border-amber-500/20">
+                ⭐ <span id="agentRank">REKRUT BARU</span>
+            </div>
+
+            <button id="nextBtn" onclick="nextSlide()" class="px-6 py-2.5 bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-400 hover:to-cyan-400 active:scale-95 text-white font-semibold rounded-xl transition-all flex items-center gap-2 text-sm shadow-lg shadow-sky-500/10">
+                Lanjut
+                <svg class="w-4 h-4 animate-bounce-h" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </button>
+        </div>
+    </footer>
+
+    <script>
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playChiptune(type) {
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            osc.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            const now = audioCtx.currentTime;
+
+            if (type === 'click') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(400, now);
+                osc.frequency.exponentialRampToValueAtTime(800, now + 0.1);
+                gainNode.gain.setValueAtTime(0.1, now);
+                gainNode.gain.linearRampToValueAtTime(0.01, now + 0.1);
+                osc.start(now);
+                osc.stop(now + 0.1);
+            } else if (type === 'success') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, now); // C5
+                osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
+                osc.frequency.setValueAtTime(783.99, now + 0.16); // G5
+                osc.frequency.setValueAtTime(1046.50, now + 0.24); // C6
+                gainNode.gain.setValueAtTime(0.15, now);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.45);
+                osc.start(now);
+                osc.stop(now + 0.45);
+            } else if (type === 'wrong') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(180, now);
+                osc.frequency.linearRampToValueAtTime(90, now + 0.25);
+                gainNode.gain.setValueAtTime(0.12, now);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+                osc.start(now);
+                osc.stop(now + 0.25);
+            } else if (type === 'levelUp') {
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(300, now);
+                osc.frequency.setValueAtTime(600, now + 0.1);
+                osc.frequency.setValueAtTime(450, now + 0.2);
+                osc.frequency.setValueAtTime(900, now + 0.3);
+                gainNode.gain.setValueAtTime(0.15, now);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+                osc.start(now);
+                osc.stop(now + 0.5);
+            }
+        }
+
+        const gameState = {
+            currentSlide: 0,
+            playerName: "Detektif X",
+            selectedAvatar: "avatar1",
+            score: 0,
+            activeRange: "1-10",
+            customMin: 1,
+            customMax: 10,
+            totalSlides: 35,
+            statsQuizAnswers: {},
+            sandboxMeanData: [6, 4, 8, 5, 7],
+            medianSortingData: [12, 19, 7, 15, 10],
+            votedGames: { Minecraft: 12, Valorant: 8, MobileLegends: 15 }
+        };
+
+        const slides = [
+            // Slide 1: Cover Page
+            {
+                section: "Misi Utama",
+                title: "Cyber Data Detective",
+                type: "custom",
+                render: () => `
+                    <div class="flex flex-col items-center text-center py-6">
+                        <div class="mb-6 relative">
+                            <!-- Gorgeous 3D Hologram SVG -->
+                            <svg class="w-48 h-48 mx-auto filter drop-shadow-[0_0_20px_rgba(56,189,248,0.4)]" viewBox="0 0 200 200" fill="none">
+                                <polygon points="100,20 180,60 180,140 100,180 20,140 20,60" fill="url(#polyGrad)" stroke="#38bdf8" stroke-width="4"/>
+                                <line x1="100" y1="20" x2="100" y2="180" stroke="#0ea5e9" stroke-width="2" stroke-dasharray="5,5"/>
+                                <circle cx="100" cy="100" r="40" fill="#0f172a" stroke="#10b981" stroke-width="3"/>
+                                <path d="M85 100 L95 110 L115 90" stroke="#10b981" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                                <defs>
+                                    <linearGradient id="polyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#0284c7" stop-opacity="0.3"/>
+                                        <stop offset="100%" stop-color="#0f172a" stop-opacity="0.8"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                        <h1 class="font-tech font-black text-3xl sm:text-5xl tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-cyan-300 to-emerald-400 mb-4 uppercase">
+                            Cyber Data Detective
+                        </h1>
+                        <p class="text-slate-400 max-w-md mx-auto mb-8 text-sm sm:text-base">
+                            Selamat datang Agen Muda! Siap menguasai rahasia pembacaan data, Mean, Median, dan Modus untuk melacak anomali server global?
+                        </p>
+                        <div class="w-full max-w-sm bg-slate-950/60 p-5 rounded-2xl border border-sky-500/20">
+                            <label class="block text-xs font-tech text-sky-400 uppercase tracking-widest text-left mb-2">Nama Sandi Detektif:</label>
+                            <input type="text" id="playerNameInput" value="${gameState.playerName}" onchange="gameState.playerName = this.value" class="w-full bg-slate-900 border border-slate-700 focus:border-sky-500 outline-none rounded-xl px-4 py-2.5 text-slate-100 font-semibold text-center mb-4 transition-all">
+                        </div>
+                    </div>
+                `
+            },
+            // Slide 2: Profiling Karakter
+            {
+                section: "Misi Utama",
+                title: "Pilih Avatar Akses Cyber",
+                type: "custom",
+                render: () => `
+                    <div class="py-4">
+                        <h3 class="text-xl font-bold text-center text-slate-200 mb-8">Pilih setelan identitas taktis kamu untuk navigasi sistem:</h3>
+                        <div class="grid grid-cols-3 gap-4 max-w-xl mx-auto">
+                            <div onclick="selectAvatar('avatar1')" id="avatar1" class="cursor-pointer p-4 rounded-2xl border-2 transition-all flex flex-col items-center bg-slate-950/30 ${gameState.selectedAvatar === 'avatar1' ? 'border-sky-400 bg-sky-950/20' : 'border-slate-800'}">
+                                <div class="w-16 h-16 rounded-full bg-sky-500/10 flex items-center justify-center border border-sky-400/40 text-4xl mb-3">🤖</div>
+                                <span class="font-tech text-xs tracking-wider text-sky-400">CYBER MECH</span>
+                            </div>
+                            <div onclick="selectAvatar('avatar2')" id="avatar2" class="cursor-pointer p-4 rounded-2xl border-2 transition-all flex flex-col items-center bg-slate-950/30 ${gameState.selectedAvatar === 'avatar2' ? 'border-sky-400 bg-sky-950/20' : 'border-slate-800'}">
+                                <div class="w-16 h-16 rounded-full bg-emerald-500/10 flex items-center justify-center border border-emerald-400/40 text-4xl mb-3">🥷</div>
+                                <span class="font-tech text-xs tracking-wider text-emerald-400">DATA NINJA</span>
+                            </div>
+                            <div onclick="selectAvatar('avatar3')" id="avatar3" class="cursor-pointer p-4 rounded-2xl border-2 transition-all flex flex-col items-center bg-slate-950/30 ${gameState.selectedAvatar === 'avatar3' ? 'border-sky-400 bg-sky-950/20' : 'border-slate-800'}">
+                                <div class="w-16 h-16 rounded-full bg-indigo-500/10 flex items-center justify-center border border-indigo-400/40 text-4xl mb-3">🦊</div>
+                                <span class="font-tech text-xs tracking-wider text-indigo-400">TECH FOX</span>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            // Slide 3: Tujuan Misi
+            {
+                section: "Tujuan Misi",
+                title: "Rencana Pembelajaran Agen",
+                type: "custom",
+                render: () => `
+                    <div class="max-w-2xl mx-auto">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="text-3xl">🧭</span>
+                            <h3 class="text-2xl font-bold font-tech text-sky-400">Misi Utama Kita Hari Ini:</h3>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex gap-4 p-4 rounded-xl bg-slate-950/50 border border-slate-800">
+                                <span class="text-xl text-sky-400 mt-1">✔</span>
+                                <div>
+                                    <h4 class="font-semibold text-slate-200">Koleksi & Penyajian Data</h4>
+                                    <p class="text-sm text-slate-400">Mengatur data mentah menjadi bentuk tabel, diagram batang, hingga diagram garis.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 p-4 rounded-xl bg-slate-950/50 border border-slate-800">
+                                <span class="text-xl text-sky-400 mt-1">✔</span>
+                                <div>
+                                    <h4 class="font-semibold text-slate-200">Trisula Ukuran Pemusatan</h4>
+                                    <p class="text-sm text-slate-400">Membedakan, menghitung, dan merekayasa taktik <strong>Mean (Rata-rata)</strong>, <strong>Median (Tengah)</strong>, dan <strong>Modus (Populer)</strong>.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 p-4 rounded-xl bg-slate-950/50 border border-slate-800">
+                                <span class="text-xl text-sky-400 mt-1">✔</span>
+                                <div>
+                                    <h4 class="font-semibold text-slate-200">Analisis Kasus Kritis</h4>
+                                    <p class="text-sm text-slate-400">Belajar menangani anomali ekstrim (Outliers) dan memecahkan soal berbasis cerita game.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            // Slide 4: Warm-up 1
+            {
+                section: "Warm-up",
+                title: "Misteri Petunjuk Hilang",
+                type: "custom",
+                render: () => `
+                    <div class="max-w-xl mx-auto text-center">
+                        <span class="text-4xl mb-4 block">🧠</span>
+                        <h3 class="text-xl font-bold text-slate-200 mb-4">Pemanasan Otak Detektif: Pecahkan Pola Data!</h3>
+                        <p class="text-sm text-slate-400 mb-6">Sebuah pola log bawah tanah menunjukkan urutan angka ini. Angka berapa yang tepat untuk melengkapinya?</p>
+                        <div class="flex justify-center gap-3 mb-8">
+                            <div class="w-12 h-12 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center font-tech text-xl text-sky-400">3</div>
+                            <div class="w-12 h-12 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center font-tech text-xl text-sky-400">6</div>
+                            <div class="w-12 h-12 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center font-tech text-xl text-sky-400">12</div>
+                            <div class="w-12 h-12 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center font-tech text-xl text-sky-400">24</div>
+                            <div class="w-12 h-12 rounded-xl bg-sky-950 border-2 border-sky-400 flex items-center justify-center font-tech text-xl text-sky-300 animate-pulse">?</div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <button onclick="checkWarmUp(this, 48, true)" class="p-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl font-tech text-lg transition-all">48</button>
+                            <button onclick="checkWarmUp(this, 36, false)" class="p-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl font-tech text-lg transition-all">36</button>
+                        </div>
+                        <div id="warmUpFeedback" class="mt-4 text-sm font-semibold h-6"></div>
+                    </div>
+                `
+            },
+            // Slide 5: Warm-up 2
+            {
+                section: "Warm-up",
+                title: "Klasifikasi Barang Bukti",
+                type: "custom",
+                render: () => `
+                    <div class="max-w-xl mx-auto text-center">
+                        <span class="text-4xl mb-4 block">📦</span>
+                        <h3 class="text-xl font-bold text-slate-200 mb-3">Mengapa Kita Harus Menyederhanakan Data?</h3>
+                        <p class="text-sm text-slate-400 mb-6">Bayangkan kamu menemukan 100 flashdisk bukti kriminal di lantai. Apa langkah pertama terbaik untuk memahami isinya?</p>
+                        <div class="space-y-3">
+                            <button onclick="checkWarmUp2(this, true)" class="w-full text-left p-4 bg-slate-800/60 hover:bg-slate-800 border border-slate-700 rounded-xl transition-all">
+                                <span class="font-bold text-sky-400 mr-2">A.</span> Mengelompokkan berdasarkan warna fisik flashdisk dan kapasitas memorinya.
+                            </button>
+                            <button onclick="checkWarmUp2(this, false)" class="w-full text-left p-4 bg-slate-800/60 hover:bg-slate-800 border border-slate-700 rounded-xl transition-all">
+                                <span class="font-bold text-sky-400 mr-2">B.</span> Mencolokkan semuanya sekaligus ke satu laptop tanpa mengelompokkannya.
+                            </button>
+                        </div>
+                        <div id="warmUp2Feedback" class="mt-4 text-sm font-semibold h-6"></div>
+                    </div>
+                `
+            },
+            // Slide 6: Warm-up 3
+            {
+                section: "Warm-up",
+                title: "Tantangan Kalkulator Mental",
+                type: "custom",
+                render: () => `
+                    <div class="max-w-xl mx-auto text-center">
+                        <span class="text-4xl mb-4 block">⚡</span>
+                        <h3 class="text-xl font-bold text-slate-200 mb-4">Uji Kecepatan Berhitungmu!</h3>
+                        <p class="text-sm text-slate-400 mb-6">Kita akan sering menjumlahkan dan membagi angka. Hitung cepat operasi di bawah ini:</p>
+                        <div class="p-6 bg-slate-950/60 rounded-2xl border border-slate-800 mb-6">
+                            <div class="font-tech text-2xl text-emerald-400 mb-2" id="warmUpMathEq"></div>
+                            <span class="text-xs text-slate-500">Gunakan taktik menggabungkan angka puluhannya dulu!</span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-3">
+                            <button onclick="checkWarmUp3(this, 12, false)" class="p-3 bg-slate-800 hover:bg-slate-700 rounded-xl font-tech text-lg">12</button>
+                            <button onclick="checkWarmUp3(this, 15, true)" class="p-3 bg-slate-800 hover:bg-slate-700 rounded-xl font-tech text-lg">15</button>
+                            <button onclick="checkWarmUp3(this, 18, false)" class="p-3 bg-slate-800 hover:bg-slate-700 rounded-xl font-tech text-lg">18</button>
+                        </div>
+                        <div id="warmUp3Feedback" class="mt-4 text-sm font-semibold h-6"></div>
+                    </div>
+                `
+            },
+            // Slide 7: Warm-up 4
+            {
+                section: "Warm-up",
+                title: "Mengenal Jenis Data",
+                type: "custom",
+                render: () => `
+                    <div class="max-w-xl mx-auto">
+                        <h3 class="text-xl font-tech font-bold text-center text-sky-400 mb-6">Bahasa Agen: Dua Kubu Data</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                            <div class="p-4 rounded-xl bg-slate-950/40 border border-sky-950">
+                                <span class="text-2xl mb-2 block">📊</span>
+                                <h4 class="font-semibold text-slate-200 mb-1">Kuantitatif (Angka)</h4>
+                                <p class="text-xs text-slate-400">Data berupa nilai numerik yang bisa dihitung secara matematis. Contoh: Tinggi badan, skor game, jumlah koin.</p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-slate-950/40 border border-emerald-950">
+                                <span class="text-2xl mb-2 block">🏷</span>
+                                <h4 class="font-semibold text-slate-200 mb-1">Kualitatif (Kategori)</h4>
+                                <p class="text-xs text-slate-400">Data deskriptif berupa sifat atau label nama. Contoh: Nama hero favorit, warna mobil, golongan darah.</p>
+                            </div>
+                        </div>
+                        <div class="p-4 rounded-xl bg-sky-950/20 border border-sky-500/10 text-center">
+                            <p class="text-sm text-slate-300">"Penyelidikan intelijen statistika kita 90% akan berfokus pada data <strong>Kuantitatif</strong>!"</p>
+                        </div>
+                    </div>
+                `
+            },
+            // Slide 8: Real-World Connection 1
+            {
+                section: "Real-world Connection",
+                title: "Bagaimana Pro Player MLBB Menganalisis KDA?",
+                type: "custom",
+                render: () => `
+                    <div class="flex flex-col md:flex-row gap-6 items-center">
+                        <div class="flex-1">
+                            <span class="text-xs font-tech text-sky-400 uppercase tracking-widest bg-sky-950/50 px-3 py-1 rounded-full border border-sky-500/20">Esports & Data</span>
+                            <h3 class="text-2xl font-bold font-tech text-slate-200 mt-2 mb-4">Rahasia Skor MVP Pro-Player!</h3>
+                            <p class="text-sm text-slate-300 leading-relaxed mb-4">
+                                Pro Player Mobile Legends tidak memenangkan pertandingan secara kebetulan. Tim analis mereka menghitung <strong>Rata-rata (Mean)</strong> eliminasi musuh, kematian, dan assist per pertandingan. 
+                            </p>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                Jika rata-rata eliminasinya tinggi, pemain diposisikan sebagai ujung tombak serangan utama!
+                            </p>
+                        </div>
+                        <div class="w-full md:w-72 bg-slate-950/40 border border-slate-800 p-4 rounded-2xl">
+                            <!-- Custom Esports Visual -->
+                            <div class="flex justify-between items-center border-b border-slate-800 pb-2 mb-3">
+                                <span class="text-xs font-tech text-emerald-400">MVP STATS DECK</span>
+                                <span class="text-xs bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded">AGENT ELITE</span>
+                            </div>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-slate-400">Match 1:</span> <span class="font-tech text-sky-400">12 Kill</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-400">Match 2:</span> <span class="font-tech text-sky-400">8 Kill</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-400">Match 3:</span> <span class="font-tech text-sky-400">10 Kill</span>
+                                </div>
+                                <div class="pt-2 border-t border-slate-800 flex justify-between font-bold">
+                                    <span>Rata-Rata Kill:</span> <span class="text-emerald-400 font-tech">10.0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            // Slide 9: Real-World Connection 2
+            {
+                section: "Real-world Connection",
+                title: "Rekomendasi Algoritma YouTube",
+                type: "custom",
+                render: () => `
+                    <div class="flex flex-col md:flex-row gap-6 items-center">
+                        <div class="w-full md:w-72 relative">
+                            <!-- SVG representasi visual algoritma video -->
+                            <svg class="w-full h-44 rounded-2xl bg-slate-950/60 p-4 border border-slate-800 filter drop-shadow-[0_0_15px_rgba(244,63,94,0.15)]" viewBox="0 0 200 120" fill="none">
+                                <rect x="10" y="10" width="180" height="100" rx="10" fill="#0f172a" stroke="#f43f5e" stroke-width="2"/>
+                                <polygon points="85,45 125,60 85,75" fill="#f43f5e"/>
+                                <rect x="25" y="95" width="50" height="6" rx="3" fill="#38bdf8"/>
+                                <rect x="85" y="95" width="90" height="6" rx="3" fill="#64748b"/>
+                            </svg>
+                        </div>
+                        <div class="flex-grow">
+                            <span class="text-xs font-tech text-rose-400 uppercase tracking-widest bg-rose-950/30 px-3 py-1 rounded-full border border-rose-500/20">Sistem Algoritma</span>
+                            <h3 class="text-2xl font-bold font-tech text-slate-200 mt-2 mb-4">Bagaimana YouTube Mengetahui Keinginanmu?</h3>
+                            <p class="text-sm text-slate-300 leading-relaxed">
+                                YouTube melacak video kategori apa yang paling sering (paling dominan) ditonton oleh akunmu. Pencarian nilai paling sering muncul ini secara teknis dinamakan <strong>Modus</strong>. 
+                            </p>
+                            <p class="text-xs text-slate-400 mt-3">
+                                Jika modus tontonanmu adalah video gaming Minecraft, sistem otomatis menampilkan deretan feed Minecraft di halaman utamamu!
+                            </p>
+                        </div>
+                    </div>
+                `
+            },
+            // Slide 10: Real-World Connection 3
+            {
+                section: "Real-world Connection",
+                title: "Prediksi Cuaca & Manajemen Stok Mainan",
+                type: "custom",
+                render: () => `
+                    <div class="max-w-2xl mx-auto">
+                        <span class="text-4xl block mb-3">🎲</span>
+                        <h3 class="text-xl font-bold font-tech text-sky-400 mb-4">Kenapa Pemilik Toko Harus Belajar Median?</h3>
+                        <p class="text-sm text-slate-300 leading-relaxed mb-4">
+                            Pemilik toko mainan menggunakan <strong>Median (Nilai Tengah)</strong> data penjualan bulanan untuk membeli stok barang secara ideal. Nilai median melindungi mereka dari jebakan angka anomali yang sangat tinggi/rendah yang merusak perhitungan stok.
+                        </p>
+                        <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+                            <h4 class="font-tech text-xs tracking-wider text-slate-400 mb-2 uppercase">Grafik Alur Distribusi Data Ideal</h4>
+                            <!-- Visual curve representation using standard Canvas/SVG elements -->
+                            <svg class="w-full h-24" viewBox="0 0 400 80">
+                                <path d="M10,70 Q100,10 200,40 T390,70" fill="none" stroke="#10b981" stroke-width="3"/>
+                                <line x1="200" y1="25" x2="200" y2="70" stroke="#f59e0b" stroke-width="2" stroke-dasharray="3,3"/>
+                                <text x="205" y="45" fill="#f59e0b" font-size="10" font-family="monospace">MEDIAN (TENGAH)</text>
+                            </svg>
+                        </div>
+                    </div>
+                `
+            },
+            // Slide 11: Konsep 1
+            {
+                section: "Konsep & Materi",
+                title: "Apa itu Penyajian Data?",
+                type: "custom",
+                render: () => `
+                    <div class="flex flex-col md:flex-row gap-6 items-center">
+                        <div class="flex-grow">
+                            <h3 class="text-xl font-bold text-sky-400 mb-3">Menertibkan Data Mentah</h3>
+                            <p class="text-sm text-slate-300 leading-relaxed mb-4">
+                                Data yang baru diambil langsung dari lapangan biasanya berupa tumpukan baris yang sulit dipahami. Melalui statistika, kita dapat menyajikannya ke dalam visualisasi cerdas:
+                            </p>
+                            <ul class="space-y-2 text-sm text-slate-300">
+                                <li class="flex items-center gap-2">📂 <strong>Tabel Frekuensi:</strong> Menyusun angka berdasarkan frekuensi kemunculannya.</li>
+                                <li class="flex items-center gap-2">📊 <strong>Diagram Batang:</strong> Membandingkan porsi data secara instan.</li>
+                                <li class="flex items-center gap-2">📈 <strong>Diagram Garis:</strong> Melihat tren peningkatan maupun penurunan dari waktu ke waktu.</li>
+                            </ul>
+                        </div>
+                        <div class="w-full md:w-64 bg-slate-950/50 p-4 border border-slate-800 rounded-2xl flex flex-col justify-between">
+                            <span class="text-xs text-center text-slate-400 font-tech uppercase mb-3">Sajian Mana yang Lebih Cepat Dipahami?</span>
+                            <div class="text-center font-tech p-2 bg-slate-900 border border-slate-800 rounded-lg text-rose-400 mb-2 text-xs">
+                                data: 12,12,12,15,15,18
+                            </div>
+                            <div class="text-center font-tech p-2 bg-emerald-950/20 border border-emerald-800/40 rounded-lg text-emerald-400 text-xs">
+                                12 (Ada 3) | 15 (Ada 2) | 18 (Ada 1)
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            // Slide 12: Konsep 2
+            {
+                section: "Konsep & Materi",
+                title: "Menyelidiki Tabel Frekuensi",
+                type: "custom",
+                render: () => `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-200 mb-2">Tabel Frekuensi Interaktif</h3>
+                            <p class="text-xs text-slate-400 leading-relaxed mb-4">
+                                Klik tombol penambah data di bawah untuk melihat bagaimana Tabel Frekuensi mengelompokkan data mentah secara dinamis!
+                            </p>
+                            <div class="grid grid-cols-2 gap-2 mb-4">
+                                <button onclick="addToFrequency('A')" class="p-2 bg-slate-800 hover:bg-slate-700 rounded-lg font-tech text-xs text-sky-400 border border-slate-700/60">+ Tambah Data A</button>
+                                <button onclick="addToFrequency('B')" class="p-2 bg-slate-800 hover:bg-slate-700 rounded-lg font-tech text-xs text-emerald-400 border border-slate-700/60">+ Tambah Data B</button>
+                            </div>
+                            <div class="p-3 bg-slate-950/80 rounded-xl font-mono text-[10px] text-slate-500 overflow-x-auto min-h-12" id="freqRawData">
+                                Data Mentah: ["A", "B", "A", "A", "B"]
+                            </div>
+                        </div>
+                        <div class="bg-slate-950/40 border border-slate-800 p-4 rounded-2xl">
+                            <table class="w-full text-left text-sm">
+                                <thead>
+                                    <tr class="border-b border-slate-800 text-slate-400">
+                                        <th class="pb-2">Kategori</th>
+                                        <th class="pb-2 text-right">Frekuensi (Jumlah)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="py-2 text-sky-400 font-semibold">Data A</td>
+                                        <td id="freqCountA" class="py-2 text-right font-tech text-sky-400">3</td>
+                                    </tr>
+                                    <tr class="border-t border-slate-800/40">
+                                        <td class="py-2 text-emerald-400 font-semibold">Data B</td>
+                                        <td id="freqCountB" class="py-2 text-right font-tech text-emerald-400">2</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `
+            },
+            // Slide 13: Konsep 3
+            {
+                section: "Konsep & Materi",
+                title: "Membaca Diagram Batang",
+                type: "custom",
+                render: () => `
+                    <div class="flex flex-col md:flex-row gap-6 items-center">
+                        <div class="flex-grow">
+                            <h3 class="text-xl font-bold text-slate-200 mb-3">Sajian Diagram Batang</h3>
+                            <p class="text-sm text-slate-300 leading-relaxed mb-4">
+                                Diagram batang mempermudah penangkapan rasio data tanpa memelototi rentetan angka numerik di tabel secara lama.
+                            </p>
+                            <p class="text-xs text-slate-400">
+                                Perhatikan tingginya batang! Semakin tinggi sebuah balok, semakin banyak kuantitas item tersebut di kehidupan nyata.
+                            </p>
+                        </div>
+                        <div class="w-full md:w-72 bg-slate-950/60 p-4 border border-slate-800 rounded-2xl">
+                            <!-- SVG Diagram Batang -->
+                            <svg class="w-full h-44" viewBox="0 0 200 120">
+                                <line x1="20" y1="100" x2="190" y2="100" stroke="#475569" stroke-width="2"/>
+                                <line x1="20" y1="10" x2="20" y2="100" stroke="#475569" stroke-width="2"/>
+                                <!-- Batang 1 -->
+                                <rect x="35" y="40" width="25" height="60" fill="#38bdf8" rx="4"/>
+                                <text x="47" y="112" fill="#94a3b8" font-size="8" text-anchor="middle">A</text>
+                                <!-- Batang 2 -->
+                                <rect x="85" y="15" width="25" height="85" fill="#10b981" rx="4"/>
+                                <text x="97" y="112" fill="#94a3b8" font-size="8" text-anchor="middle">B</text>
+                                <!-- Batang 3 -->
+                                <rect x="135" y="70" width="25" height="30" fill="#f59e0b" rx="4"/>
+                                <text x="147" y="112" fill="#94a3b8" font-size="8" text-anchor="middle">C</text>
+                            </svg>
+                        </div>
+                    </div>
+                `
+            },
+            // Slide 14: Konsep 4
+            {
+                section: "Konsep & Materi",
+                title: "Membaca Diagram Garis",
+                type: "custom",
+                render: () => `
+                    <div class="flex flex-col md:flex-row gap-6 items-center">
+                        <div class="flex-grow">
+                            <h3 class="text-xl font-bold text-slate-200 mb-3">Diagram Garis & Tren Waktu</h3>
+                            <p class="text-sm text-slate-300 leading-relaxed">
+                                Diagram garis ideal digunakan untuk memonitor data berkelanjutan (kontinu) seiring berjalannya interval waktu tertentu.
+                            </p>
+                            <p class="text-xs text-slate-400 mt-2">
+                                Tren naik ke atas menandakan adanya pertumbuhan positif, sedangkan garis melandai mengindikasikan penurunan data.
+                            </p>
+                        </div>
+                        <div class="w-full md:w-72 bg-slate-950/60 p-4 border border-slate-800 rounded-2xl">
+                            <!-- SVG Diagram Garis -->
+                            <svg class="w-full h-44" viewBox="0 0 200 120">
+                                <line x1="20" y1="100" x2="190" y2="100" stroke="#475569" stroke-width="2"/>
+                                <line x1="20" y1="10" x2="20" y2="100" stroke="#475569" stroke-width="2"/>
+                                <path d="M20,90 L60,50 L100,70 L140,20 L180,40" fill="none" stroke="#f43f5e" stroke-width="3"/>
+                                <circle cx="20" cy="90" r="4" fill="#f43f5e"/>
+                                <circle cx="60" cy="50" r="4" fill="#f43f5e"/>
+                                <circle cx="100" cy="70" r="4" fill="#f43f5e"/>
+                                <circle cx="140" cy="20" r="4" fill="#f43f5e"/>
+                                <circle cx="180" cy="40" r="4" fill="#f43f5e"/>
+                            </svg>
+                        </div>
+                    </div>
+                `
+            },
+            // Slide 15: Konsep 5
+            {
+                section: "Konsep & Materi",
+                title: "Membaca Diagram Lingkaran",
+                type: "custom",
+                render: () => `
+                    <div class="flex flex-col md:flex-row gap-6 items-center">
+                        <div class="flex-grow">
+                            <h3 class="text-xl font-bold text-slate-200 mb-3">Diagram Lingkaran (Porsi Pizza)</h3>
+                            <p class="text-sm text-slate-300 leading-relaxed mb-4">
+                                Diagram ini menampilkan rasio persentase atau perbandingan bagian terhadap data keseluruhan (total 100% atau <span class="math-tex">360^\circ</span>).
+                            </p>
+                            <p id="katexCircle" class="bg-slate-950/40 p-2 rounded-lg border border-slate-800 text-xs font-mono text-center"></p>
+                        </div>
+                        <div class="w-full md:w-72 bg-slate-950/60 p-4 border border-slate-800 rounded-2xl flex items-center justify-center">
+                            <!-- SVG Diagram Lingkaran -->
+                            <svg class="w-40 h-40" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="40" fill="none" stroke="#38bdf8" stroke-width="20" stroke-dasharray="125 251.2" transform="rotate(-90 50 50)"/>
+                                <circle cx="50" cy="50" r="40" fill="none" stroke="#10b981" stroke-width="20" stroke-dasharray="80 251.2" transform="rotate(90 50 50)"/>
+                                <circle cx="50" cy="50" r="40" fill="none" stroke="#f59e0b" stroke-width="20" stroke-dasharray="46.2 251.2" transform="rotate(205 50 50)"/>
+                            </svg>
+                        </div>
+                    </div>
+                `
+            },
+            // Slide 16: Konsep 6
+            {
+                section: "Konsep & Materi",
+                title: "Trisula Pemusatan Data",
+                type: "custom",
+                render: () => `
+                    <div class="max-w-2xl mx-auto">
+                        <h3 class="text-xl font-bold text-sky-400 text-center mb-6">Mengenal 3 Pilar Statistika</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="p-4 bg-slate-950/40 rounded-xl border border-sky-500/20 text-center">
+                                <div class="text-3xl mb-2">⚖</div>
+                                <h4 class="font-bold text-sky-400 mb-1">MEAN</h4>
+                                <p class="text-xs text-slate-400">Nilai rata-rata dari seluruh data yang digabungkan kemudian dibagi sama rata.</p>
+                            </div>
+                            <div class="p-4 bg-slate-950/40 rounded-xl border border-emerald-500/20 text-center">
+                                <div class="text-3xl mb-2">📐</div>
+                                <h4 class="font-bold text-emerald-400 mb-1">MEDIAN</h4>
+                                <p class="text-xs text-slate-400">Nilai tengah dari barisan data setelah diurutkan dari terkecil ke terbesar.</p>
+                            </div>
+                            <div class="p-4 bg-slate-950/40 rounded-xl border border-amber-500/20 text-center">
+                                <div class="text-3xl mb-2">🔥</div>
+                                <h4 class="font-bold text-amber-400 mb-1">MODUS</h4>
+                                <p class="text-xs text-slate-400">Data yang paling populer, sering ditemui, atau memiliki frekuensi tertinggi.</p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            // Slide 17: Konsep 7 (Mean Sandbox)
+            {
+                section: "Konsep & Materi",
+                title: "Mean: Prinsip 'Bagi Rata'",
+                type: "custom",
+                render: () => `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-200 mb-2">Eksperimen Interaktif Mean</h3>
+                            <p class="text-xs text-slate-400 leading-relaxed mb-4">
+                                Tarik slider di bawah untuk mengatur tinggi tiap pilar data. Garis putus-putus mendatar akan menyesuaikan nilai Rerata (Mean) secara otomatis!
+                            </p>
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xs text-slate-400 w-12">Pilar A:</span>
+                                    <input type="range" min="1" max="10" value="${gameState.sandboxMeanData[0]}" oninput="updateMeanSandbox(0, this.value)" class="flex-grow accent-sky-400">
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xs text-slate-400 w-12">Pilar B:</span>
+                                    <input type="range" min="1" max="10" value="${gameState.sandboxMeanData[1]}" oninput="updateMeanSandbox(1, this.value)" class="flex-grow accent-sky-400">
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xs text-slate-400 w-12">Pilar C:</span>
+                                    <input type="range" min="1" max="10" value="${gameState.sandboxMeanData[2]}" oninput="updateMeanSandbox(2, this.value)" class="flex-grow accent-sky-400">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-950/60 p-4 border border-slate-800 rounded-2xl flex flex-col justify-between">
+                            <div class="h-32 relative flex items-end justify-around border-b border-slate-800 pb-2 mb-3">
+                                <!-- Bars will be drawn dynamically -->
+                                <div id="meanBar0" class="w-8 bg-sky-500 rounded-t-md transition-all duration-100" style="height: 60%"></div>
+                                <div id="meanBar1" class="w-8 bg-sky-500 rounded-t-md transition-all duration-100" style="height: 40%"></div>
+                                <div id="meanBar2" class="w-8 bg-sky-500 rounded-t-md transition-all duration-100" style="height: 80%"></div>
+                                <!-- Mean line indicator -->
+                                <div id="meanLine" class="absolute left-0 right-0 border-t-2 border-dashed border-emerald-400 transition-all duration-100" style="bottom: 60%"></div>
+                            </div>
+                            <div class="text-center font-tech text-sm text-emerald-400">
+                                Rerata Tinggi (Mean): <span id="meanResultText">6.0</span>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            // Slide 18: Konsep 8 (Median Sorting Game)
+            {
+                section: "Konsep & Materi",
+                title: "Median: Menemukan Inti Tengah",
+                type: "custom",
+                render: () => `
+                    <div class="max-w-xl mx-auto text-center">
+                        <h3 class="text-lg font-bold text-slate-200 mb-2">Simulasi Urutan Median</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-6">
+                            Data harus diurutkan terlebih dahulu! Urutkan deret angka di bawah ini dengan menekan tombol urutkan agar nilai tengah (Median) terlihat nyata:
+                        </p>
+                        <div class="flex justify-center gap-2 mb-6" id="medianNumberBlocks">
+                            <!-- JS will inject randomized blocks -->
+                        </div>
+                        <div class="flex justify-center gap-3">
+                            <button onclick="sortMedianBlocks()" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-lg text-sm transition-all">
+                                Urutkan Sekarang! 📊
+                            </button>
+                            <button onclick="resetMedianBlocks()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold rounded-lg text-sm transition-all">
+                                Reset 🔄
+                            </button>
+                        </div>
+                        <div id="medianExplanationText" class="mt-4 text-xs font-semibold text-amber-400 h-6"></div>
+                    </div>
+                `
+            },
+            // Slide 19: Konsep 9 (Mode Popularity Sandbox)
+            {
+                section: "Konsep & Materi",
+                title: "Modus: Bintang Terpopuler!",
+                type: "custom",
+                render: () => `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-200 mb-2">Misi Voting: Menentukan Modus</h3>
+                            <p class="text-xs text-slate-400 leading-relaxed mb-4">
+                                Klik game di bawah untuk menyumbang suara. Kategori dengan suara terbanyak otomatis menjadi <strong>Modus</strong>!
+                            </p>
+                            <div class="space-y-2">
+                                <button onclick="voteGame('Minecraft')" class="w-full p-2.5 bg-slate-800/80 hover:bg-slate-700 text-left rounded-lg text-xs font-semibold border border-slate-700 transition-all flex justify-between">
+                                    <span>👾 Minecraft</span> <span id="voteCountMinecraft" class="font-tech text-sky-400">12</span>
+                                </button>
+                                <button onclick="voteGame('Valorant')" class="w-full p-2.5 bg-slate-800/80 hover:bg-slate-700 text-left rounded-lg text-xs font-semibold border border-slate-700 transition-all flex justify-between">
+                                    <span>🎯 Valorant</span> <span id="voteCountValorant" class="font-tech text-rose-400">8</span>
+                                </button>
+                                <button onclick="voteGame('MobileLegends')" class="w-full p-2.5 bg-slate-800/80 hover:bg-slate-700 text-left rounded-lg text-xs font-semibold border border-slate-700 transition-all flex justify-between">
+                                    <span>⚔ MLBB</span> <span id="voteCountMobileLegends" class="font-tech text-emerald-400">15</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="bg-slate-950/60 p-5 border border-slate-800 rounded-2xl text-center flex flex-col justify-center items-center">
+                            <span class="text-4xl mb-3">👑</span>
+                            <span class="text-xs text-slate-400 font-tech uppercase">Modus Terpilih Saat Ini:</span>
+                            <h4 id="modusWinnerGame" class="text-2xl font-black text-amber-400 font-tech mt-2">MOBILE LEGENDS</h4>
+                        </div>
+                    </div>
+                `
+            },
+            // Slide 20: Cheat Sheet KaTeX
+            {
+                section: "Konsep & Materi",
+                title: "Rangkuman Singkat Formula",
+                type: "custom",
+                render: () => `
+                    <div class="max-w-2xl mx-auto">
+                        <h3 class="text-lg font-bold text-center text-slate-200 mb-4">Catatan Saku Digital:</h3>
+                        <div class="space-y-3">
+                            <div class="p-4 bg-slate-950/50 border border-slate-800 rounded-xl">
+                                <span class="text-xs font-tech text-sky-400 block mb-1">RUMUS MEAN (RERATA)</span>
+                                <div id="katexFormulaMean" class="text-center py-2 overflow-x-auto"></div>
+                            </div>
+                            <div class="p-4 bg-slate-950/50 border border-slate-800 rounded-xl">
+                                <span class="text-xs font-tech text-emerald-400 block mb-1">MEDIAN (NILAI TENGAH GANJIL)</span>
+                                <div id="katexFormulaMedian" class="text-center py-2 overflow-x-auto"></div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            // Slide 21: Contoh Soal 1
+            {
+                section: "Contoh Soal",
+                title: "Menganalisis Skor Game RPG",
+                type: "custom",
+                render: () => `
+                    <div class="max-w-2xl mx-auto">
+                        <span class="text-xs font-tech text-sky-400 uppercase tracking-widest bg-sky-950/40 px-3 py-1 rounded-full border border-sky-500/20">Panduan Detektif</span>
+                        <h3 class="text-xl font-bold text-slate-200 mt-2 mb-3">Studi Kasus 1: Mencari Mean</h3>
+                        <p class="text-sm text-slate-300 leading-relaxed mb-4">
+                            Detektif mendapatkan 5 catatan data poin yang tersebar: <strong class="text-sky-400">10, 20, 15, 25, 30</strong>. Bagaimana cara menghitung rata-ratanya?
+                        </p>
+                        <div class="p-4 bg-slate-950/60 rounded-xl border border-slate-800 space-y-2 text-xs sm:text-sm">
+                            <p><strong>Langkah 1:</strong> Jumlahkan semua nilai data:</p>
+                            <div id="katexEx1Step1" class="text-center py-1"></div>
+                            <p><strong>Langkah 2:</strong> Bagi dengan jumlah item data (ada 5):</p>
+                            <div id="katexEx1Step2" class="text-center py-1"></div>
+                        </div>
+                    </div>
+                `
+            },
+            // Slide 22: Contoh Soal 2
+            {
+                section: "Contoh Soal",
+                title: "Mencari Median Jumlah Anggota Pasukan (Ganjil)",
+                type: "custom",
+                render: () => `
+                    <div class="max-w-2xl mx-auto">
+                        <h3 class="text-xl font-bold text-slate-200 mb-3">Studi Kasus 2: Median Jumlah Ganjil</h3>
+                        <p class="text-sm text-slate-300 leading-relaxed mb-4">
+                            Temukan median dari data: <strong class="text-emerald-400">4, 1, 9, 7, 5</strong>.
+                        </p>
+                        <div class="p-4 bg-slate-950/60 rounded-xl border border-slate-800 space-y-3 text-sm">
+                            <div>
+                                <strong class="text-xs text-slate-400 uppercase">Langkah 1: Urutkan data dari yang terkecil</strong>
+                                <p class="text-emerald-400 font-tech text-lg">1, 4, <span class="underline decoration-wavy text-amber-400">5</span>, 7, 9</p>
+                            </div>
+                            <div>
+                                <strong class="text-xs text-slate-400 uppercase">Langkah 2: Cari posisi tengah</strong>
+                                <p class="text-slate-300">Karena jumlah data ganjil (5), nilai tengah adalah data ke-3, yaitu <strong class="text-amber-400">5</strong>.</p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            // Slide 23: Contoh Soal 3
+            {
+                section: "Contoh Soal",
+                title: "Mencari Median Jumlah Anggota Pasukan (Genap)",
+                type: "custom",
+                render: () => `
+                    <div class="max-w-2xl mx-auto">
+                        <h3 class="text-xl font-bold text-slate-200 mb-3">Studi Kasus 3: Median Jumlah Genap</h3>
+                        <p class="text-sm text-slate-300 leading-relaxed mb-4">
+                            Bagaimana jika datanya genap? Misal: <strong class="text-emerald-400">4, 1, 9, 7, 5, 2</strong>.
+                        </p>
+                        <div class="p-4 bg-slate-950/60 rounded-xl border border-slate-800 space-y-3 text-xs sm:text-sm">
+                            <div>
+                                <strong class="text-xs text-slate-400 uppercase">Langkah 1: Urutkan data dari yang terkecil</strong>
+                                <p class="text-emerald-400 font-tech text-lg">1, 2, <span class="text-amber-400 font-bold">4</span>, <span class="text-sky-400 font-bold">5</span>, 7, 9</p>
+                            </div>
+                            <div>
+                                <strong class="text-xs text-slate-400 uppercase">Langkah 2: Cari dua nilai tengah lalu bagi 2</strong>
+                                <p class="text-slate-300">Dua nilai tengah adalah <strong class="text-amber-400">4</strong> dan <strong class="text-sky-400">5</strong>.</p>
+                                <div id="katexEx3Step" class="text-center py-2"></div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            // Slide 24: Contoh Soal 4
+            {
+                section: "Contoh Soal",
+                title: "Mencari Modus di Balik Tabel",
+                type: "custom",
+                render: () => `
+                    <div class="max-w-2xl mx-auto">
+                        <h3 class="text-xl font-bold text-slate-200 mb-3">Studi Kasus 4: Modus dari Tabel Frekuensi</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="p-4 bg-slate-950/60 rounded-xl border border-slate-800">
+                                <table class="w-full text-xs text-left">
+                                    <tr class="border-b border-slate-800 text-slate-400"><th class="pb-1">Item Loot</th><th class="pb-1 text-right">Frekuensi</th></tr>
+                                    <tr><td class="py-1">Koin Emas</td><td class="py-1 text-right font-tech text-sky-400">25</td></tr>
+                                    <tr><td class="py-1 text-emerald-400 font-bold">Ramuan Kesehatan</td><td class="py-1 text-right font-tech text-emerald-400 font-bold">42</td></tr>
+                                    <tr><td class="py-1">Perisai Besi</td><td class="py-1 text-right font-tech text-sky-400">18</td></tr>
+                                </table>
+                            </div>
+                            <div class="flex flex-col justify-center">
+                                <span class="text-xs font-tech text-amber-400 uppercase mb-1">PEMBONGKARAN DATA:</span>
+                                <p class="text-sm text-slate-300">
+                                    Cukup cari item dengan frekuensi kemunculan terbesar! Pada tabel di samping, frekuensi tertinggi adalah <strong class="text-emerald-400">42</strong>. Jadi, modusnya adalah <strong>Ramuan Kesehatan</strong>.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            // Slide 25: Contoh Soal 5
+            {
+                section: "Contoh Soal",
+                title: "Merangkai Visual Menjadi Grafik",
+                type: "custom",
+                render: () => `
+                    <div class="max-w-2xl mx-auto">
+                        <h3 class="text-xl font-bold text-slate-200 mb-3">Studi Kasus 5: Konstruksi Grafik Sederhana</h3>
+                        <p class="text-sm text-slate-300 leading-relaxed mb-4">
+                            Setiap poin frekuensi pada tabel diplot sesuai nilai sumbu vertikalnya (Y), kemudian dihubungkan menggunakan garis lurus.
+                        </p>
+                        <div class="p-4 bg-slate-950/60 rounded-xl border border-slate-800 text-center">
+                            <span class="text-xs text-slate-400 block mb-2">Simulasi Plot Koordinat Grafik</span>
+                            <!-- Visual representation -->
+                            <div class="flex justify-center gap-12 font-tech text-xs">
+                                <div class="p-2 bg-slate-900 border border-slate-800 rounded">Senin: (10 Poin)</div>
+                                <div class="p-2 bg-slate-900 border border-slate-800 rounded">Selasa: (25 Poin)</div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            // Slide 26: Latihan Mandiri 1 (Quiz)
+            {
+                section: "Latihan Soal",
+                title: "Misi 1: Menghitung Mean MVP",
+                type: "quiz",
+                question: "Dari data skor pertandingan: 15, 25, 20. Berapakah nilai rata-rata (Mean) skor tersebut?",
+                options: ["18", "20", "22", "25"],
+                correct: "20",
+                explanation: "Gunakan trik gabungan: (15 + 25 + 20) / 3 = 60 / 3 = 20."
+            },
+            // Slide 27: Latihan Mandiri 2 (Quiz)
+            {
+                section: "Latihan Soal",
+                title: "Misi 2: Median Kecepatan Internet",
+                type: "quiz",
+                question: "Urutkan data delay internet (ms) ini: 35, 12, 45, 20, 15. Tentukan nilai Median yang tepat!",
+                options: ["15 ms", "20 ms", "35 ms", "45 ms"],
+                correct: "20 ms",
+                explanation: "Data diurutkan menjadi: 12, 15, 20, 35, 45. Nilai tengahnya berada tepat di angka 20 ms."
+            },
+            // Slide 28: Latihan Mandiri 3 (Quiz)
+            {
+                section: "Latihan Soal",
+                title: "Misi 3: Modus Penjualan Aksesoris",
+                type: "quiz",
+                question: "Sistem mencatat penjualan topi: S (3 buah), M (10 buah), L (25 buah), XL (12 buah). Mana item yang menjadi Modus?",
+                options: ["Ukuran S", "Ukuran M", "Ukuran L", "Ukuran XL"],
+                correct: "Ukuran L",
+                explanation: "Ukuran L memiliki frekuensi penjualan terbesar dibandingkan ukuran lainnya yaitu sebanyak 25 buah."
+            },
+            // Slide 29: Latihan Mandiri 4 (Quiz)
+            {
+                section: "Latihan Soal",
+                title: "Misi 4: Membaca Grafik Rahasia",
+                type: "quiz",
+                question: "Sebuah grafik batang menunjukkan tinggi pilar data: Pilar A=4, Pilar B=8, Pilar C=6. Berapa nilai Mean-nya?",
+                options: ["4", "5", "6", "8"],
+                correct: "6",
+                explanation: "Jumlah data = 4 + 8 + 6 = 18. Dibagi 3 pilar = 6."
+            },
+            // Slide 30: Latihan Mandiri 5 (Quiz)
+            {
+                section: "Latihan Soal",
+                title: "Misi 5: Menghitung Modus Dari Kumpulan Ganda",
+                type: "quiz",
+                question: "Diberikan data nilai tes: 7, 7, 8, 8, 8, 9, 9, 10. Manakah nilai modusnya?",
+                options: ["7", "8", "9", "10"],
+                correct: "8",
+                explanation: "Nilai 8 muncul sebanyak 3 kali, paling banyak dibandingkan nilai-nilai lainnya."
+            },
+            // Slide 31: Latihan Mandiri 6 (Quiz)
+            {
+                section: "Latihan Soal",
+                title: "Misi 6: Deteksi Penyusup Data (Outlier)",
+                type: "quiz",
+                question: "Dari kumpulan data: 12, 14, 11, 15, 95. Angka manakah yang tergolong sebagai 'Penyusup' (Outlier / Pencilan) karena nilainya terlalu berbeda ekstrem?",
+                options: ["11", "12", "15", "95"],
+                correct: "95",
+                explanation: "Angka 95 bernilai sangat jauh dari kelompok data lainnya yang berfokus di kisaran belasan. Ini adalah Outlier!"
+            },
+            // Slide 32: Refleksi 1
+            {
+                section: "Refleksi",
+                title: "Evaluasi Pemahaman Detektif",
+                type: "custom",
+                render: () => `
+                    <div class="max-w-xl mx-auto text-center">
+                        <span class="text-4xl mb-3 block">🧐</span>
+                        <h3 class="text-xl font-bold text-slate-200 mb-4">Seberapa Paham Kamu dengan Misi Hari Ini?</h3>
+                        <p class="text-sm text-slate-400 mb-6">Tarik slider untuk menandai tingkat pemahamanmu terkait materi statistika dasar ini:</p>
+                        <div class="p-6 bg-slate-950/60 border border-slate-800 rounded-2xl mb-6">
+                            <input type="range" min="1" max="10" value="8" oninput="document.getElementById('reflectRating').innerText = this.value" class="w-full accent-emerald-400">
+                            <div class="mt-3 font-tech text-lg text-emerald-400">Nilai Kemantapan: <span id="reflectRating">8</span>/10</div>
+                        </div>
+                    </div>
+                `
+            },
+            // Slide 33: Refleksi 2
+            {
+                section: "Refleksi",
+                title: "Bagian Paling Menantang?",
+                type: "custom",
+                render: () => `
+                    <div class="max-w-xl mx-auto text-center">
+                        <h3 class="text-xl font-bold text-slate-200 mb-4">Bagian manakah yang menurutmu paling menantang?</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <button onclick="selectReflectOption(this)" class="p-4 bg-slate-800 hover:bg-slate-700 rounded-xl text-sm font-semibold border border-slate-700 text-slate-300">
+                                Perhitungan Mean Genap ⚖
+                            </button>
+                            <button onclick="selectReflectOption(this)" class="p-4 bg-slate-800 hover:bg-slate-700 rounded-xl text-sm font-semibold border border-slate-700 text-slate-300">
+                                Menemukan Median Urut 📐
+                            </button>
+                            <button onclick="selectReflectOption(this)" class="p-4 bg-slate-800 hover:bg-slate-700 rounded-xl text-sm font-semibold border border-slate-700 text-slate-300">
+                                Membaca Grafik Lingkaran 🍕
+                            </button>
+                            <button onclick="selectReflectOption(this)" class="p-4 bg-slate-800 hover:bg-slate-700 rounded-xl text-sm font-semibold border border-slate-700 text-slate-300">
+                                Mengenal Outlier 👾
+                            </button>
+                        </div>
+                    </div>
+                `
+            },
+            // Slide 34: Kesimpulan Akhir
+            {
+                section: "Kesimpulan & Penutup",
+                title: "Pemberian Pangkat Agen Data",
+                type: "custom",
+                render: () => `
+                    <div class="max-w-xl mx-auto text-center">
+                        <div class="w-24 h-24 mx-auto bg-gradient-to-tr from-amber-500 to-yellow-300 rounded-full flex items-center justify-center text-5xl filter drop-shadow-[0_0_15px_rgba(245,158,11,0.3)] animate-bounce mb-6">
+                            🏅
+                        </div>
+                        <h3 class="text-2xl font-bold font-tech text-slate-100 mb-2">Evaluasi Hasil Penyelidikan</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed mb-6">
+                            Kamu telah berhasil menuntaskan seluruh rantai pemahaman dasar statistika Kurikulum Merdeka! Pangkat kamu naik menjadi:
+                        </p>
+                        <span class="px-6 py-2.5 bg-amber-500/10 text-amber-400 border-2 border-amber-500/40 font-tech font-black rounded-full tracking-wider text-lg">
+                            AGEN DATA DETEKTIF KELAS I
+                        </span>
+                    </div>
+                `
+            },
+            // Slide 35: Kelulusan & Sertifikat
+            {
+                section: "Kesimpulan & Penutup",
+                title: "Piagam Penghargaan Resmi",
+                type: "custom",
+                render: () => `
+                    <div class="max-w-xl mx-auto text-center py-4">
+                        <div class="p-6 bg-slate-950/80 border-4 border-double border-amber-500/50 rounded-2xl relative">
+                            <span class="text-xs font-tech text-amber-400 block tracking-widest uppercase mb-2">SERTIFIKAT KELULUSAN DIGITAL</span>
+                            <h4 class="text-xl sm:text-2xl font-black text-slate-100 font-tech" id="certPlayerName">REKRUT ELIT</h4>
+                            <p class="text-xs text-slate-400 my-3">
+                                Dinyatakan kompeten dan menguasai pilar statistika Mean, Median, Modus, serta Visualisasi Data Kurikulum Merdeka tingkat dasar.
+                            </p>
+                            <span class="text-[10px] font-tech text-slate-500 block">KODE OTENTIKASI: SECURE-DATA-77X</span>
+                        </div>
+                        <button onclick="window.print()" class="mt-6 px-6 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold rounded-xl text-sm transition-all border border-slate-700">
+                            Cetak Sertifikat 🖨
+                        </button>
+                    </div>
+                `
+            }
+        ];
+
+        function selectAvatar(avatarId) {
+            playChiptune('click');
+            gameState.selectedAvatar = avatarId;
+            document.querySelectorAll('[id^="avatar"]').forEach(el => {
+                el.className = el.className.replace('border-sky-400 bg-sky-950/20', 'border-slate-800');
+            });
+            document.getElementById(avatarId).className = document.getElementById(avatarId).className.replace('border-slate-800', 'border-sky-400 bg-sky-950/20');
+        }
+
+        function checkWarmUp(btn, score, isCorrect) {
+            const fb = document.getElementById('warmUpFeedback');
+            if (isCorrect) {
+                playChiptune('success');
+                btn.className = btn.className.replace('bg-slate-800', 'bg-emerald-500 text-slate-950 font-bold');
+                fb.innerText = "Jawaban Tepat! Pola dikalikan 2 secara konsisten! 🚀";
+                fb.className = "mt-4 text-sm font-semibold h-6 text-emerald-400";
+            } else {
+                playChiptune('wrong');
+                btn.className = btn.className.replace('bg-slate-800', 'bg-rose-500 text-slate-950 font-bold');
+                fb.innerText = "Kurang tepat, ayo coba hitung ulang lagi!";
+                fb.className = "mt-4 text-sm font-semibold h-6 text-rose-400";
+            }
+        }
+
+        function checkWarmUp2(btn, isCorrect) {
+            const fb = document.getElementById('warmUp2Feedback');
+            if (isCorrect) {
+                playChiptune('success');
+                btn.className = btn.className.replace('bg-slate-800/60', 'bg-emerald-500 text-slate-950 font-bold');
+                fb.innerText = "Tepat sekali! Mengelompokkan data mempermudah pemahaman utama! 🌟";
+                fb.className = "mt-4 text-sm font-semibold h-6 text-emerald-400";
+            } else {
+                playChiptune('wrong');
+                btn.className = btn.className.replace('bg-slate-800/60', 'bg-rose-500 text-slate-950');
+                fb.innerText = "Kurang efisien. Ayo cari langkah klasifikasi yang pintar!";
+                fb.className = "mt-4 text-sm font-semibold h-6 text-rose-400";
+            }
+        }
+
+        function checkWarmUp3(btn, val, isCorrect) {
+            const fb = document.getElementById('warmUp3Feedback');
+            if (isCorrect) {
+                playChiptune('success');
+                btn.className = btn.className.replace('bg-slate-800', 'bg-emerald-500 text-slate-950 font-bold');
+                fb.innerText = "Luar biasa! Pembagianmu sangat cepat! ⚡";
+                fb.className = "mt-4 text-sm font-semibold h-6 text-emerald-400";
+            } else {
+                playChiptune('wrong');
+                btn.className = btn.className.replace('bg-slate-800', 'bg-rose-500 text-slate-950');
+                fb.innerText = "Hasilnya belum cocok, silakan hitung kembali.";
+                fb.className = "mt-4 text-sm font-semibold h-6 text-rose-400";
+            }
+        }
+
+        function selectReflectOption(btn) {
+            playChiptune('click');
+            document.querySelectorAll('[onclick="selectReflectOption(this)"]').forEach(el => {
+                el.className = el.className.replace('bg-emerald-500 text-slate-950 font-bold border-emerald-400', 'bg-slate-800 border-slate-700 text-slate-300');
+            });
+            btn.className = btn.className.replace('bg-slate-800 border-slate-700 text-slate-300', 'bg-emerald-500 text-slate-950 font-bold border-emerald-400');
+        }
+
+        const rawFreqData = ["A", "B", "A", "A", "B"];
+        function addToFrequency(type) {
+            playChiptune('click');
+            rawFreqData.push(type);
+            document.getElementById('freqRawData').innerText = `Data Mentah: ` + JSON.stringify(rawFreqData);
+            
+            const countA = rawFreqData.filter(x => x === 'A').length;
+            const countB = rawFreqData.filter(x => x === 'B').length;
+            
+            document.getElementById('freqCountA').innerText = countA;
+            document.getElementById('freqCountB').innerText = countB;
+        }
+
+        function updateMeanSandbox(index, value) {
+            gameState.sandboxMeanData[index] = parseInt(value);
+            
+            // Re-render visual bar sizes
+            document.getElementById('meanBar0').style.height = `${gameState.sandboxMeanData[0] * 10}%`;
+            document.getElementById('meanBar1').style.height = `${gameState.sandboxMeanData[1] * 10}%`;
+            document.getElementById('meanBar2').style.height = `${gameState.sandboxMeanData[2] * 10}%`;
+            
+            // Recalculate mean value
+            const sum = gameState.sandboxMeanData[0] + gameState.sandboxMeanData[1] + gameState.sandboxMeanData[2];
+            const avg = (sum / 3).toFixed(1);
+            
+            document.getElementById('meanResultText').innerText = avg;
+            document.getElementById('meanLine').style.bottom = `${avg * 10}%`;
+        }
+
+        function renderMedianSortingWidget() {
+            const container = document.getElementById('medianNumberBlocks');
+            if(!container) return;
+            container.innerHTML = '';
+            gameState.medianSortingData.forEach((val, i) => {
+                container.innerHTML += `
+                    <div id="medBlock_${i}" class="w-14 h-14 rounded-2xl bg-slate-800 border-2 border-slate-700 flex items-center justify-center font-tech text-lg text-emerald-400 transition-all duration-300">
+                        ${val}
+                    </div>
+                `;
+            });
+        }
+
+        function sortMedianBlocks() {
+            playChiptune('success');
+            const sorted = [...gameState.medianSortingData].sort((a,b) => a-b);
+            const container = document.getElementById('medianNumberBlocks');
+            container.innerHTML = '';
+            sorted.forEach((val, i) => {
+                const isMiddle = i === 2; // Exact middle for 5 elements
+                const borderClass = isMiddle ? 'border-amber-400 bg-amber-950/40 text-amber-400' : 'border-slate-700 bg-slate-800 text-slate-500';
+                container.innerHTML += `
+                    <div class="w-14 h-14 rounded-2xl border-2 ${borderClass} flex items-center justify-center font-tech text-lg transition-all duration-500">
+                        ${val}
+                    </div>
+                `;
+            });
+            document.getElementById('medianExplanationText').innerText = "Angka diurutkan! Nilai tengah (Median) adalah " + sorted[2];
+        }
+
+        function resetMedianBlocks() {
+            playChiptune('click');
+            renderMedianSortingWidget();
+            document.getElementById('medianExplanationText').innerText = "";
+        }
+
+        function voteGame(gameKey) {
+            playChiptune('success');
+            gameState.votedGames[gameKey]++;
+            document.getElementById(`voteCount${gameKey}`).innerText = gameState.votedGames[gameKey];
+            
+            // Recalculate which is the Modus
+            let winner = 'Minecraft';
+            let maxVote = gameState.votedGames.Minecraft;
+            
+            if(gameState.votedGames.Valorant > maxVote) {
+                winner = 'Valorant';
+                maxVote = gameState.votedGames.Valorant;
+            }
+            if(gameState.votedGames.MobileLegends > maxVote) {
+                winner = 'Mobile Legends';
+                maxVote = gameState.votedGames.MobileLegends;
+            }
+            
+            document.getElementById('modusWinnerGame').innerText = winner.toUpperCase();
+        }
+
+        function checkQuizAnswer(selectedOption, optBtn) {
+            const slide = slides[gameState.currentSlide];
+            const correctOption = slide.correct;
+            
+            // Locate or create the explanation container
+            let explanationEl = document.getElementById('quizExplanation');
+            if(!explanationEl) {
+                explanationEl = document.createElement('div');
+                explanationEl.id = "quizExplanation";
+                document.getElementById('slideContent').appendChild(explanationEl);
+            }
+            
+            if (selectedOption === correctOption) {
+                playChiptune('success');
+                optBtn.className = "w-full text-left p-4 rounded-xl font-bold bg-emerald-500 text-slate-950 transition-all flex justify-between items-center";
+                optBtn.innerHTML += `<span>✔</span>`;
+                explanationEl.className = "mt-6 p-4 rounded-xl bg-emerald-950/40 border border-emerald-500/20 text-xs sm:text-sm text-emerald-300 fade-in";
+                explanationEl.innerHTML = `<strong>Jawaban Benar!</strong> ${slide.explanation}`;
+                
+                // Track score if this slide hasn't been answered correctly yet
+                if (!gameState.statsQuizAnswers[gameState.currentSlide]) {
+                    gameState.statsQuizAnswers[gameState.currentSlide] = true;
+                    gameState.score += 10;
+                }
+            } else {
+                playChiptune('wrong');
+                optBtn.disabled = true;
+                optBtn.className = "w-full text-left p-4 rounded-xl bg-rose-950/20 border border-rose-900/40 text-rose-400 transition-all flex justify-between items-center opacity-60";
+                optBtn.innerHTML += `<span>✖ Try Again</span>`;
+                explanationEl.className = "mt-6 p-4 rounded-xl bg-rose-950/40 border border-rose-500/20 text-xs sm:text-sm text-rose-300 fade-in";
+                explanationEl.innerHTML = `<strong>Salah!</strong> Jangan menyerah, buang pilihan ini dan coba tebak opsi lainnya!`;
+            }
+        }
+
+        function renderCurrentSlide() {
+            const slide = slides[gameState.currentSlide];
+            const container = document.getElementById('slideContent');
+            
+            // Standard update fields
+            document.getElementById('currentSlideNumber').innerText = gameState.currentSlide + 1;
+            const progressPercentage = ((gameState.currentSlide + 1) / gameState.totalSlides) * 100;
+            document.getElementById('progressBar').style.width = `${progressPercentage}%`;
+            
+            // Adjust footer badge rank based on slide progress
+            let currentRank = "REKRUT BARU";
+            if(gameState.currentSlide > 10) currentRank = "DEKTETIF INTERMEDIATE";
+            if(gameState.currentSlide > 24) currentRank = "DATA MASTERMIND";
+            document.getElementById('agentRank').innerText = currentRank;
+            
+            if(gameState.currentSlide > 0) {
+                document.getElementById('badgeDisplay').classList.remove('hidden');
+            } else {
+                document.getElementById('badgeDisplay').classList.add('hidden');
+            }
+
+            // Disable/Enable navigation button limits
+            document.getElementById('prevBtn').disabled = gameState.currentSlide === 0;
+            
+            if (slide.type === "quiz") {
+                container.innerHTML = `
+                    <div class="max-w-2xl mx-auto">
+                        <span class="text-xs font-tech text-sky-400 uppercase tracking-widest bg-sky-950/50 px-3 py-1 rounded-full border border-sky-500/20">${slide.section}</span>
+                        <h2 class="text-2xl font-bold font-tech text-slate-100 mt-3 mb-6">${slide.title}</h2>
+                        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-6 bg-slate-950/40 p-5 rounded-2xl border border-slate-800">${slide.question}</p>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="quizOptionsGrid">
+                            ${slide.options.map(opt => `
+                                <button onclick="checkQuizAnswer('${opt}', this)" class="w-full text-left p-4 bg-slate-800/50 hover:bg-slate-800 border border-slate-700/80 rounded-xl font-semibold text-slate-200 transition-all active:scale-98">
+                                    ${opt}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Execute standard html template generator function
+                container.innerHTML = `
+                    <div class="max-w-3xl mx-auto">
+                        <span class="text-xs font-tech text-sky-400 uppercase tracking-widest bg-sky-950/50 px-3 py-1 rounded-full border border-sky-500/20">${slide.section}</span>
+                        <h2 class="text-2xl font-bold font-tech text-slate-100 mt-3 mb-6">${slide.title}</h2>
+                        ${slide.render()}
+                    </div>
+                `;
+            }
+
+            // Trigger post-rendering steps for specific simulation slides
+            if (gameState.currentSlide === 5) {
+                // Setup Warm-up 3 formula
+                const expr = "Pecahan Rata: \\frac{10 + 20 + 15}{3} = \\dots?";
+                katex.render(expr, document.getElementById('warmUpMathEq'), { throwOnError: false });
+            }
+            else if (gameState.currentSlide === 14) {
+                // Render pizza diagram description
+                katex.render("\\text{Total Porsi} = 360^\\circ \\quad \\text{atau} \\quad 100\\%", document.getElementById('katexCircle'), { throwOnError: false });
+            }
+            else if (gameState.currentSlide === 16) {
+                updateMeanSandbox(0, gameState.sandboxMeanData[0]);
+            }
+            else if (gameState.currentSlide === 17) {
+                renderMedianSortingWidget();
+            }
+            else if (gameState.currentSlide === 19) {
+                // Formulas Cheat-sheet
+                katex.render("\\text{Mean} = \\frac{\\sum \\text{Nilai Data}}{\\text{Banyak Data}}", document.getElementById('katexFormulaMean'), { throwOnError: false });
+                katex.render("\\text{Median} = X_{\\frac{n+1}{2}}", document.getElementById('katexFormulaMedian'), { throwOnError: false });
+            }
+            else if (gameState.currentSlide === 20) {
+                // Example 1
+                katex.render("\\sum X = 10 + 20 + 15 + 25 + 30 = 100", document.getElementById('katexEx1Step1'), { throwOnError: false });
+                katex.render("\\text{Mean} = \\frac{100}{5} = 20", document.getElementById('katexEx1Step2'), { throwOnError: false });
+            }
+            else if (gameState.currentSlide === 22) {
+                // Example 3
+                katex.render("\\text{Median} = \\frac{4 + 5}{2} = 4.5", document.getElementById('katexEx3Step'), { throwOnError: false });
+            }
+            else if (gameState.currentSlide === 34) {
+                // Set certified player name dynamically
+                const nameEl = document.getElementById('certPlayerName');
+                if(nameEl) nameEl.innerText = gameState.playerName.toUpperCase();
+            }
+        }
+
+        function nextSlide() {
+            if (gameState.currentSlide < gameState.totalSlides - 1) {
+                playChiptune('click');
+                gameState.currentSlide++;
+                renderCurrentSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (gameState.currentSlide > 0) {
+                playChiptune('click');
+                gameState.currentSlide--;
+                renderCurrentSlide();
+            }
+        }
+
+        window.onload = function() {
+            renderCurrentSlide();
+        };
+    </script>
+</body>
+</html>
