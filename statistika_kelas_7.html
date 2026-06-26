@@ -1,0 +1,2401 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Statistika — Kelas 6 → 7 | Kurikulum Merdeka</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+<style>
+:root{
+  --bg:#0d0f1a;
+  --surface:#141726;
+  --card:#1c2035;
+  --card2:#222540;
+  --accent:#00e5ff;
+  --accent2:#7c3aed;
+  --accent3:#f59e0b;
+  --accent4:#10b981;
+  --accent5:#f43f5e;
+  --text:#e8eaf6;
+  --muted:#8892b0;
+  --white:#ffffff;
+  --grad1:linear-gradient(135deg,#00e5ff22,#7c3aed22);
+  --radius:18px;
+  --radius-sm:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Space Grotesk',sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+/* ===== NAV ===== */
+#nav-bar{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  background:rgba(13,15,26,.92);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(0,229,255,.15);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;height:60px;
+}
+#nav-title{font-family:'Nunito',sans-serif;font-weight:900;font-size:1rem;color:var(--accent);letter-spacing:.5px}
+#nav-progress-wrap{display:flex;align-items:center;gap:12px}
+#nav-page-label{font-size:.8rem;color:var(--muted)}
+#nav-bar .btn-nav{
+  background:rgba(0,229,255,.12);border:1px solid rgba(0,229,255,.3);
+  color:var(--accent);border-radius:8px;padding:6px 14px;
+  cursor:pointer;font-size:.85rem;font-family:inherit;transition:.2s;
+}
+#nav-bar .btn-nav:hover{background:rgba(0,229,255,.25)}
+#progress-bar-wrap{width:120px;height:6px;background:#2a2d44;border-radius:3px;overflow:hidden}
+#progress-bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:2.86%;transition:.4s}
+
+/* ===== PAGES ===== */
+#app{padding-top:60px;width:100%;min-height:100vh}
+.page{
+  display:none;
+  min-height:calc(100vh - 60px);
+  width:100%;max-width:900px;
+  margin:0 auto;
+  padding:40px 24px 120px;
+  animation:fadeUp .5s ease;
+}
+.page.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== BOTTOM NAV ===== */
+#bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:998;
+  background:rgba(13,15,26,.95);
+  border-top:1px solid rgba(124,58,237,.2);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 24px;
+}
+.btn-main{
+  background:linear-gradient(135deg,var(--accent2),var(--accent));
+  border:none;color:#000;font-weight:700;font-family:inherit;
+  padding:12px 28px;border-radius:12px;cursor:pointer;
+  font-size:1rem;transition:.2s;letter-spacing:.3px;
+}
+.btn-main:hover{transform:scale(1.04);opacity:.9}
+.btn-sec{
+  background:transparent;border:1px solid rgba(0,229,255,.3);
+  color:var(--accent);padding:12px 22px;border-radius:12px;
+  cursor:pointer;font-size:.95rem;font-family:inherit;transition:.2s;
+}
+.btn-sec:hover{background:rgba(0,229,255,.1)}
+#page-counter{font-size:.85rem;color:var(--muted)}
+
+/* ===== TYPOGRAPHY ===== */
+.page-tag{
+  display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;padding:4px 12px;border-radius:20px;
+  background:rgba(0,229,255,.12);color:var(--accent);
+  border:1px solid rgba(0,229,255,.3);margin-bottom:16px;
+}
+.page-tag.purple{background:rgba(124,58,237,.18);color:#a78bfa;border-color:rgba(124,58,237,.4)}
+.page-tag.amber{background:rgba(245,158,11,.15);color:#fbbf24;border-color:rgba(245,158,11,.3)}
+.page-tag.green{background:rgba(16,185,129,.15);color:#34d399;border-color:rgba(16,185,129,.3)}
+.page-tag.rose{background:rgba(244,63,94,.15);color:#fb7185;border-color:rgba(244,63,94,.3)}
+h1{font-family:'Nunito',sans-serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:900;line-height:1.15;color:var(--white)}
+h2{font-family:'Nunito',sans-serif;font-size:clamp(1.3rem,3.5vw,2rem);font-weight:800;color:var(--white);margin-bottom:12px}
+h3{font-family:'Nunito',sans-serif;font-size:1.15rem;font-weight:700;color:var(--accent);margin-bottom:8px}
+p{line-height:1.75;color:var(--text);font-size:1rem;margin-bottom:14px}
+
+/* ===== CARDS ===== */
+.card{
+  background:var(--card);border:1px solid rgba(255,255,255,.06);
+  border-radius:var(--radius);padding:24px;margin-bottom:20px;
+}
+.card.glow{border-color:rgba(0,229,255,.2);box-shadow:0 0 30px rgba(0,229,255,.06)}
+.card.purple-glow{border-color:rgba(124,58,237,.3);box-shadow:0 0 30px rgba(124,58,237,.08)}
+.card.amber-glow{border-color:rgba(245,158,11,.3);box-shadow:0 0 30px rgba(245,158,11,.07)}
+.card.green-glow{border-color:rgba(16,185,129,.3);box-shadow:0 0 30px rgba(16,185,129,.07)}
+.card.rose-glow{border-color:rgba(244,63,94,.3);box-shadow:0 0 30px rgba(244,63,94,.07)}
+
+/* ===== HERO ===== */
+.hero-wrap{
+  display:flex;flex-direction:column;align-items:center;
+  text-align:center;padding:20px 0 40px;
+}
+.hero-accent{
+  font-size:clamp(1.1rem,3vw,1.4rem);color:var(--muted);
+  margin-top:10px;margin-bottom:28px;
+}
+.hero-badges{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+.badge{
+  padding:6px 16px;border-radius:20px;font-size:.82rem;font-weight:600;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  color:var(--muted);
+}
+/* ===== SVG ILLUSTRATION STYLES ===== */
+.svg-wrap{display:flex;justify-content:center;margin:20px 0;filter:drop-shadow(0 8px 32px rgba(0,229,255,.18))}
+/* ===== GRID ===== */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+@media(max-width:600px){.grid-2,.grid-3{grid-template-columns:1fr}}
+/* ===== STAT TABLE ===== */
+.stat-table{width:100%;border-collapse:collapse;font-size:.95rem;margin:12px 0}
+.stat-table th{background:rgba(0,229,255,.12);color:var(--accent);font-weight:700;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(0,229,255,.2)}
+.stat-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text)}
+.stat-table tr:hover td{background:rgba(255,255,255,.03)}
+/* ===== HIGHLIGHT BOX ===== */
+.highlight{
+  background:linear-gradient(135deg,rgba(0,229,255,.08),rgba(124,58,237,.08));
+  border-left:4px solid var(--accent);
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  padding:16px 20px;margin:16px 0;
+}
+.formula-box{
+  background:rgba(124,58,237,.1);
+  border:1px solid rgba(124,58,237,.4);
+  border-radius:var(--radius-sm);
+  padding:20px;margin:16px 0;text-align:center;
+}
+/* ===== QUIZ / LATIHAN ===== */
+.quiz-q{
+  background:var(--card);border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--radius-sm);padding:18px;margin-bottom:14px;
+}
+.quiz-q p{margin-bottom:12px}
+.options-wrap{display:flex;flex-direction:column;gap:8px}
+.opt-btn{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:8px;padding:11px 16px;
+  color:var(--text);cursor:pointer;font-family:inherit;
+  font-size:.95rem;text-align:left;transition:.2s;
+}
+.opt-btn:hover{background:rgba(0,229,255,.1);border-color:rgba(0,229,255,.3);color:var(--accent)}
+.opt-btn.correct{background:rgba(16,185,129,.15);border-color:#10b981;color:#34d399}
+.opt-btn.wrong{background:rgba(244,63,94,.12);border-color:#f43f5e;color:#fb7185}
+.feedback{margin-top:10px;font-size:.9rem;font-weight:600;display:none;padding:8px 14px;border-radius:6px}
+.feedback.ok{background:rgba(16,185,129,.15);color:#34d399;display:block}
+.feedback.no{background:rgba(244,63,94,.12);color:#fb7185;display:block}
+/* ===== STEP BOX ===== */
+.step-list{display:flex;flex-direction:column;gap:12px;margin:14px 0}
+.step{display:flex;gap:14px;align-items:flex-start}
+.step-num{
+  min-width:32px;height:32px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent2),var(--accent));
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:.85rem;color:#000;flex-shrink:0;
+}
+.step-text{line-height:1.7;color:var(--text)}
+/* ===== TIPS ===== */
+.tip-box{
+  background:rgba(245,158,11,.08);
+  border:1px solid rgba(245,158,11,.25);
+  border-radius:var(--radius-sm);padding:14px 18px;margin:14px 0;
+}
+.tip-box::before{content:"💡 Tips: ";font-weight:700;color:#fbbf24}
+/* ===== REFLEKSI ===== */
+.reflect-card{
+  background:var(--card2);border:1px solid rgba(124,58,237,.3);
+  border-radius:var(--radius);padding:22px;margin-bottom:16px;
+}
+.emoji-big{font-size:2.5rem;margin-bottom:10px}
+/* ===== CHART BAR ===== */
+.bar-chart-wrap{margin:18px 0}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.bar-label{width:80px;font-size:.85rem;color:var(--muted);text-align:right;flex-shrink:0}
+.bar-track{flex:1;background:rgba(255,255,255,.06);border-radius:4px;height:28px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font-size:.8rem;font-weight:700;color:#000;transition:width 1.2s ease}
+.bar-val{width:36px;font-size:.85rem;color:var(--accent);font-weight:700;flex-shrink:0}
+/* ===== SCOREBOARD ===== */
+#scoreboard{
+  position:fixed;top:70px;right:16px;z-index:997;
+  background:rgba(20,23,38,.95);border:1px solid rgba(0,229,255,.2);
+  border-radius:12px;padding:10px 16px;font-size:.82rem;
+  display:none;
+}
+#scoreboard span{color:var(--accent);font-weight:700}
+/* ===== MISC ===== */
+.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(0,229,255,.2),transparent);margin:28px 0}
+.text-accent{color:var(--accent)}
+.text-amber{color:#fbbf24}
+.text-green{color:#34d399}
+.text-rose{color:#fb7185}
+.text-muted{color:var(--muted)}
+.bold{font-weight:700}
+ul.nice-list{padding-left:0;list-style:none;margin:10px 0}
+ul.nice-list li{padding:5px 0 5px 24px;position:relative;color:var(--text);line-height:1.65}
+ul.nice-list li::before{content:"→";position:absolute;left:0;color:var(--accent);font-weight:700}
+.mini-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin:14px 0}
+.mini-card{background:var(--card2);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:14px;text-align:center}
+.mini-card .big{font-size:1.6rem;font-weight:900;font-family:'Nunito',sans-serif;color:var(--accent)}
+.mini-card .lbl{font-size:.75rem;color:var(--muted);margin-top:4px}
+/* ===== INPUT ===== */
+.text-input{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);
+  border-radius:8px;padding:10px 14px;color:var(--text);
+  font-family:inherit;font-size:.95rem;width:100%;margin-top:8px;
+}
+.text-input:focus{outline:none;border-color:var(--accent)}
+.check-btn{
+  background:linear-gradient(135deg,var(--accent2),var(--accent));
+  border:none;color:#000;font-weight:700;font-family:inherit;
+  padding:9px 20px;border-radius:8px;cursor:pointer;font-size:.9rem;
+  margin-top:10px;transition:.2s;
+}
+.check-btn:hover{opacity:.85}
+/* ===== ICON BADGE ===== */
+.icon-badge{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:.95rem}
+.icon-circle{
+  width:38px;height:38px;border-radius:50%;display:inline-flex;
+  align-items:center;justify-content:center;font-size:1.1rem;
+  flex-shrink:0;
+}
+.ic-blue{background:rgba(0,229,255,.15);border:1px solid rgba(0,229,255,.3)}
+.ic-purple{background:rgba(124,58,237,.18);border:1px solid rgba(124,58,237,.4)}
+.ic-amber{background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.3)}
+.ic-green{background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3)}
+.ic-rose{background:rgba(244,63,94,.15);border:1px solid rgba(244,63,94,.3)}
+/* DOTS for table data visual */
+.dot-line{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0}
+.dot{width:18px;height:18px;border-radius:50%;background:var(--accent);opacity:.7}
+.dot.v2{background:#7c3aed}
+.dot.v3{background:#f59e0b}
+.dot.v4{background:#10b981}
+/* PIECHART label */
+.pie-legend{display:flex;flex-direction:column;gap:8px;margin-left:16px}
+.pie-leg-item{display:flex;align-items:center;gap:8px;font-size:.9rem}
+.pie-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+/* responsive table */
+.table-wrap{overflow-x:auto}
+/* confetti placeholder */
+#confetti-wrap{position:fixed;top:0;left:0;right:0;height:0;z-index:9999;pointer-events:none;overflow:hidden}
+</style>
+</head>
+<body>
+
+<!-- Top Nav -->
+<nav id="nav-bar">
+  <div id="nav-title">📊 Statistika Kelas 7</div>
+  <div id="nav-progress-wrap">
+    <div id="nav-page-label">1 / 35</div>
+    <div id="progress-bar-wrap"><div id="progress-bar"></div></div>
+  </div>
+</nav>
+
+<!-- Scoreboard -->
+<div id="scoreboard">Skor: <span id="score-val">0</span></div>
+<div id="confetti-wrap"></div>
+
+<!-- Main App -->
+<div id="app">
+
+<!-- ===== PAGE 1: COVER / JUDUL ===== -->
+<div class="page active" id="p1">
+  <div class="hero-wrap">
+    <!-- 3D SVG ILLUSTRATION: Space/Data theme -->
+    <svg width="260" height="220" viewBox="0 0 260 220" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="glo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#00e5ff" stop-opacity=".3"/>
+          <stop offset="100%" stop-color="#7c3aed" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="bar1g" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00e5ff"/><stop offset="100%" stop-color="#7c3aed"/></linearGradient>
+        <linearGradient id="bar2g" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#f43f5e"/></linearGradient>
+        <linearGradient id="bar3g" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#10b981"/></linearGradient>
+        <linearGradient id="bar4g" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#10b981"/><stop offset="100%" stop-color="#00e5ff"/></linearGradient>
+        <!-- 3D effect shadows -->
+        <filter id="shadow3d"><feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#00e5ff" flood-opacity=".3"/></filter>
+        <filter id="shadow2"><feDropShadow dx="2" dy="4" stdDeviation="3" flood-color="#7c3aed" flood-opacity=".4"/></filter>
+      </defs>
+      <!-- glow background -->
+      <ellipse cx="130" cy="160" rx="100" ry="40" fill="url(#glo)"/>
+      <!-- 3D isometric base platform -->
+      <g transform="translate(30,140)">
+        <!-- platform top -->
+        <ellipse cx="100" cy="0" rx="95" ry="22" fill="#1c2035" stroke="#00e5ff" stroke-width="1" stroke-opacity=".4"/>
+        <!-- platform front left -->
+        <path d="M 5,0 L 5,16 L 100,27 L 100,11 Z" fill="#141726" stroke="#7c3aed" stroke-width=".5" stroke-opacity=".5"/>
+        <!-- platform front right -->
+        <path d="M 100,11 L 100,27 L 195,16 L 195,0 Z" fill="#0d0f1a" stroke="#7c3aed" stroke-width=".5" stroke-opacity=".5"/>
+      </g>
+      <!-- 3D Bars (isometric) -->
+      <!-- Bar 1 -->
+      <g transform="translate(52,80)" filter="url(#shadow3d)">
+        <rect x="0" y="0" width="28" height="75" rx="4" fill="url(#bar1g)" opacity=".9"/>
+        <!-- top face 3D -->
+        <path d="M 0,0 L 14,-8 L 42,-8 L 28,0 Z" fill="#00e5ff" opacity=".7"/>
+        <!-- right face 3D -->
+        <path d="M 28,0 L 42,-8 L 42,67 L 28,75 Z" fill="#005f77" opacity=".8"/>
+      </g>
+      <!-- Bar 2 -->
+      <g transform="translate(92,100)" filter="url(#shadow2)">
+        <rect x="0" y="0" width="28" height="55" rx="4" fill="url(#bar2g)" opacity=".9"/>
+        <path d="M 0,0 L 14,-8 L 42,-8 L 28,0 Z" fill="#a78bfa" opacity=".7"/>
+        <path d="M 28,0 L 42,-8 L 42,47 L 28,55 Z" fill="#3b1f6e" opacity=".8"/>
+      </g>
+      <!-- Bar 3 -->
+      <g transform="translate(132,60)">
+        <rect x="0" y="0" width="28" height="95" rx="4" fill="url(#bar3g)" opacity=".9"/>
+        <path d="M 0,0 L 14,-8 L 42,-8 L 28,0 Z" fill="#fbbf24" opacity=".7"/>
+        <path d="M 28,0 L 42,-8 L 42,87 L 28,95 Z" fill="#7c4a00" opacity=".8"/>
+      </g>
+      <!-- Bar 4 -->
+      <g transform="translate(172,90)">
+        <rect x="0" y="0" width="28" height="65" rx="4" fill="url(#bar4g)" opacity=".9"/>
+        <path d="M 0,0 L 14,-8 L 42,-8 L 28,0 Z" fill="#34d399" opacity=".7"/>
+        <path d="M 28,0 L 42,-8 L 42,57 L 28,65 Z" fill="#065f46" opacity=".8"/>
+      </g>
+      <!-- Stars/particles -->
+      <circle cx="20" cy="30" r="2" fill="#00e5ff" opacity=".6"><animate attributeName="opacity" values=".6;1;.6" dur="2s" repeatCount="indefinite"/></circle>
+      <circle cx="240" cy="50" r="1.5" fill="#a78bfa" opacity=".7"><animate attributeName="opacity" values=".7;1;.4;.7" dur="3s" repeatCount="indefinite"/></circle>
+      <circle cx="15" cy="100" r="1.5" fill="#fbbf24" opacity=".5"><animate attributeName="opacity" values=".5;1;.5" dur="2.5s" repeatCount="indefinite"/></circle>
+      <circle cx="250" cy="120" r="2" fill="#34d399" opacity=".6"><animate attributeName="opacity" values=".6;.2;.6" dur="1.8s" repeatCount="indefinite"/></circle>
+      <!-- Floating data label -->
+      <g transform="translate(100,20)">
+        <rect x="0" y="0" width="70" height="24" rx="6" fill="rgba(0,229,255,.12)" stroke="#00e5ff" stroke-width=".8" stroke-opacity=".5"/>
+        <text x="35" y="16" text-anchor="middle" fill="#00e5ff" font-size="11" font-family="Space Grotesk" font-weight="600">📊 DATA</text>
+      </g>
+      <!-- trend line -->
+      <polyline points="66,155 106,136 146,116 186,127" stroke="#f59e0b" stroke-width="2" fill="none" stroke-dasharray="4,3" opacity=".8"/>
+      <circle cx="66" cy="155" r="4" fill="#f59e0b" opacity=".9"/>
+      <circle cx="106" cy="136" r="4" fill="#f59e0b" opacity=".9"/>
+      <circle cx="146" cy="116" r="4" fill="#f59e0b" opacity=".9"/>
+      <circle cx="186" cy="127" r="4" fill="#f59e0b" opacity=".9"/>
+    </svg>
+
+    <div class="page-tag">Kurikulum Merdeka · 2025</div>
+    <h1>Statistika<br><span style="background:linear-gradient(90deg,#00e5ff,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Dunia Data</span></h1>
+    <p class="hero-accent">Kelas 6 → 7 &nbsp;|&nbsp; Fast Learner Edition</p>
+    <div class="hero-badges">
+      <span class="badge">📘 35 Halaman</span>
+      <span class="badge">🎯 Latihan Interaktif</span>
+      <span class="badge">📊 Tabel & Grafik</span>
+      <span class="badge">🧠 Berbasis Data Nyata</span>
+      <span class="badge">⚡ Kurikulum Merdeka</span>
+    </div>
+    <p style="color:var(--muted);font-size:.95rem">Siap menjadi <span class="text-accent bold">penguasa data</span>? Mulai petualangan statistikamu di sini! 🚀</p>
+  </div>
+</div>
+
+<!-- ===== PAGE 2: TUJUAN PEMBELAJARAN ===== -->
+<div class="page" id="p2">
+  <div class="page-tag purple">Tujuan Pembelajaran</div>
+  <h2>Kamu Akan Bisa Apa?</h2>
+  <p>Di modul ini, kamu akan menjadi ahli statistika level 7! Ini yang bakal kamu kuasai:</p>
+  <!-- 3D SVG: target/rocket -->
+  <div class="svg-wrap">
+    <svg width="220" height="160" viewBox="0 0 220 160" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="targetGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#f43f5e" stop-opacity=".9"/>
+          <stop offset="40%" stop-color="#f43f5e" stop-opacity=".2"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </radialGradient>
+        <filter id="glow2"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <!-- target circles -->
+      <circle cx="110" cy="85" r="70" fill="none" stroke="rgba(244,63,94,.15)" stroke-width="2"/>
+      <circle cx="110" cy="85" r="52" fill="none" stroke="rgba(244,63,94,.25)" stroke-width="2"/>
+      <circle cx="110" cy="85" r="35" fill="none" stroke="rgba(244,63,94,.4)" stroke-width="2"/>
+      <circle cx="110" cy="85" r="18" fill="rgba(244,63,94,.25)" stroke="#f43f5e" stroke-width="2"/>
+      <circle cx="110" cy="85" r="6" fill="#f43f5e"/>
+      <!-- rocket -->
+      <g transform="translate(148,22) rotate(45)">
+        <path d="M 0,-22 C 8,-22 14,-10 14,0 L 0,12 L -14,0 C -14,-10 -8,-22 0,-22 Z" fill="#00e5ff" filter="url(#glow2)"/>
+        <path d="M -14,0 L -22,14 L -8,10 Z" fill="#7c3aed"/>
+        <path d="M 14,0 L 22,14 L 8,10 Z" fill="#7c3aed"/>
+        <circle cx="0" cy="-8" r="4" fill="#0d0f1a"/>
+        <path d="M -4,12 L 0,24 L 4,12 Z" fill="#f59e0b" opacity=".8"/>
+      </g>
+      <!-- text labels -->
+      <text x="10" y="32" fill="rgba(0,229,255,.6)" font-size="9" font-family="Space Grotesk">📊 Data</text>
+      <text x="10" y="120" fill="rgba(124,58,237,.7)" font-size="9" font-family="Space Grotesk">📈 Grafik</text>
+      <text x="170" y="130" fill="rgba(16,185,129,.7)" font-size="9" font-family="Space Grotesk">🎯 Ukuran</text>
+    </svg>
+  </div>
+
+  <div class="grid-2">
+    <div class="card glow">
+      <span class="icon-circle ic-blue" style="margin-bottom:10px">📋</span>
+      <h3>Data & Tabel</h3>
+      <p style="font-size:.9rem">Membaca, mengumpulkan, dan menyusun data dalam tabel frekuensi dengan tepat.</p>
+    </div>
+    <div class="card purple-glow">
+      <span class="icon-circle ic-purple" style="margin-bottom:10px">📊</span>
+      <h3>Penyajian Data</h3>
+      <p style="font-size:.9rem">Membuat diagram batang, garis, dan lingkaran dari data mentah.</p>
+    </div>
+    <div class="card amber-glow">
+      <span class="icon-circle ic-amber" style="margin-bottom:10px">🧮</span>
+      <h3>Ukuran Pemusatan</h3>
+      <p style="font-size:.9rem">Menghitung mean, median, dan modus dari data tunggal dan data berkelompok.</p>
+    </div>
+    <div class="card green-glow">
+      <span class="icon-circle ic-green" style="margin-bottom:10px">🌍</span>
+      <h3>Masalah Nyata</h3>
+      <p style="font-size:.9rem">Memecahkan masalah sehari-hari menggunakan konsep statistika.</p>
+    </div>
+  </div>
+  <div class="highlight">
+    <strong>Alur belajar kamu:</strong> Warm-Up → Koneksi Nyata → Materi → Contoh → Latihan → Refleksi → Kesimpulan
+  </div>
+</div>
+
+<!-- ===== PAGE 3: WARM-UP 1 ===== -->
+<div class="page" id="p3">
+  <div class="page-tag amber">Warm-Up</div>
+  <h2>Pemanasan Otak! 🔥</h2>
+  <p>Sebelum masuk materi, jawab kuis kilat ini. Jangan pikir panjang — cukup feeling kamu!</p>
+
+  <div class="card amber-glow">
+    <h3>⚡ Kuis 1 menit</h3>
+    <p>Di kelasmu ada 5 teman dengan nilai ulangan: <strong>70, 85, 90, 75, 80</strong></p>
+    <p>Menurutmu, nilai <strong>rata-rata</strong> kelas kira-kira berapa?</p>
+    <div class="options-wrap" id="wu1-opts">
+      <button class="opt-btn" onclick="checkWU('wu1',this,'wrong','wu1-fb')">A. 70</button>
+      <button class="opt-btn" onclick="checkWU('wu1',this,'wrong','wu1-fb')">B. 78</button>
+      <button class="opt-btn" onclick="checkWU('wu1',this,'correct','wu1-fb')">C. 80</button>
+      <button class="opt-btn" onclick="checkWU('wu1',this,'wrong','wu1-fb')">D. 90</button>
+    </div>
+    <div class="feedback" id="wu1-fb"></div>
+  </div>
+
+  <div class="card glow">
+    <h3>🔢 Quick Sort!</h3>
+    <p>Urutkanlah data ini dari terkecil ke terbesar:</p>
+    <p><strong>15, 8, 22, 4, 17, 11</strong></p>
+    <input class="text-input" id="sort-ans" placeholder="Tuliskan jawabanmu di sini..." type="text"/>
+    <button class="check-btn" onclick="checkSort()">Cek Jawaban</button>
+    <div class="feedback" id="sort-fb"></div>
+  </div>
+
+  <div class="tip-box">
+    Statistika itu ilmu yang ngolah <strong>data</strong> jadi <strong>informasi bermakna</strong>. Seperti game — data mentah itu raw material, kita yang bikin jadi sesuatu!
+  </div>
+</div>
+
+<!-- ===== PAGE 4: REAL-WORLD CONNECTION ===== -->
+<div class="page" id="p4">
+  <div class="page-tag green">Real-World Connection</div>
+  <h2>Statistika Ada di Mana-Mana! 🌍</h2>
+  <p>Serius, statistika bukan cuma soal pelajaran. Ini buktinya:</p>
+
+  <div class="svg-wrap">
+    <svg width="280" height="170" viewBox="0 0 280 170" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="phoneGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1c2035"/><stop offset="100%" stop-color="#0d0f1a"/></linearGradient>
+      </defs>
+      <!-- Phone 3D mockup -->
+      <rect x="80" y="10" width="120" height="150" rx="16" fill="url(#phoneGrad)" stroke="#00e5ff" stroke-width="1.5" stroke-opacity=".6"/>
+      <rect x="88" y="24" width="104" height="116" rx="6" fill="#0a0c18"/>
+      <!-- screen content: mini chart -->
+      <rect x="96" y="105" width="14" height="26" rx="3" fill="#00e5ff" opacity=".8"/>
+      <rect x="114" y="90" width="14" height="41" rx="3" fill="#7c3aed" opacity=".8"/>
+      <rect x="132" y="80" width="14" height="51" rx="3" fill="#f59e0b" opacity=".8"/>
+      <rect x="150" y="95" width="14" height="36" rx="3" fill="#10b981" opacity=".8"/>
+      <line x1="96" y1="132" x2="166" y2="132" stroke="#2a2d44" stroke-width="1"/>
+      <text x="140" y="46" text-anchor="middle" fill="#00e5ff" font-size="9" font-family="Space Grotesk" font-weight="600">📈 Spotify Stats</text>
+      <text x="140" y="60" text-anchor="middle" fill="#8892b0" font-size="7.5" font-family="Space Grotesk">Top Played This Week</text>
+      <!-- speaker -->
+      <rect x="120" y="14" width="40" height="4" rx="2" fill="#2a2d44"/>
+      <circle cx="170" cy="16" r="2" fill="#2a2d44"/>
+      <!-- floating labels -->
+      <g transform="translate(0,30)">
+        <rect x="0" y="0" width="72" height="22" rx="6" fill="rgba(0,229,255,.1)" stroke="rgba(0,229,255,.3)" stroke-width=".8"/>
+        <text x="36" y="15" text-anchor="middle" fill="#00e5ff" font-size="9" font-family="Space Grotesk">🎮 Game Rank</text>
+      </g>
+      <g transform="translate(205,25)">
+        <rect x="0" y="0" width="72" height="22" rx="6" fill="rgba(124,58,237,.1)" stroke="rgba(124,58,237,.3)" stroke-width=".8"/>
+        <text x="36" y="15" text-anchor="middle" fill="#a78bfa" font-size="9" font-family="Space Grotesk">⚽ Match Stats</text>
+      </g>
+      <g transform="translate(205,85)">
+        <rect x="0" y="0" width="72" height="22" rx="6" fill="rgba(16,185,129,.1)" stroke="rgba(16,185,129,.3)" stroke-width=".8"/>
+        <text x="36" y="15" text-anchor="middle" fill="#34d399" font-size="9" font-family="Space Grotesk">🛒 Harga Toko</text>
+      </g>
+      <g transform="translate(0,110)">
+        <rect x="0" y="0" width="72" height="22" rx="6" fill="rgba(245,158,11,.1)" stroke="rgba(245,158,11,.3)" stroke-width=".8"/>
+        <text x="36" y="15" text-anchor="middle" fill="#fbbf24" font-size="9" font-family="Space Grotesk">🌡️ Cuaca</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="emoji-big">🎮</div>
+      <h3>Gaming</h3>
+      <p style="font-size:.9rem">KDA ratio, win rate, damage per minute — semua itu statistik! Pro gamer baca data buat improve performa.</p>
+    </div>
+    <div class="card">
+      <div class="emoji-big">⚽</div>
+      <h3>Olahraga</h3>
+      <p style="font-size:.9rem">Gol per pertandingan, persentase umpan akurat, clean sheet — pelatih pakai statistik buat strategi.</p>
+    </div>
+    <div class="card">
+      <div class="emoji-big">📱</div>
+      <h3>Medsos</h3>
+      <p style="font-size:.9rem">Jumlah views, engagement rate, follower growth — kreator konten butuh statistik tiap hari.</p>
+    </div>
+    <div class="card">
+      <div class="emoji-big">🌦️</div>
+      <h3>Cuaca</h3>
+      <p style="font-size:.9rem">Prakiraan cuaca dibuat dari data ribuan titik pengukuran yang diolah dengan statistika.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE 5: APA ITU DATA? ===== -->
+<div class="page" id="p5">
+  <div class="page-tag">Materi 1</div>
+  <h2>Apa Itu Data? 📋</h2>
+  <p><strong class="text-accent">Data</strong> adalah kumpulan fakta, angka, atau keterangan yang dikumpulkan untuk diolah menjadi informasi.</p>
+
+  <div class="svg-wrap">
+    <svg width="300" height="140" viewBox="0 0 300 140" xmlns="http://www.w3.org/2000/svg">
+      <!-- Raw data blobs -->
+      <g>
+        <rect x="10" y="30" width="90" height="80" rx="12" fill="#1c2035" stroke="rgba(0,229,255,.3)" stroke-width="1"/>
+        <text x="55" y="55" text-anchor="middle" fill="#8892b0" font-size="10" font-family="Space Grotesk" font-weight="600">Data Mentah</text>
+        <text x="55" y="74" text-anchor="middle" fill="#e8eaf6" font-size="11" font-family="Space Grotesk">75, 80, 60</text>
+        <text x="55" y="90" text-anchor="middle" fill="#e8eaf6" font-size="11" font-family="Space Grotesk">90, 70, 85</text>
+        <text x="55" y="106" text-anchor="middle" fill="#e8eaf6" font-size="11" font-family="Space Grotesk">65, 88, 72</text>
+      </g>
+      <!-- Arrow -->
+      <g>
+        <path d="M 106,70 L 165,70" stroke="#00e5ff" stroke-width="2" marker-end="url(#arrow)"/>
+        <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 Z" fill="#00e5ff"/></marker></defs>
+        <text x="135" y="62" text-anchor="middle" fill="#8892b0" font-size="8" font-family="Space Grotesk">Diolah</text>
+      </g>
+      <!-- Processed info -->
+      <g>
+        <rect x="170" y="20" width="120" height="100" rx="12" fill="#1c2035" stroke="rgba(16,185,129,.4)" stroke-width="1"/>
+        <text x="230" y="48" text-anchor="middle" fill="#34d399" font-size="10" font-family="Space Grotesk" font-weight="700">Informasi</text>
+        <text x="230" y="68" text-anchor="middle" fill="#e8eaf6" font-size="10" font-family="Space Grotesk">Rata-rata: 76</text>
+        <text x="230" y="85" text-anchor="middle" fill="#e8eaf6" font-size="10" font-family="Space Grotesk">Nilai Tertinggi: 90</text>
+        <text x="230" y="102" text-anchor="middle" fill="#e8eaf6" font-size="10" font-family="Space Grotesk">Nilai Terendah: 60</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="grid-2">
+    <div class="card glow">
+      <h3>📊 Data Kuantitatif</h3>
+      <p style="font-size:.9rem">Data berupa <strong>angka</strong>. Bisa dihitung dan diukur.</p>
+      <p style="font-size:.85rem;color:var(--muted)">Contoh: nilai ujian, tinggi badan, berat badan, suhu</p>
+      <div style="margin-top:8px">
+        <span class="badge">Diskrit: 1, 2, 3 ...</span>&nbsp;
+        <span class="badge">Kontinu: 170,5 cm</span>
+      </div>
+    </div>
+    <div class="card purple-glow">
+      <h3>🏷️ Data Kualitatif</h3>
+      <p style="font-size:.9rem">Data berupa <strong>kategori/label</strong>. Tidak bisa dihitung langsung.</p>
+      <p style="font-size:.85rem;color:var(--muted)">Contoh: warna favorit, jenis olahraga, nama kota</p>
+      <div style="margin-top:8px">
+        <span class="badge">Biru, Merah</span>&nbsp;
+        <span class="badge">Baik, Buruk</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🔍 Cara Pengumpulan Data</h3>
+    <div class="step-list">
+      <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Observasi</strong> — Mengamati langsung. Contoh: menghitung jumlah motor di parkiran.</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Wawancara</strong> — Tanya langsung ke narasumber. Contoh: menanyakan hobi teman sekelas.</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Angket/Kuesioner</strong> — Formulir pertanyaan. Contoh: survei makanan favorit online.</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Studi Dokumen</strong> — Dari catatan/arsip. Contoh: buku nilai, rapot, data sensus.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE 6: TABEL FREKUENSI ===== -->
+<div class="page" id="p6">
+  <div class="page-tag">Materi 2</div>
+  <h2>Tabel Frekuensi 📋</h2>
+  <p><strong class="text-accent">Tabel frekuensi</strong> adalah cara menyusun data agar mudah dibaca — berapa kali setiap nilai/kategori muncul.</p>
+
+  <div class="highlight">
+    <strong>🎮 Contoh nyata:</strong> Dari survei 20 gamer tentang genre favorit, data mentahnya acak banget. Tabel frekuensi yang bikin rapi!
+  </div>
+
+  <div class="card glow">
+    <h3>Data Mentah (Genre Game Favorit)</h3>
+    <p style="color:var(--muted);font-size:.9rem">RPG, FPS, RPG, Sport, MOBA, FPS, RPG, MOBA, MOBA, RPG, Sport, FPS, FPS, RPG, MOBA, Sport, RPG, FPS, MOBA, MOBA</p>
+    <div class="divider"></div>
+    <h3>Jadi Tabel Frekuensi:</h3>
+    <div class="table-wrap">
+      <table class="stat-table">
+        <thead><tr><th>Genre Game</th><th>Turus (Tally)</th><th>Frekuensi</th><th>Frekuensi Relatif</th></tr></thead>
+        <tbody>
+          <tr><td>RPG</td><td>| | | | | |</td><td>6</td><td>6/20 = 30%</td></tr>
+          <tr><td>FPS</td><td>| | | | |</td><td>5</td><td>5/20 = 25%</td></tr>
+          <tr><td>MOBA</td><td>| | | | | |</td><td>6</td><td>6/20 = 30%</td></tr>
+          <tr><td>Sport</td><td>| | |</td><td>3</td><td>3/20 = 15%</td></tr>
+          <tr style="font-weight:700"><td>Total</td><td></td><td>20</td><td>100%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📌 Cara Membuat Tabel Frekuensi</h3>
+    <div class="step-list">
+      <div class="step"><div class="step-num">1</div><div class="step-text">Tentukan <strong>kategori atau kelas</strong> yang akan digunakan.</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">Hitung <strong>turus (tally)</strong> untuk setiap kategori dari data mentah.</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text">Jumlahkan turus menjadi <strong>frekuensi</strong>.</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-text">Hitung <strong>frekuensi relatif</strong> = frekuensi ÷ total data × 100%</div></div>
+    </div>
+  </div>
+  <div class="tip-box">
+    Turus (tally) digambar per 5: empat garis tegak + satu garis miring. Setiap "pagar" = 5 data!
+  </div>
+</div>
+
+<!-- ===== PAGE 7: CONTOH SOAL TABEL ===== -->
+<div class="page" id="p7">
+  <div class="page-tag amber">Contoh Soal</div>
+  <h2>Contoh Soal — Tabel Frekuensi 💡</h2>
+
+  <div class="card amber-glow">
+    <h3>📝 Soal</h3>
+    <p>Data nilai Matematika 15 siswa kelas 7A adalah:</p>
+    <p><strong>75, 80, 65, 90, 75, 85, 70, 80, 75, 90, 65, 80, 85, 70, 75</strong></p>
+    <p>Buatlah tabel frekuensi dari data tersebut!</p>
+  </div>
+
+  <div class="card">
+    <h3>✅ Penyelesaian</h3>
+    <div class="step-list">
+      <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Identifikasi nilai unik:</strong> 65, 70, 75, 80, 85, 90</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Hitung kemunculan tiap nilai:</strong> tandai satu per satu di data mentah</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Susun dalam tabel</strong> seperti di bawah ini</div></div>
+    </div>
+    <div class="table-wrap">
+      <table class="stat-table">
+        <thead><tr><th>Nilai</th><th>Turus</th><th>Frekuensi (f)</th></tr></thead>
+        <tbody>
+          <tr><td>65</td><td>| |</td><td>2</td></tr>
+          <tr><td>70</td><td>| |</td><td>2</td></tr>
+          <tr><td>75</td><td>| | | |</td><td>4</td></tr>
+          <tr><td>80</td><td>| | |</td><td>3</td></tr>
+          <tr><td>85</td><td>| |</td><td>2</td></tr>
+          <tr><td>90</td><td>| |</td><td>2</td></tr>
+          <tr style="font-weight:700;color:var(--accent)"><td>Jumlah</td><td></td><td>15</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="highlight">
+      <strong>✔ Cek:</strong> Total frekuensi = 2+2+4+3+2+2 = <strong class="text-accent">15</strong> ✓ (sama dengan jumlah data)
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE 8: LATIHAN SOAL TABEL ===== -->
+<div class="page" id="p8">
+  <div class="page-tag rose">Latihan</div>
+  <h2>Latihan Yuk! 🏋️</h2>
+  <p>Perhatikan tabel frekuensi berikut dan jawab pertanyaannya!</p>
+
+  <div class="card">
+    <h3>📊 Data: Nilai UH IPA Kelas 7B</h3>
+    <div class="table-wrap">
+      <table class="stat-table">
+        <thead><tr><th>Nilai</th><th>Frekuensi</th></tr></thead>
+        <tbody>
+          <tr><td>60</td><td>3</td></tr>
+          <tr><td>70</td><td>7</td></tr>
+          <tr><td>80</td><td>12</td></tr>
+          <tr><td>90</td><td>5</td></tr>
+          <tr><td>100</td><td>3</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="quiz-q" id="q8-1">
+    <p><strong>1.</strong> Berapa total siswa di kelas 7B?</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(8,1,this,'wrong')">A. 25 siswa</button>
+      <button class="opt-btn" onclick="checkQ(8,1,this,'correct')">B. 30 siswa</button>
+      <button class="opt-btn" onclick="checkQ(8,1,this,'wrong')">C. 28 siswa</button>
+      <button class="opt-btn" onclick="checkQ(8,1,this,'wrong')">D. 32 siswa</button>
+    </div>
+    <div class="feedback" id="fb8-1"></div>
+  </div>
+
+  <div class="quiz-q" id="q8-2">
+    <p><strong>2.</strong> Nilai yang paling banyak diperoleh siswa adalah...</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(8,2,this,'wrong')">A. 70</button>
+      <button class="opt-btn" onclick="checkQ(8,2,this,'correct')">B. 80</button>
+      <button class="opt-btn" onclick="checkQ(8,2,this,'wrong')">C. 90</button>
+      <button class="opt-btn" onclick="checkQ(8,2,this,'wrong')">D. 100</button>
+    </div>
+    <div class="feedback" id="fb8-2"></div>
+  </div>
+
+  <div class="quiz-q" id="q8-3">
+    <p><strong>3.</strong> Berapa persen siswa yang mendapat nilai 80?</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(8,3,this,'wrong')">A. 30%</button>
+      <button class="opt-btn" onclick="checkQ(8,3,this,'wrong')">B. 35%</button>
+      <button class="opt-btn" onclick="checkQ(8,3,this,'correct')">C. 40%</button>
+      <button class="opt-btn" onclick="checkQ(8,3,this,'wrong')">D. 45%</button>
+    </div>
+    <div class="feedback" id="fb8-3"></div>
+  </div>
+</div>
+
+<!-- ===== PAGE 9: DIAGRAM BATANG ===== -->
+<div class="page" id="p9">
+  <div class="page-tag">Materi 3</div>
+  <h2>Diagram Batang 📊</h2>
+  <p><strong class="text-accent">Diagram batang</strong> adalah cara menyajikan data menggunakan batang/kotak dengan panjang yang mewakili frekuensi. Cocok untuk membandingkan kategori!</p>
+
+  <!-- 3D Bar Chart SVG -->
+  <div class="svg-wrap">
+    <svg width="320" height="200" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="b1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00e5ff"/><stop offset="100%" stop-color="#0891b2"/></linearGradient>
+        <linearGradient id="b2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#7c3aed"/></linearGradient>
+        <linearGradient id="b3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fbbf24"/><stop offset="100%" stop-color="#d97706"/></linearGradient>
+        <linearGradient id="b4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#34d399"/><stop offset="100%" stop-color="#059669"/></linearGradient>
+        <linearGradient id="b5" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fb7185"/><stop offset="100%" stop-color="#e11d48"/></linearGradient>
+      </defs>
+      <!-- Grid lines -->
+      <line x1="40" y1="20" x2="40" y2="160" stroke="#2a2d44" stroke-width="1"/>
+      <line x1="40" y1="160" x2="310" y2="160" stroke="#2a2d44" stroke-width="1"/>
+      <line x1="40" y1="120" x2="310" y2="120" stroke="#2a2d44" stroke-width=".5" stroke-dasharray="3,3"/>
+      <line x1="40" y1="80" x2="310" y2="80" stroke="#2a2d44" stroke-width=".5" stroke-dasharray="3,3"/>
+      <line x1="40" y1="40" x2="310" y2="40" stroke="#2a2d44" stroke-width=".5" stroke-dasharray="3,3"/>
+      <!-- Labels Y -->
+      <text x="32" y="163" text-anchor="end" fill="#8892b0" font-size="9" font-family="Space Grotesk">0</text>
+      <text x="32" y="123" text-anchor="end" fill="#8892b0" font-size="9" font-family="Space Grotesk">5</text>
+      <text x="32" y="83" text-anchor="end" fill="#8892b0" font-size="9" font-family="Space Grotesk">10</text>
+      <text x="32" y="43" text-anchor="end" fill="#8892b0" font-size="9" font-family="Space Grotesk">15</text>
+      <!-- Bar 1: Futsal -->
+      <rect x="52" y="80" width="38" height="80" rx="4" fill="url(#b1)"/>
+      <text x="71" y="76" text-anchor="middle" fill="#00e5ff" font-size="9" font-weight="700" font-family="Space Grotesk">10</text>
+      <text x="71" y="178" text-anchor="middle" fill="#8892b0" font-size="9" font-family="Space Grotesk">Futsal</text>
+      <!-- Bar 2: Basket -->
+      <rect x="102" y="104" width="38" height="56" rx="4" fill="url(#b2)"/>
+      <text x="121" y="100" text-anchor="middle" fill="#a78bfa" font-size="9" font-weight="700" font-family="Space Grotesk">7</text>
+      <text x="121" y="178" text-anchor="middle" fill="#8892b0" font-size="9" font-family="Space Grotesk">Basket</text>
+      <!-- Bar 3: Renang -->
+      <rect x="152" y="48" width="38" height="112" rx="4" fill="url(#b3)"/>
+      <text x="171" y="44" text-anchor="middle" fill="#fbbf24" font-size="9" font-weight="700" font-family="Space Grotesk">14</text>
+      <text x="171" y="178" text-anchor="middle" fill="#8892b0" font-size="9" font-family="Space Grotesk">Renang</text>
+      <!-- Bar 4: Voli -->
+      <rect x="202" y="96" width="38" height="64" rx="4" fill="url(#b4)"/>
+      <text x="221" y="92" text-anchor="middle" fill="#34d399" font-size="9" font-weight="700" font-family="Space Grotesk">8</text>
+      <text x="221" y="178" text-anchor="middle" fill="#8892b0" font-size="9" font-family="Space Grotesk">Voli</text>
+      <!-- Bar 5: Badminton -->
+      <rect x="252" y="64" width="38" height="96" rx="4" fill="url(#b5)"/>
+      <text x="271" y="60" text-anchor="middle" fill="#fb7185" font-size="9" font-weight="700" font-family="Space Grotesk">12</text>
+      <text x="271" y="178" text-anchor="middle" fill="#8892b0" font-size="9" font-family="Space Grotesk">Badmin</text>
+      <!-- Title -->
+      <text x="175" y="12" text-anchor="middle" fill="#e8eaf6" font-size="10" font-weight="600" font-family="Space Grotesk">Olahraga Favorit Kelas 7</text>
+    </svg>
+  </div>
+
+  <div class="card glow">
+    <h3>📌 Cara Membaca Diagram Batang</h3>
+    <ul class="nice-list">
+      <li><strong>Sumbu X (horizontal)</strong> = kategori (nama olahraga, kelas, dll)</li>
+      <li><strong>Sumbu Y (vertikal)</strong> = frekuensi / jumlah data</li>
+      <li>Batang yang <strong>lebih tinggi</strong> = frekuensi <strong>lebih besar</strong></li>
+      <li>Semua batang harus memiliki <strong>lebar yang sama</strong></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>📏 Cara Membuat Diagram Batang</h3>
+    <div class="step-list">
+      <div class="step"><div class="step-num">1</div><div class="step-text">Buat <strong>sumbu X dan Y</strong>, beri label dan skala</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">Tentukan <strong>skala Y</strong> — mulai dari 0, interval sesuai data</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text">Gambar batang setinggi frekuensi untuk setiap kategori</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-text">Beri <strong>judul</strong> yang jelas!</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE 10: LATIHAN DIAGRAM BATANG ===== -->
+<div class="page" id="p10">
+  <div class="page-tag rose">Latihan</div>
+  <h2>Latihan — Diagram Batang 🏋️</h2>
+  <p>Perhatikan diagram batang hasil survei <strong>makanan favorit 40 siswa</strong> kelas 7C berikut:</p>
+
+  <div class="bar-chart-wrap card">
+    <h3 style="margin-bottom:14px">Makanan Favorit Kelas 7C</h3>
+    <div class="bar-row"><div class="bar-label">Bakso</div><div class="bar-track"><div class="bar-fill" style="width:37.5%;background:linear-gradient(90deg,#00e5ff,#7c3aed)">15</div></div><div class="bar-val">15</div></div>
+    <div class="bar-row"><div class="bar-label">Mie Ayam</div><div class="bar-track"><div class="bar-fill" style="width:25%;background:linear-gradient(90deg,#a78bfa,#7c3aed)">10</div></div><div class="bar-val">10</div></div>
+    <div class="bar-row"><div class="bar-label">Soto</div><div class="bar-track"><div class="bar-fill" style="width:20%;background:linear-gradient(90deg,#fbbf24,#f59e0b)">8</div></div><div class="bar-val">8</div></div>
+    <div class="bar-row"><div class="bar-label">Nasi Goreng</div><div class="bar-track"><div class="bar-fill" style="width:17.5%;background:linear-gradient(90deg,#34d399,#10b981)">7</div></div><div class="bar-val">7</div></div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>1.</strong> Makanan yang paling disukai siswa adalah...</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(10,1,this,'correct')">A. Bakso</button>
+      <button class="opt-btn" onclick="checkQ(10,1,this,'wrong')">B. Mie Ayam</button>
+      <button class="opt-btn" onclick="checkQ(10,1,this,'wrong')">C. Soto</button>
+      <button class="opt-btn" onclick="checkQ(10,1,this,'wrong')">D. Nasi Goreng</button>
+    </div>
+    <div class="feedback" id="fb10-1"></div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>2.</strong> Selisih jumlah siswa yang suka Bakso and Soto adalah...</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(10,2,this,'wrong')">A. 5 siswa</button>
+      <button class="opt-btn" onclick="checkQ(10,2,this,'correct')">B. 7 siswa</button>
+      <button class="opt-btn" onclick="checkQ(10,2,this,'wrong')">C. 8 siswa</button>
+      <button class="opt-btn" onclick="checkQ(10,2,this,'wrong')">D. 10 siswa</button>
+    </div>
+    <div class="feedback" id="fb10-2"></div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>3.</strong> Berapa persen siswa yang suka Mie Ayam?</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(10,3,this,'wrong')">A. 20%</button>
+      <button class="opt-btn" onclick="checkQ(10,3,this,'correct')">B. 25%</button>
+      <button class="opt-btn" onclick="checkQ(10,3,this,'wrong')">C. 30%</button>
+      <button class="opt-btn" onclick="checkQ(10,3,this,'wrong')">D. 35%</button>
+    </div>
+    <div class="feedback" id="fb10-3"></div>
+  </div>
+</div>
+
+<!-- ===== PAGE 11: DIAGRAM GARIS ===== -->
+<div class="page" id="p11">
+  <div class="page-tag">Materi 4</div>
+  <h2>Diagram Garis 📈</h2>
+  <p><strong class="text-accent">Diagram garis</strong> cocok untuk menunjukkan <strong>perubahan data dari waktu ke waktu</strong> (tren). Misalnya: perkembangan suhu, harga, atau nilai dari hari ke hari.</p>
+
+  <!-- Line Chart SVG -->
+  <div class="svg-wrap">
+    <svg width="320" height="200" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="lineGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#00e5ff" stop-opacity=".3"/>
+          <stop offset="100%" stop-color="#00e5ff" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="lineGrad2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#f59e0b" stop-opacity=".3"/>
+          <stop offset="100%" stop-color="#f59e0b" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <!-- Grid -->
+      <line x1="45" y1="20" x2="45" y2="165" stroke="#2a2d44" stroke-width="1"/>
+      <line x1="45" y1="165" x2="310" y2="165" stroke="#2a2d44" stroke-width="1"/>
+      <line x1="45" y1="125" x2="310" y2="125" stroke="#2a2d44" stroke-width=".4" stroke-dasharray="3,3"/>
+      <line x1="45" y1="85" x2="310" y2="85" stroke="#2a2d44" stroke-width=".4" stroke-dasharray="3,3"/>
+      <line x1="45" y1="45" x2="310" y2="45" stroke="#2a2d44" stroke-width=".4" stroke-dasharray="3,3"/>
+      <!-- Y labels -->
+      <text x="38" y="168" text-anchor="end" fill="#8892b0" font-size="8.5" font-family="Space Grotesk">60</text>
+      <text x="38" y="128" text-anchor="end" fill="#8892b0" font-size="8.5" font-family="Space Grotesk">70</text>
+      <text x="38" y="88" text-anchor="end" fill="#8892b0" font-size="8.5" font-family="Space Grotesk">80</text>
+      <text x="38" y="48" text-anchor="end" fill="#8892b0" font-size="8.5" font-family="Space Grotesk">90</text>
+      <!-- X labels -->
+      <text x="75" y="180" text-anchor="middle" fill="#8892b0" font-size="8.5" font-family="Space Grotesk">Jan</text>
+      <text x="119" y="180" text-anchor="middle" fill="#8892b0" font-size="8.5" font-family="Space Grotesk">Feb</text>
+      <text x="163" y="180" text-anchor="middle" fill="#8892b0" font-size="8.5" font-family="Space Grotesk">Mar</text>
+      <text x="207" y="180" text-anchor="middle" fill="#8892b0" font-size="8.5" font-family="Space Grotesk">Apr</text>
+      <text x="251" y="180" text-anchor="middle" fill="#8892b0" font-size="8.5" font-family="Space Grotesk">Mei</text>
+      <text x="295" y="180" text-anchor="middle" fill="#8892b0" font-size="8.5" font-family="Space Grotesk">Jun</text>
+      <!-- Area fill Budi -->
+      <path d="M 75,145 L 119,125 L 163,85 L 207,65 L 251,85 L 295,55 L 295,165 L 75,165 Z" fill="url(#lineGrad)" opacity=".5"/>
+      <!-- Line Budi -->
+      <polyline points="75,145 119,125 163,85 207,65 251,85 295,55" stroke="#00e5ff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Dots Budi -->
+      <circle cx="75" cy="145" r="5" fill="#00e5ff" stroke="#0d0f1a" stroke-width="2"/>
+      <circle cx="119" cy="125" r="5" fill="#00e5ff" stroke="#0d0f1a" stroke-width="2"/>
+      <circle cx="163" cy="85" r="5" fill="#00e5ff" stroke="#0d0f1a" stroke-width="2"/>
+      <circle cx="207" cy="65" r="5" fill="#00e5ff" stroke="#0d0f1a" stroke-width="2"/>
+      <circle cx="251" cy="85" r="5" fill="#00e5ff" stroke="#0d0f1a" stroke-width="2"/>
+      <circle cx="295" cy="55" r="5" fill="#00e5ff" stroke="#0d0f1a" stroke-width="2"/>
+      <!-- Area fill Andi -->
+      <path d="M 75,125 L 119,145 L 163,125 L 207,105 L 251,125 L 295,105 L 295,165 L 75,165 Z" fill="url(#lineGrad2)" opacity=".4"/>
+      <!-- Line Andi -->
+      <polyline points="75,125 119,145 163,125 207,105 251,125 295,105" stroke="#f59e0b" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6,3"/>
+      <circle cx="75" cy="125" r="4" fill="#f59e0b" stroke="#0d0f1a" stroke-width="2"/>
+      <circle cx="119" cy="145" r="4" fill="#f59e0b" stroke="#0d0f1a" stroke-width="2"/>
+      <circle cx="163" cy="125" r="4" fill="#f59e0b" stroke="#0d0f1a" stroke-width="2"/>
+      <circle cx="207" cy="105" r="4" fill="#f59e0b" stroke="#0d0f1a" stroke-width="2"/>
+      <circle cx="251" cy="125" r="4" fill="#f59e0b" stroke="#0d0f1a" stroke-width="2"/>
+      <circle cx="295" cy="105" r="4" fill="#f59e0b" stroke="#0d0f1a" stroke-width="2"/>
+      <!-- Legend -->
+      <line x1="55" y1="15" x2="80" y2="15" stroke="#00e5ff" stroke-width="2"/>
+      <text x="85" y="19" fill="#e8eaf6" font-size="8.5" font-family="Space Grotesk">Budi (UH)</text>
+      <line x1="145" y1="15" x2="170" y2="15" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4,2"/>
+      <text x="175" y="19" fill="#e8eaf6" font-size="8.5" font-family="Space Grotesk">Andi (UH)</text>
+    </svg>
+  </div>
+
+  <div class="card glow">
+    <h3>Nilai Ujian Budi vs Andi (Jan–Jun)</h3>
+    <div class="table-wrap">
+      <table class="stat-table">
+        <thead><tr><th>Bulan</th><th>Budi</th><th>Andi</th></tr></thead>
+        <tbody>
+          <tr><td>Januari</td><td>65</td><td>70</td></tr>
+          <tr><td>Februari</td><td>70</td><td>65</td></tr>
+          <tr><td>Maret</td><td>80</td><td>70</td></tr>
+          <tr><td>April</td><td>85</td><td>75</td></tr>
+          <tr><td>Mei</td><td>80</td><td>70</td></tr>
+          <tr><td>Juni</td><td>88</td><td>75</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="highlight" style="margin-top:12px">
+      <strong>📈 Tren:</strong> Nilai Budi cenderung <strong class="text-accent">meningkat</strong> dari Januari ke Juni! Itulah kekuatan diagram garis — langsung keliatan tren-nya.
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE 12: LATIHAN DIAGRAM GARIS ===== -->
+<div class="page" id="p12">
+  <div class="page-tag rose">Latihan</div>
+  <h2>Latihan — Diagram Garis 📈</h2>
+  <p>Perhatikan tabel perkembangan jumlah subscriber YouTube Dika selama 6 bulan:</p>
+
+  <div class="card">
+    <div class="table-wrap">
+      <table class="stat-table">
+        <thead><tr><th>Bulan</th><th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Mei</th><th>Jun</th></tr></thead>
+        <tbody>
+          <tr><td>Subscriber (ribu)</td><td>2</td><td>5</td><td>8</td><td>12</td><td>10</td><td>15</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>1.</strong> Bulan dengan kenaikan subscriber terbesar adalah...</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(12,1,this,'wrong')">A. Januari ke Februari</button>
+      <button class="opt-btn" onclick="checkQ(12,1,this,'wrong')">B. Februari ke Maret</button>
+      <button class="opt-btn" onclick="checkQ(12,1,this,'correct')">C. Maret ke April</button>
+      <button class="opt-btn" onclick="checkQ(12,1,this,'wrong')">D. April ke Mei</button>
+    </div>
+    <div class="feedback" id="fb12-1"></div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>2.</strong> Dari April ke Mei, subscriber Dika...</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(12,2,this,'wrong')">A. Naik 2 ribu</button>
+      <button class="opt-btn" onclick="checkQ(12,2,this,'wrong')">B. Tetap sama</button>
+      <button class="opt-btn" onclick="checkQ(12,2,this,'correct')">C. Turun 2 ribu</button>
+      <button class="opt-btn" onclick="checkQ(12,2,this,'wrong')">D. Naik 5 ribu</button>
+    </div>
+    <div class="feedback" id="fb12-2"></div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>3.</strong> Total kenaikan subscriber dari Januari sampai Juni adalah...</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(12,3,this,'wrong')">A. 10 ribu</button>
+      <button class="opt-btn" onclick="checkQ(12,3,this,'wrong')">B. 12 ribu</button>
+      <button class="opt-btn" onclick="checkQ(12,3,this,'correct')">C. 13 ribu</button>
+      <button class="opt-btn" onclick="checkQ(12,3,this,'wrong')">D. 15 ribu</button>
+    </div>
+    <div class="feedback" id="fb12-3"></div>
+  </div>
+</div>
+
+<!-- ===== PAGE 13: DIAGRAM LINGKARAN ===== -->
+<div class="page" id="p13">
+  <div class="page-tag">Materi 5</div>
+  <h2>Diagram Lingkaran 🥧</h2>
+  <p><strong class="text-accent">Diagram lingkaran (pie chart)</strong> menampilkan data sebagai irisan dari sebuah lingkaran. Cocok untuk menunjukkan <strong>proporsi/persentase</strong> tiap bagian dari keseluruhan.</p>
+
+  <!-- PIE CHART SVG 3D -->
+  <div class="svg-wrap">
+    <svg width="300" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+      <!-- 3D shadow ellipse -->
+      <ellipse cx="110" cy="172" rx="78" ry="16" fill="rgba(0,0,0,.3)"/>
+      <!-- 3D pie slices (side depth) -->
+      <path d="M 110,100 L 110,115 L 188,115 L 188,100 Z" fill="#005f77" opacity=".6"/>
+      <path d="M 110,100 L 110,115 L 68,167 L 68,152 Z" fill="#7c3aed" opacity=".5"/>
+      <path d="M 110,100 L 110,115 L 32,90 L 32,75 Z" fill="#065f46" opacity=".5"/>
+      <!-- Actual 2D pie (simplified circles with clip) -->
+      <!-- Sector 1: RPG 35% = 126deg -->
+      <path d="M 110,100 L 188,100 A 78,78 0 0,1 110,178 Z" fill="#00e5ff"/>
+      <!-- Sector 2: FPS 25% = 90deg -->
+      <path d="M 110,100 L 110,178 A 78,78 0 0,1 32,100 Z" fill="#7c3aed"/>
+      <!-- Sector 3: MOBA 25% = 90deg -->
+      <path d="M 110,100 L 32,100 A 78,78 0 0,1 110,22 Z" fill="#10b981"/>
+      <!-- Sector 4: Sport 15% = 54deg -->
+      <path d="M 110,100 L 110,22 A 78,78 0 0,1 188,100 Z" fill="#f59e0b"/>
+      <!-- Center circle for donut effect -->
+      <circle cx="110" cy="100" r="32" fill="#1c2035"/>
+      <text x="110" y="96" text-anchor="middle" fill="#e8eaf6" font-size="9" font-weight="700" font-family="Space Grotesk">Genre</text>
+      <text x="110" y="108" text-anchor="middle" fill="#8892b0" font-size="8" font-family="Space Grotesk">Favorit</text>
+      <!-- Legend -->
+      <rect x="205" y="40" width="12" height="12" rx="3" fill="#00e5ff"/>
+      <text x="222" y="51" fill="#e8eaf6" font-size="10" font-family="Space Grotesk">RPG – 35%</text>
+      <rect x="205" y="62" width="12" height="12" rx="3" fill="#7c3aed"/>
+      <text x="222" y="73" fill="#e8eaf6" font-size="10" font-family="Space Grotesk">FPS – 25%</text>
+      <rect x="205" y="84" width="12" height="12" rx="3" fill="#10b981"/>
+      <text x="222" y="95" fill="#e8eaf6" font-size="10" font-family="Space Grotesk">MOBA – 25%</text>
+      <rect x="205" y="106" width="12" height="12" rx="3" fill="#f59e0b"/>
+      <text x="222" y="117" fill="#e8eaf6" font-size="10" font-family="Space Grotesk">Sport – 15%</text>
+    </svg>
+  </div>
+
+  <div class="card glow">
+    <h3>🧮 Cara Menghitung Sudut Diagram Lingkaran</h3>
+    <p>Ingat: satu lingkaran penuh = 360°</p>
+    <div class="formula-box">
+      $\text{Sudut} = \dfrac{\text{frekuensi}}{\text{total data}} \times 360°$
+    </div>
+    <p><strong>Contoh:</strong> Jika 7 dari 20 siswa suka RPG, maka sudutnya:</p>
+    <div class="formula-box">
+      $\dfrac{7}{20} \times 360° = 126°$
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📌 Cara Menghitung Persen</h3>
+    <div class="formula-box">
+      $\text{Persentase} = \dfrac{\text{frekuensi}}{\text{total data}} \times 100\%$
+    </div>
+    <div class="table-wrap">
+      <table class="stat-table">
+        <thead><tr><th>Genre</th><th>f</th><th>%</th><th>Sudut</th></tr></thead>
+        <tbody>
+          <tr><td>RPG</td><td>7</td><td>35%</td><td>126°</td></tr>
+          <tr><td>FPS</td><td>5</td><td>25%</td><td>90°</td></tr>
+          <tr><td>MOBA</td><td>5</td><td>25%</td><td>90°</td></tr>
+          <tr><td>Sport</td><td>3</td><td>15%</td><td>54°</td></tr>
+          <tr style="font-weight:700;color:var(--accent)"><td>Total</td><td>20</td><td>100%</td><td>360°</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE 14: LATIHAN DIAGRAM LINGKARAN ===== -->
+<div class="page" id="p14">
+  <div class="page-tag rose">Latihan</div>
+  <h2>Latihan — Diagram Lingkaran 🥧</h2>
+  <p>Data hobi 40 siswa disajikan dalam diagram lingkaran dengan persentase berikut:</p>
+  <div class="card">
+    <div class="mini-grid">
+      <div class="mini-card"><div class="big" style="color:#00e5ff">40%</div><div class="lbl">Gaming</div></div>
+      <div class="mini-card"><div class="big" style="color:#a78bfa">25%</div><div class="lbl">Membaca</div></div>
+      <div class="mini-card"><div class="big" style="color:#fbbf24">20%</div><div class="lbl">Olahraga</div></div>
+      <div class="mini-card"><div class="big" style="color:#34d399">15%</div><div class="lbl">Memasak</div></div>
+    </div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>1.</strong> Berapa siswa yang memiliki hobi gaming?</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(14,1,this,'wrong')">A. 14 siswa</button>
+      <button class="opt-btn" onclick="checkQ(14,1,this,'wrong')">B. 15 siswa</button>
+      <button class="opt-btn" onclick="checkQ(14,1,this,'correct')">C. 16 siswa</button>
+      <button class="opt-btn" onclick="checkQ(14,1,this,'wrong')">D. 20 siswa</button>
+    </div>
+    <div class="feedback" id="fb14-1"></div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>2.</strong> Berapa derajat sudut sektor "Memasak" dalam diagram lingkaran?</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(14,2,this,'wrong')">A. 36°</button>
+      <button class="opt-btn" onclick="checkQ(14,2,this,'wrong')">B. 45°</button>
+      <button class="opt-btn" onclick="checkQ(14,2,this,'correct')">C. 54°</button>
+      <button class="opt-btn" onclick="checkQ(14,2,this,'wrong')">D. 72°</button>
+    </div>
+    <div class="feedback" id="fb14-2"></div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>3.</strong> Jika kita gabung hobi Gaming dan Membaca, totalnya berapa persen?</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(14,3,this,'wrong')">A. 55%</button>
+      <button class="opt-btn" onclick="checkQ(14,3,this,'correct')">B. 65%</button>
+      <button class="opt-btn" onclick="checkQ(14,3,this,'wrong')">C. 70%</button>
+      <button class="opt-btn" onclick="checkQ(14,3,this,'wrong')">D. 75%</button>
+    </div>
+    <div class="feedback" id="fb14-3"></div>
+  </div>
+</div>
+
+<!-- ===== PAGE 15: MEAN (RATA-RATA) ===== -->
+<div class="page" id="p15">
+  <div class="page-tag purple">Materi 6</div>
+  <h2>Mean (Rata-Rata) 🧮</h2>
+  <p><strong class="text-accent">Mean</strong> atau rata-rata adalah jumlah semua data dibagi banyaknya data. Ini ukuran pemusatan yang paling sering dipakai!</p>
+
+  <!-- 3D Scales SVG -->
+  <div class="svg-wrap">
+    <svg width="260" height="160" viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="scaleGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00e5ff"/><stop offset="100%" stop-color="#7c3aed"/></linearGradient>
+      </defs>
+      <!-- base -->
+      <rect x="100" y="140" width="60" height="10" rx="4" fill="#2a2d44"/>
+      <!-- pole -->
+      <rect x="127" y="60" width="6" height="80" rx="2" fill="url(#scaleGrad)"/>
+      <!-- beam -->
+      <rect x="50" y="56" width="160" height="6" rx="3" fill="url(#scaleGrad)"/>
+      <!-- left pan -->
+      <ellipse cx="70" cy="100" rx="34" ry="8" fill="#1c2035" stroke="#00e5ff" stroke-width="1" stroke-opacity=".5"/>
+      <line x1="70" y1="60" x2="70" y2="100" stroke="#00e5ff" stroke-width="1" stroke-opacity=".5"/>
+      <!-- right pan -->
+      <ellipse cx="190" cy="100" rx="34" ry="8" fill="#1c2035" stroke="#a78bfa" stroke-width="1" stroke-opacity=".5"/>
+      <line x1="190" y1="60" x2="190" y2="100" stroke="#a78bfa" stroke-width="1" stroke-opacity=".5"/>
+      <!-- data dots left -->
+      <circle cx="58" cy="92" r="8" fill="#00e5ff" opacity=".8"/>
+      <text x="58" y="96" text-anchor="middle" fill="#000" font-size="8" font-weight="700">80</text>
+      <circle cx="76" cy="92" r="8" fill="#00e5ff" opacity=".8"/>
+      <text x="76" y="96" text-anchor="middle" fill="#000" font-size="8" font-weight="700">70</text>
+      <!-- data dots right -->
+      <rect x="168" y="84" width="44" height="16" rx="4" fill="#7c3aed" opacity=".8"/>
+      <text x="190" y="96" text-anchor="middle" fill="#fff" font-size="8" font-weight="700">x̄ = 75</text>
+      <!-- labels -->
+      <text x="70" y="118" text-anchor="middle" fill="#8892b0" font-size="9" font-family="Space Grotesk">Data</text>
+      <text x="190" y="118" text-anchor="middle" fill="#8892b0" font-size="9" font-family="Space Grotesk">Rata-rata</text>
+      <!-- pivot dot -->
+      <circle cx="130" cy="59" r="6" fill="#f59e0b"/>
+    </svg>
+  </div>
+
+  <div class="formula-box">
+    $\bar{x} = \dfrac{x_1 + x_2 + x_3 + \cdots + x_n}{n} = \dfrac{\sum x}{n}$
+  </div>
+
+  <div class="card glow">
+    <h3>📘 Contoh 1 — Data Sederhana</h3>
+    <p>Nilai ulangan Raka: <strong>70, 80, 85, 65, 90</strong></p>
+    <div class="step-list">
+      <div class="step"><div class="step-num">1</div><div class="step-text">Jumlahkan semua nilai: $70 + 80 + 85 + 65 + 90 = 390$</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">Bagi dengan banyak data: $n = 5$</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text">$\bar{x} = \dfrac{390}{5} = \mathbf{78}$</div></div>
+    </div>
+    <div class="highlight">Rata-rata nilai Raka adalah <strong class="text-accent">78</strong></div>
+  </div>
+
+  <div class="card">
+    <h3>📘 Contoh 2 — Dari Tabel Frekuensi</h3>
+    <div class="formula-box">
+      $\bar{x} = \dfrac{\sum (x_i \times f_i)}{\sum f_i}$
+    </div>
+    <div class="table-wrap">
+      <table class="stat-table">
+        <thead><tr><th>Nilai (x)</th><th>f</th><th>x × f</th></tr></thead>
+        <tbody>
+          <tr><td>70</td><td>3</td><td>210</td></tr>
+          <tr><td>80</td><td>5</td><td>400</td></tr>
+          <tr><td>90</td><td>2</td><td>180</td></tr>
+          <tr style="font-weight:700;color:var(--accent)"><td>Total</td><td>10</td><td>790</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:10px">$\bar{x} = \dfrac{790}{10} = \mathbf{79}$</p>
+  </div>
+</div>
+
+<!-- ===== PAGE 16: MEDIAN ===== -->
+<div class="page" id="p16">
+  <div class="page-tag purple">Materi 7</div>
+  <h2>Median (Nilai Tengah) 🎯</h2>
+  <p><strong class="text-accent">Median</strong> adalah nilai yang tepat berada di tengah data, setelah data diurutkan. Median tidak terpengaruh oleh nilai yang terlalu ekstrem!</p>
+
+  <div class="svg-wrap">
+    <svg width="300" height="90" viewBox="0 0 300 90" xmlns="http://www.w3.org/2000/svg">
+      <!-- number line -->
+      <line x1="20" y1="45" x2="280" y2="45" stroke="#2a2d44" stroke-width="2"/>
+      <!-- data points -->
+      <circle cx="40" cy="45" r="14" fill="#1c2035" stroke="rgba(0,229,255,.4)" stroke-width="1.5"/>
+      <text x="40" y="50" text-anchor="middle" fill="#e8eaf6" font-size="11" font-weight="600" font-family="Space Grotesk">65</text>
+      <circle cx="84" cy="45" r="14" fill="#1c2035" stroke="rgba(0,229,255,.4)" stroke-width="1.5"/>
+      <text x="84" y="50" text-anchor="middle" fill="#e8eaf6" font-size="11" font-weight="600" font-family="Space Grotesk">70</text>
+      <circle cx="128" cy="45" r="16" fill="#7c3aed" stroke="#a78bfa" stroke-width="2"/>
+      <text x="128" y="50" text-anchor="middle" fill="#fff" font-size="11" font-weight="700" font-family="Space Grotesk">75</text>
+      <circle cx="172" cy="45" r="14" fill="#1c2035" stroke="rgba(0,229,255,.4)" stroke-width="1.5"/>
+      <text x="172" y="50" text-anchor="middle" fill="#e8eaf6" font-size="11" font-weight="600" font-family="Space Grotesk">80</text>
+      <circle cx="216" cy="45" r="14" fill="#1c2035" stroke="rgba(0,229,255,.4)" stroke-width="1.5"/>
+      <text x="216" y="50" text-anchor="middle" fill="#e8eaf6" font-size="11" font-weight="600" font-family="Space Grotesk">90</text>
+      <!-- median arrow -->
+      <line x1="128" y1="16" x2="128" y2="28" stroke="#a78bfa" stroke-width="2" marker-end="url(#arr2)"/>
+      <defs><marker id="arr2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 Z" fill="#a78bfa"/></marker></defs>
+      <text x="128" y="13" text-anchor="middle" fill="#a78bfa" font-size="9" font-weight="700" font-family="Space Grotesk">MEDIAN</text>
+      <!-- n label -->
+      <text x="22" y="78" fill="#8892b0" font-size="8.5" font-family="Space Grotesk">data ke-1</text>
+      <text x="112" y="78" fill="#a78bfa" font-size="8.5" font-family="Space Grotesk">data ke-3 (tengah)</text>
+      <text x="204" y="78" fill="#8892b0" font-size="8.5" font-family="Space Grotesk">data ke-5</text>
+    </svg>
+  </div>
+
+  <div class="card purple-glow">
+    <h3>📌 Rumus Median</h3>
+    <p><strong>Jika n = ganjil:</strong></p>
+    <div class="formula-box">
+      $\text{Median} = \text{data ke-}\dfrac{n+1}{2}$
+    </div>
+    <p><strong>Jika n = genap:</strong></p>
+    <div class="formula-box">
+      $\text{Median} = \dfrac{\text{data ke-}\frac{n}{2} + \text{data ke-}(\frac{n}{2}+1)}{2}$
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>n = Ganjil (5 data)</h3>
+      <p style="color:var(--muted);font-size:.9rem">Data: 65, 70, <strong class="text-accent">75</strong>, 80, 90</p>
+      <p>Data ke-$\frac{5+1}{2}$ = data ke-3 = <strong class="text-accent">75</strong></p>
+    </div>
+    <div class="card">
+      <h3>n = Genap (6 data)</h3>
+      <p style="color:var(--muted);font-size:.9rem">Data: 65, 70, <strong class="text-accent">75, 80</strong>, 85, 90</p>
+      <p>Median = $\frac{75+80}{2} = \mathbf{77,5}$</p>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    Jangan lupa urutkan data dari kecil ke besar DULU sebelum cari median!
+  </div>
+</div>
+
+<!-- ===== PAGE 17: MODUS ===== -->
+<div class="page" id="p17">
+  <div class="page-tag purple">Materi 8</div>
+  <h2>Modus (Nilai Terbanyak) 🏆</h2>
+  <p><strong class="text-accent">Modus</strong> adalah nilai yang paling sering muncul dalam data. Mudah dicari — tinggal lihat mana yang paling banyak!</p>
+
+  <div class="svg-wrap">
+    <svg width="280" height="140" viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg">
+      <!-- Horizontal frequency display -->
+      <g transform="translate(10,10)">
+        <!-- Value 70 -->
+        <text x="24" y="24" text-anchor="middle" fill="#8892b0" font-size="10" font-family="Space Grotesk">70</text>
+        <circle cx="44" cy="20" r="8" fill="#1c2035" stroke="rgba(0,229,255,.3)" stroke-width="1"/>
+        <text x="44" y="24" fill="#e8eaf6" font-size="8" text-anchor="middle">1×</text>
+        <!-- Value 75 -->
+        <text x="24" y="54" text-anchor="middle" fill="#8892b0" font-size="10" font-family="Space Grotesk">75</text>
+        <circle cx="44" cy="50" r="8" fill="#00e5ff" stroke="none"/><text x="44" y="54" fill="#000" font-size="8" text-anchor="middle" font-weight="700">1</text>
+        <circle cx="62" cy="50" r="8" fill="#00e5ff" stroke="none"/><text x="62" y="54" fill="#000" font-size="8" text-anchor="middle" font-weight="700">2</text>
+        <circle cx="80" cy="50" r="8" fill="#00e5ff" stroke="none"/><text x="80" y="54" fill="#000" font-size="8" text-anchor="middle" font-weight="700">3</text>
+        <circle cx="98" cy="50" r="8" fill="#00e5ff" stroke="none"/><text x="98" y="54" fill="#000" font-size="8" text-anchor="middle" font-weight="700">4</text>
+        <text x="114" y="54" fill="#fbbf24" font-size="9" font-weight="700" font-family="Space Grotesk">← MODUS!</text>
+        <!-- Value 80 -->
+        <text x="24" y="84" text-anchor="middle" fill="#8892b0" font-size="10" font-family="Space Grotesk">80</text>
+        <circle cx="44" cy="80" r="8" fill="#7c3aed" opacity=".7"/><text x="44" y="84" fill="#fff" font-size="8" text-anchor="middle">1</text>
+        <circle cx="62" cy="80" r="8" fill="#7c3aed" opacity=".7"/><text x="62" y="84" fill="#fff" font-size="8" text-anchor="middle">2</text>
+        <circle cx="80" cy="80" r="8" fill="#7c3aed" opacity=".7"/><text x="80" y="84" fill="#fff" font-size="8" text-anchor="middle">3</text>
+        <!-- Value 90 -->
+        <text x="24" y="114" text-anchor="middle" fill="#8892b0" font-size="10" font-family="Space Grotesk">90</text>
+        <circle cx="44" cy="110" r="8" fill="#1c2035" stroke="rgba(0,229,255,.3)" stroke-width="1"/>
+        <text x="44" y="114" fill="#e8eaf6" font-size="8" text-anchor="middle">1×</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="card green-glow">
+    <h3>📌 Jenis-Jenis Modus</h3>
+    <div class="table-wrap">
+      <table class="stat-table">
+        <thead><tr><th>Jenis</th><th>Artinya</th><th>Contoh</th></tr></thead>
+        <tbody>
+          <tr><td><span class="text-accent">Unimodal</span></td><td>Satu modus</td><td>70, 75, <strong>80</strong>, 80, 90 → Mo = 80</td></tr>
+          <tr><td><span class="text-amber">Bimodal</span></td><td>Dua modus</td><td>70, <strong>75</strong>, 75, <strong>80</strong>, 80, 90 → Mo = 75 & 80</td></tr>
+          <tr><td><span class="text-muted">Tidak ada</span></td><td>Semua muncul 1×</td><td>70, 75, 80, 90 → tidak ada modus</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <strong>🎮 Analogi Game:</strong> Modus = karakter yang paling banyak dipilih pemain. Kalau 100 pemain, 40 pilih Knight, 30 Mage, 30 Rogue → Modus = Knight!
+  </div>
+</div>
+
+<!-- ===== PAGE 18: CONTOH SOAL MEAN/MEDIAN/MODUS ===== -->
+<div class="page" id="p18">
+  <div class="page-tag amber">Contoh Soal</div>
+  <h2>Contoh Soal — Mean, Median, Modus 💡</h2>
+
+  <div class="card amber-glow">
+    <h3>📝 Soal (Bentuk Cerita)</h3>
+    <p>Nilai UAS Matematika 8 siswa adalah: <strong>75, 80, 65, 80, 90, 70, 80, 85</strong>. Tentukan:</p>
+    <ul class="nice-list">
+      <li>Mean (rata-rata)</li>
+      <li>Median</li>
+      <li>Modus</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>✅ Penyelesaian</h3>
+    <p><strong>Langkah 1: Urutkan data</strong></p>
+    <p style="color:var(--accent);font-size:1.1rem;font-weight:700;letter-spacing:2px">65 · 70 · 75 · 80 · 80 · 80 · 85 · 90</p>
+
+    <div class="divider"></div>
+    <h3>📊 Mean</h3>
+    <p>$\bar{x} = \dfrac{65+70+75+80+80+80+85+90}{8} = \dfrac{625}{8} = \mathbf{78,125}$</p>
+
+    <div class="divider"></div>
+    <h3>🎯 Median (n = 8, genap)</h3>
+    <p>Data ke-4 = 80, Data ke-5 = 80</p>
+    <p>$\text{Median} = \dfrac{80 + 80}{2} = \mathbf{80}$</p>
+
+    <div class="divider"></div>
+    <h3>🏆 Modus</h3>
+    <p>Nilai 80 muncul <strong>3 kali</strong> (terbanyak)</p>
+    <p><strong class="text-accent">Modus = 80</strong></p>
+  </div>
+</div>
+
+<!-- ===== PAGE 19: LATIHAN MEAN/MEDIAN/MODUS ===== -->
+<div class="page" id="p19">
+  <div class="page-tag rose">Latihan</div>
+  <h2>Latihan — Mean, Median, Modus 🏋️</h2>
+  <p>Berikut data skor game Dika selama 7 sesi: <strong>120, 150, 130, 150, 170, 150, 140</strong></p>
+
+  <div class="quiz-q">
+    <p><strong>1.</strong> Berapa mean (rata-rata) skor Dika?</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(19,1,this,'wrong')">A. 145</button>
+      <button class="opt-btn" onclick="checkQ(19,1,this,'correct')">B. 144,3</button>
+      <button class="opt-btn" onclick="checkQ(19,1,this,'wrong')">C. 150</button>
+      <button class="opt-btn" onclick="checkQ(19,1,this,'wrong')">D. 140</button>
+    </div>
+    <div class="feedback" id="fb19-1"></div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>2.</strong> Berapa median skor Dika?</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(19,2,this,'wrong')">A. 130</button>
+      <button class="opt-btn" onclick="checkQ(19,2,this,'wrong')">B. 140</button>
+      <button class="opt-btn" onclick="checkQ(19,2,this,'correct')">C. 150</button>
+      <button class="opt-btn" onclick="checkQ(19,2,this,'wrong')">D. 170</button>
+    </div>
+    <div class="feedback" id="fb19-2"></div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>3.</strong> Berapa modus skor Dika?</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(19,3,this,'wrong')">A. 120</button>
+      <button class="opt-btn" onclick="checkQ(19,3,this,'wrong')">B. 140</button>
+      <button class="opt-btn" onclick="checkQ(19,3,this,'correct')">C. 150</button>
+      <button class="opt-btn" onclick="checkQ(19,3,this,'wrong')">D. 170</button>
+    </div>
+    <div class="feedback" id="fb19-3"></div>
+  </div>
+
+  <div class="tip-box">
+    Trik cepat: <strong>Urutkan dulu</strong> → 120, 130, 140, 150, 150, 150, 170. Mean = 1010÷7 ≈ 144,3. Median = data ke-4 = 150. Modus = 150 (muncul 3×).
+  </div>
+</div>
+
+<!-- ===== PAGE 20: SOAL CERITA 1 ===== -->
+<div class="page" id="p20">
+  <div class="page-tag amber">Soal Cerita</div>
+  <h2>Soal Cerita — Dunia Nyata 🌍</h2>
+
+  <div class="card amber-glow">
+    <div class="emoji-big">⚽</div>
+    <h3>Cerita: Statistik Pemain Bola</h3>
+    <p>Dalam 10 pertandingan, Rizky berhasil mencetak gol sebanyak:</p>
+    <p><strong>2, 1, 3, 0, 2, 1, 2, 3, 1, 2</strong></p>
+    <p>Pelatih ingin tahu: apakah rata-rata gol Rizky per pertandingan memenuhi target 2 gol per match?</p>
+  </div>
+
+  <div class="card">
+    <h3>✅ Penyelesaian</h3>
+    <div class="step-list">
+      <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Total gol:</strong> $2+1+3+0+2+1+2+3+1+2 = 17$</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Jumlah pertandingan:</strong> $n = 10$</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Mean:</strong> $\bar{x} = \dfrac{17}{10} = 1,7$ gol/pertandingan</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Kesimpulan:</strong> $1,7 < 2$ → Rizky <span class="text-rose">belum memenuhi</span> target pelatih 😅</div></div>
+    </div>
+    <div class="highlight">
+      Pelatih juga mencari modus: data yang paling sering = <strong>2</strong> (muncul 4×). Tapi rata-ratanya masih di bawah target!
+    </div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>Cek pemahamanmu:</strong> Jika di pertandingan ke-11 Rizky cetak <strong>3 gol</strong>, berapakah rata-rata gol baru Rizky dari 11 pertandingan?</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(20,1,this,'wrong')">A. 1,7 gol</button>
+      <button class="opt-btn" onclick="checkQ(20,1,this,'correct')">B. 1,82 gol</button>
+      <button class="opt-btn" onclick="checkQ(20,1,this,'wrong')">C. 2 gol</button>
+      <button class="opt-btn" onclick="checkQ(20,1,this,'wrong')">D. 2,1 gol</button>
+    </div>
+    <div class="feedback" id="fb20-1"></div>
+  </div>
+</div>
+
+<!-- ===== PAGE 21: SOAL TABEL LENGKAP ===== -->
+<div class="page" id="p21">
+  <div class="page-tag amber">Soal Tabel</div>
+  <h2>Soal dari Tabel Data 📊</h2>
+
+  <div class="card glow">
+    <h3>📋 Tabel: Data Tinggi Badan Siswa Kelas 7</h3>
+    <div class="table-wrap">
+      <table class="stat-table">
+        <thead><tr><th>Tinggi (cm)</th><th>Frekuensi (f)</th><th>f × x</th></tr></thead>
+        <tbody>
+          <tr><td>150</td><td>4</td><td>600</td></tr>
+          <tr><td>155</td><td>8</td><td>1240</td></tr>
+          <tr><td>160</td><td>10</td><td>1600</td></tr>
+          <tr><td>165</td><td>6</td><td>990</td></tr>
+          <tr><td>170</td><td>2</td><td>340</td></tr>
+          <tr style="font-weight:700;color:var(--accent)"><td>Total</td><td>30</td><td>4770</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>1.</strong> Mean tinggi badan siswa adalah...</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(21,1,this,'wrong')">A. 157 cm</button>
+      <button class="opt-btn" onclick="checkQ(21,1,this,'wrong')">B. 158 cm</button>
+      <button class="opt-btn" onclick="checkQ(21,1,this,'correct')">C. 159 cm</button>
+      <button class="opt-btn" onclick="checkQ(21,1,this,'wrong')">D. 160 cm</button>
+    </div>
+    <div class="feedback" id="fb21-1"></div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>2.</strong> Modus tinggi badan siswa adalah...</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(21,2,this,'wrong')">A. 155 cm</button>
+      <button class="opt-btn" onclick="checkQ(21,2,this,'correct')">B. 160 cm</button>
+      <button class="opt-btn" onclick="checkQ(21,2,this,'wrong')">C. 165 cm</button>
+      <button class="opt-btn" onclick="checkQ(21,2,this,'wrong')">D. 150 cm</button>
+    </div>
+    <div class="feedback" id="fb21-2"></div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>3.</strong> Berapa persen siswa yang memiliki tinggi lebih dari 160 cm?</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(21,3,this,'wrong')">A. 20%</button>
+      <button class="opt-btn" onclick="checkQ(21,3,this,'correct')">B. 26,7%</button>
+      <button class="opt-btn" onclick="checkQ(21,3,this,'wrong')">C. 30%</button>
+      <button class="opt-btn" onclick="checkQ(21,3,this,'wrong')">D. 33%</button>
+    </div>
+    <div class="feedback" id="fb21-3"></div>
+  </div>
+</div>
+
+<!-- ===== PAGE 22: SOAL CERITA 2 ===== -->
+<div class="page" id="p22">
+  <div class="page-tag amber">Soal Cerita</div>
+  <h2>Soal Cerita — Nilai Kelas 🎓</h2>
+
+  <div class="card amber-glow">
+    <div class="emoji-big">📚</div>
+    <h3>Cerita: Nilai Ujian Nasional</h3>
+    <p>Hasil nilai UN Matematika 12 siswa kelas 6 yang akan masuk SMP:</p>
+    <div class="table-wrap">
+      <table class="stat-table">
+        <thead><tr><th>Siswa</th><th>Nilai</th><th>Siswa</th><th>Nilai</th></tr></thead>
+        <tbody>
+          <tr><td>Budi</td><td>78</td><td>Hani</td><td>85</td></tr>
+          <tr><td>Andi</td><td>82</td><td>Ivan</td><td>78</td></tr>
+          <tr><td>Cici</td><td>90</td><td>Joko</td><td>70</td></tr>
+          <tr><td>Dodi</td><td>78</td><td>Kiki</td><td>88</td></tr>
+          <tr><td>Erna</td><td>85</td><td>Lala</td><td>92</td></tr>
+          <tr><td>Fani</td><td>70</td><td>Mika</td><td>84</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>✅ Analisis</h3>
+    <p>Data terurut: <strong>70, 70, 78, 78, 78, 82, 84, 85, 85, 88, 90, 92</strong></p>
+    <div class="grid-2">
+      <div>
+        <p><strong class="text-accent">Mean:</strong></p>
+        <p>$\bar{x} = \dfrac{980}{12} \approx 81,7$</p>
+      </div>
+      <div>
+        <p><strong class="text-amber">Median (n=12):</strong></p>
+        <p>$Me = \dfrac{82+84}{2} = 83$</p>
+      </div>
+      <div>
+        <p><strong class="text-green">Modus:</strong></p>
+        <p>78 (muncul 3×)</p>
+      </div>
+      <div>
+        <p><strong class="text-rose">Nilai Tertinggi:</strong></p>
+        <p>Lala dengan 92</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>Berapa siswa yang nilainya di atas rata-rata?</strong></p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(22,1,this,'wrong')">A. 4 siswa</button>
+      <button class="opt-btn" onclick="checkQ(22,1,this,'wrong')">B. 5 siswa</button>
+      <button class="opt-btn" onclick="checkQ(22,1,this,'correct')">C. 6 siswa</button>
+      <button class="opt-btn" onclick="checkQ(22,1,this,'wrong')">D. 7 siswa</button>
+    </div>
+    <div class="feedback" id="fb22-1"></div>
+  </div>
+</div>
+
+<!-- ===== PAGE 23: MEAN DARI DATA KELOMPOK ===== -->
+<div class="page" id="p23">
+  <div class="page-tag purple">Materi 9</div>
+  <h2>Mean Data Berkelompok 📊</h2>
+  <p>Kalau data sudah dalam <strong>kelas interval</strong>, kita pakai <strong>nilai tengah</strong> tiap kelas sebagai representasi!</p>
+
+  <div class="formula-box">
+    $\bar{x} = \dfrac{\sum (x_i \times f_i)}{\sum f_i}$
+    <br><br>
+    <span style="color:var(--muted);font-size:.85rem">$x_i$ = nilai tengah kelas ke-$i$,&nbsp; $f_i$ = frekuensi kelas ke-$i$</span>
+  </div>
+
+  <div class="card glow">
+    <h3>📘 Contoh: Data Berat Badan 30 Siswa</h3>
+    <div class="table-wrap">
+      <table class="stat-table">
+        <thead><tr><th>Berat (kg)</th><th>x<sub>i</sub> (Nilai Tengah)</th><th>f</th><th>x<sub>i</sub> × f</th></tr></thead>
+        <tbody>
+          <tr><td>40 – 44</td><td>42</td><td>5</td><td>210</td></tr>
+          <tr><td>45 – 49</td><td>47</td><td>10</td><td>470</td></tr>
+          <tr><td>50 – 54</td><td>52</td><td>9</td><td>468</td></tr>
+          <tr><td>55 – 59</td><td>57</td><td>4</td><td>228</td></tr>
+          <tr><td>60 – 64</td><td>62</td><td>2</td><td>124</td></tr>
+          <tr style="font-weight:700;color:var(--accent)"><td>Total</td><td>–</td><td>30</td><td>1500</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="highlight" style="margin-top:12px">
+      $\bar{x} = \dfrac{1500}{30} = \mathbf{50 \text{ kg}}$
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>💡 Cara Mencari Nilai Tengah</h3>
+    <div class="formula-box">
+      $x_i = \dfrac{\text{batas bawah} + \text{batas atas}}{2}$
+    </div>
+    <p>Contoh: kelas 45–49 → $x_i = \dfrac{45+49}{2} = 47$</p>
+  </div>
+</div>
+
+<!-- ===== PAGE 24: LATIHAN DATA KELOMPOK ===== -->
+<div class="page" id="p24">
+  <div class="page-tag rose">Latihan</div>
+  <h2>Latihan — Data Berkelompok 💪</h2>
+
+  <div class="card glow">
+    <h3>📋 Tabel: Nilai UTS Kelas 7A</h3>
+    <div class="table-wrap">
+      <table class="stat-table">
+        <thead><tr><th>Nilai</th><th>Nilai Tengah (x<sub>i</sub>)</th><th>f</th><th>x<sub>i</sub> × f</th></tr></thead>
+        <tbody>
+          <tr><td>51 – 60</td><td>55,5</td><td>3</td><td>166,5</td></tr>
+          <tr><td>61 – 70</td><td>65,5</td><td>7</td><td>458,5</td></tr>
+          <tr><td>71 – 80</td><td>75,5</td><td>12</td><td>906</td></tr>
+          <tr><td>81 – 90</td><td>85,5</td><td>6</td><td>513</td></tr>
+          <tr><td>91 – 100</td><td>95,5</td><td>2</td><td>191</td></tr>
+          <tr style="font-weight:700;color:var(--accent)"><td>Total</td><td></td><td>30</td><td>2235</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>1.</strong> Mean nilai UTS kelas 7A adalah...</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(24,1,this,'wrong')">A. 72,5</button>
+      <button class="opt-btn" onclick="checkQ(24,1,this,'correct')">B. 74,5</button>
+      <button class="opt-btn" onclick="checkQ(24,1,this,'wrong')">C. 75,5</button>
+      <button class="opt-btn" onclick="checkQ(24,1,this,'wrong')">D. 76</button>
+    </div>
+    <div class="feedback" id="fb24-1"></div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>2.</strong> Kelas modus (kelas dengan frekuensi tertinggi) adalah...</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(24,2,this,'wrong')">A. 61 – 70</button>
+      <button class="opt-btn" onclick="checkQ(24,2,this,'correct')">B. 71 – 80</button>
+      <button class="opt-btn" onclick="checkQ(24,2,this,'wrong')">C. 81 – 90</button>
+      <button class="opt-btn" onclick="checkQ(24,2,this,'wrong')">D. 91 – 100</button>
+    </div>
+    <div class="feedback" id="fb24-2"></div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>3.</strong> Berapa persen siswa yang mendapat nilai di atas 80?</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(24,3,this,'wrong')">A. 20%</button>
+      <button class="opt-btn" onclick="checkQ(24,3,this,'wrong')">B. 25%</button>
+      <button class="opt-btn" onclick="checkQ(24,3,this,'correct')">C. 26,7%</button>
+      <button class="opt-btn" onclick="checkQ(24,3,this,'wrong')">D. 30%</button>
+    </div>
+    <div class="feedback" id="fb24-3"></div>
+  </div>
+</div>
+
+<!-- ===== PAGE 25: JANGKAUAN / RANGE ===== -->
+<div class="page" id="p25">
+  <div class="page-tag">Materi 10</div>
+  <h2>Jangkauan (Range) 📏</h2>
+  <p><strong class="text-accent">Jangkauan</strong> mengukur seberapa jauh "rentang" data — dari nilai terkecil ke terbesar. Ini ukuran penyebaran data yang paling sederhana!</p>
+
+  <div class="formula-box">
+    $\text{Jangkauan} = x_{maks} - x_{min}$
+  </div>
+
+  <div class="svg-wrap">
+    <svg width="300" height="100" viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg">
+      <!-- Number line -->
+      <line x1="30" y1="50" x2="270" y2="50" stroke="#2a2d44" stroke-width="2"/>
+      <!-- Range arrow -->
+      <line x1="60" y1="50" x2="240" y2="50" stroke="#00e5ff" stroke-width="3" stroke-opacity=".6"/>
+      <!-- Min -->
+      <circle cx="60" cy="50" r="12" fill="#f43f5e"/>
+      <text x="60" y="55" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">60</text>
+      <text x="60" y="75" text-anchor="middle" fill="#fb7185" font-size="9" font-family="Space Grotesk">x min</text>
+      <!-- Max -->
+      <circle cx="240" cy="50" r="12" fill="#10b981"/>
+      <text x="240" y="55" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">95</text>
+      <text x="240" y="75" text-anchor="middle" fill="#34d399" font-size="9" font-family="Space Grotesk">x maks</text>
+      <!-- Middle data -->
+      <circle cx="110" cy="50" r="8" fill="#2a2d44" stroke="rgba(0,229,255,.3)" stroke-width="1"/>
+      <circle cx="150" cy="50" r="8" fill="#2a2d44" stroke="rgba(0,229,255,.3)" stroke-width="1"/>
+      <circle cx="190" cy="50" r="8" fill="#2a2d44" stroke="rgba(0,229,255,.3)" stroke-width="1"/>
+      <!-- Range label -->
+      <text x="150" y="26" text-anchor="middle" fill="#00e5ff" font-size="10" font-weight="700" font-family="Space Grotesk">Jangkauan = 35</text>
+      <line x1="60" y1="32" x2="240" y2="32" stroke="#00e5ff" stroke-width="1" stroke-opacity=".4" marker-start="url(#al)" marker-end="url(#ar)"/>
+      <defs>
+        <marker id="al" markerWidth="6" markerHeight="6" refX="0" refY="3" orient="auto"><path d="M6,0 L6,6 L0,3 Z" fill="#00e5ff" opacity=".6"/></marker>
+        <marker id="ar" markerWidth="6" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 Z" fill="#00e5ff" opacity=".6"/></marker>
+      </defs>
+    </svg>
+  </div>
+
+  <div class="grid-2">
+    <div class="card glow">
+      <h3>📘 Contoh</h3>
+      <p>Data: 60, 75, 80, 70, 95, 65, 88</p>
+      <p>$x_{min} = 60$, &nbsp;$x_{maks} = 95$</p>
+      <p>$\text{Jangkauan} = 95 - 60 = \mathbf{35}$</p>
+    </div>
+    <div class="card">
+      <h3>🤔 Apa Gunanya?</h3>
+      <ul class="nice-list">
+        <li>Jangkauan besar → data sangat beragam</li>
+        <li>Jangkauan kecil → data relatif seragam</li>
+        <li>Membantu lihat konsistensi data</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="quiz-q" style="margin-top:10px">
+    <p><strong>Soal Cepat:</strong> Data nilai: 55, 70, 65, 80, 90, 75, 60. Berapa jangkauannya?</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(25,1,this,'wrong')">A. 30</button>
+      <button class="opt-btn" onclick="checkQ(25,1,this,'correct')">B. 35</button>
+      <button class="opt-btn" onclick="checkQ(25,1,this,'wrong')">C. 25</button>
+      <button class="opt-btn" onclick="checkQ(25,1,this,'wrong')">D. 40</button>
+    </div>
+    <div class="feedback" id="fb25-1"></div>
+  </div>
+</div>
+
+<!-- ===== PAGE 26: LATIHAN GABUNGAN ===== -->
+<div class="page" id="p26">
+  <div class="page-tag rose">Latihan Gabungan</div>
+  <h2>Latihan Gabungan — All In! 🔥</h2>
+  <p>Soal berikut menggabungkan semua materi yang sudah dipelajari!</p>
+
+  <div class="card amber-glow">
+    <h3>📋 Data: Penjualan Minuman Per Hari (cups)</h3>
+    <div class="table-wrap">
+      <table class="stat-table">
+        <thead><tr><th>Hari</th><th>Sen</th><th>Sel</th><th>Rab</th><th>Kam</th><th>Jum</th><th>Sab</th><th>Min</th></tr></thead>
+        <tbody>
+          <tr><td>Penjualan</td><td>45</td><td>60</td><td>55</td><td>70</td><td>80</td><td>90</td><td>70</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>1.</strong> Rata-rata penjualan per hari adalah...</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(26,1,this,'wrong')">A. 65 cups</button>
+      <button class="opt-btn" onclick="checkQ(26,1,this,'correct')">B. 67,1 cups</button>
+      <button class="opt-btn" onclick="checkQ(26,1,this,'wrong')">C. 70 cups</button>
+      <button class="opt-btn" onclick="checkQ(26,1,this,'wrong')">D. 72 cups</button>
+    </div>
+    <div class="feedback" id="fb26-1"></div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>2.</strong> Median penjualan adalah...</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(26,2,this,'wrong')">A. 60</button>
+      <button class="opt-btn" onclick="checkQ(26,2,this,'wrong')">B. 65</button>
+      <button class="opt-btn" onclick="checkQ(26,2,this,'correct')">C. 70</button>
+      <button class="opt-btn" onclick="checkQ(26,2,this,'wrong')">D. 75</button>
+    </div>
+    <div class="feedback" id="fb26-2"></div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>3.</strong> Jangkauan penjualan selama seminggu adalah...</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(26,3,this,'wrong')">A. 40</button>
+      <button class="opt-btn" onclick="checkQ(26,3,this,'wrong')">B. 42</button>
+      <button class="opt-btn" onclick="checkQ(26,3,this,'correct')">C. 45</button>
+      <button class="opt-btn" onclick="checkQ(26,3,this,'wrong')">D. 50</button>
+    </div>
+    <div class="feedback" id="fb26-3"></div>
+  </div>
+</div>
+
+<!-- ===== PAGE 27: SOAL CERITA 3 (INTEGRATIF) ===== -->
+<div class="page" id="p27">
+  <div class="page-tag amber">Soal Cerita Integratif</div>
+  <h2>Soal Cerita — Analisis Lengkap 🧩</h2>
+
+  <div class="card amber-glow">
+    <div class="emoji-big">🎮</div>
+    <h3>Cerita: Turnamen Gaming</h3>
+    <p>Dalam sebuah turnamen e-sports sekolah, 5 tim mencatat skor berikut:</p>
+    <div class="table-wrap">
+      <table class="stat-table">
+        <thead><tr><th>Tim</th><th>Skor Game 1</th><th>Skor Game 2</th><th>Total</th></tr></thead>
+        <tbody>
+          <tr><td>Alpha</td><td>850</td><td>920</td><td>1770</td></tr>
+          <tr><td>Beta</td><td>750</td><td>880</td><td>1630</td></tr>
+          <tr><td>Cyber</td><td>900</td><td>950</td><td>1850</td></tr>
+          <tr><td>Delta</td><td>800</td><td>820</td><td>1620</td></tr>
+          <tr><td>Echo</td><td>750</td><td>900</td><td>1650</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>✅ Analisis Total Skor</h3>
+    <p>Data total: <strong>1770, 1630, 1850, 1620, 1650</strong></p>
+    <p>Diurutkan: <strong>1620, 1630, 1650, 1770, 1850</strong></p>
+    <div class="grid-2">
+      <div>
+        <p><strong class="text-accent">Mean:</strong> $\dfrac{8520}{5} = 1704$</p>
+        <p><strong class="text-amber">Median:</strong> Data ke-3 = <strong>1650</strong></p>
+      </div>
+      <div>
+        <p><strong class="text-green">Juara 1:</strong> Tim Cyber (1850)</p>
+        <p><strong class="text-rose">Jangkauan:</strong> $1850-1620=230$</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>Tim mana yang performanya paling jauh di atas rata-rata?</strong></p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(27,1,this,'wrong')">A. Alpha (selisih 66)</button>
+      <button class="opt-btn" onclick="checkQ(27,1,this,'correct')">B. Cyber (selisih 146)</button>
+      <button class="opt-btn" onclick="checkQ(27,1,this,'wrong')">C. Delta (selisih 84)</button>
+      <button class="opt-btn" onclick="checkQ(27,1,this,'wrong')">D. Echo (selisih 54)</button>
+    </div>
+    <div class="feedback" id="fb27-1"></div>
+  </div>
+</div>
+
+<!-- ===== PAGE 28: MEMBACA DATA DARI GRAFIK ===== -->
+<div class="page" id="p28">
+  <div class="page-tag">Materi 11</div>
+  <h2>Membaca & Menganalisis Grafik 🔍</h2>
+  <p>Kemampuan membaca grafik sama pentingnya dengan menghitung. Ini skill yang dipakai profesional setiap hari!</p>
+
+  <div class="card glow">
+    <h3>📊 Grafik: Penjualan Smartphone Q1 2025</h3>
+    <div class="bar-chart-wrap">
+      <div class="bar-row"><div class="bar-label">Merek A</div><div class="bar-track"><div class="bar-fill" style="width:45%;background:linear-gradient(90deg,#00e5ff,#7c3aed)">4500</div></div><div class="bar-val">4.5K</div></div>
+      <div class="bar-row"><div class="bar-label">Merek B</div><div class="bar-track"><div class="bar-fill" style="width:30%;background:linear-gradient(90deg,#a78bfa,#7c3aed)">3000</div></div><div class="bar-val">3.0K</div></div>
+      <div class="bar-row"><div class="bar-label">Merek C</div><div class="bar-track"><div class="bar-fill" style="width:60%;background:linear-gradient(90deg,#fbbf24,#f59e0b)">6000</div></div><div class="bar-val">6.0K</div></div>
+      <div class="bar-row"><div class="bar-label">Merek D</div><div class="bar-track"><div class="bar-fill" style="width:20%;background:linear-gradient(90deg,#34d399,#10b981)">2000</div></div><div class="bar-val">2.0K</div></div>
+    </div>
+    <p style="font-size:.8rem;color:var(--muted);margin-top:8px">Satuan: unit terjual (dalam ribuan)</p>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>1.</strong> Berapa total penjualan semua merek?</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(28,1,this,'wrong')">A. 14.000 unit</button>
+      <button class="opt-btn" onclick="checkQ(28,1,this,'wrong')">B. 15.000 unit</button>
+      <button class="opt-btn" onclick="checkQ(28,1,this,'correct')">C. 15.500 unit</button>
+      <button class="opt-btn" onclick="checkQ(28,1,this,'wrong')">D. 16.000 unit</button>
+    </div>
+    <div class="feedback" id="fb28-1"></div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>2.</strong> Perbandingan penjualan Merek C terhadap Merek D adalah...</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(28,2,this,'wrong')">A. 2 : 1</button>
+      <button class="opt-btn" onclick="checkQ(28,2,this,'correct')">B. 3 : 1</button>
+      <button class="opt-btn" onclick="checkQ(28,2,this,'wrong')">C. 4 : 1</button>
+      <button class="opt-btn" onclick="checkQ(28,2,this,'wrong')">D. 1,5 : 1</button>
+    </div>
+    <div class="feedback" id="fb28-2"></div>
+  </div>
+</div>
+
+<!-- ===== PAGE 29: MANA YANG TEPAT? ===== -->
+<div class="page" id="p29">
+  <div class="page-tag">Materi 12</div>
+  <h2>Mean, Median, atau Modus? 🤔</h2>
+  <p>Kapan harus pakai yang mana? Ini penting banget untuk menginterpretasi data!</p>
+
+  <div class="grid-2">
+    <div class="card glow">
+      <h3>📊 Gunakan Mean ketika...</h3>
+      <ul class="nice-list">
+        <li>Data numerik dan <strong>tidak ada nilai ekstrem</strong></li>
+        <li>Ingin tahu nilai <strong>"seimbang"</strong> dari semua data</li>
+        <li>Contoh: nilai rata-rata ujian, rata-rata pengeluaran</li>
+      </ul>
+    </div>
+    <div class="card purple-glow">
+      <h3>🎯 Gunakan Median ketika...</h3>
+      <ul class="nice-list">
+        <li>Ada <strong>nilai ekstrem/outlier</strong> yang mengganggu</li>
+        <li>Data tidak simetris (skewed)</li>
+        <li>Contoh: median gaji pegawai, harga rumah</li>
+      </ul>
+    </div>
+    <div class="card amber-glow">
+      <h3>🏆 Gunakan Modus ketika...</h3>
+      <ul class="nice-list">
+        <li>Data <strong>kategori (kualitatif)</strong></li>
+        <li>Ingin tahu yang <strong>paling populer</strong></li>
+        <li>Contoh: warna baju terlaris, menu terbanyak dipesan</li>
+      </ul>
+    </div>
+    <div class="card green-glow">
+      <h3>⚠️ Awas Outlier!</h3>
+      <p style="font-size:.9rem">Misal: gaji pegawai 3, 4, 4, 5, 5 juta. Ada bos dengan gaji 50 juta. Mean = 11,8 juta (misleading!). Median lebih akurat = 4 juta.</p>
+    </div>
+  </div>
+
+  <div class="quiz-q" style="margin-top:8px">
+    <p><strong>Sebuah toko ingin tahu sepatu ukuran apa yang harus diperbanyak stoknya. Ukuran yang tepat untuk data ini adalah...</strong></p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(29,1,this,'wrong')">A. Mean</button>
+      <button class="opt-btn" onclick="checkQ(29,1,this,'wrong')">B. Median</button>
+      <button class="opt-btn" onclick="checkQ(29,1,this,'correct')">C. Modus</button>
+      <button class="opt-btn" onclick="checkQ(29,1,this,'wrong')">D. Jangkauan</button>
+    </div>
+    <div class="feedback" id="fb29-1"></div>
+  </div>
+</div>
+
+<!-- ===== PAGE 30: MINI PROYEK ===== -->
+<div class="page" id="p30">
+  <div class="page-tag green">Mini Proyek</div>
+  <h2>Mini Proyek: Statistika Kelasku 🎒</h2>
+  <p>Saatnya jadi <strong>peneliti data</strong>! Bayangkan kamu sudah survei teman-teman sekelas.</p>
+
+  <div class="card green-glow">
+    <h3>📋 Skenario: Survei Kelas 7A (30 Siswa)</h3>
+    <p>Kamu mengumpulkan data waktu belajar per hari (jam):</p>
+    <div class="table-wrap">
+      <table class="stat-table">
+        <thead><tr><th>Waktu Belajar</th><th>Frekuensi</th></tr></thead>
+        <tbody>
+          <tr><td>1 jam</td><td>4</td></tr>
+          <tr><td>2 jam</td><td>10</td></tr>
+          <tr><td>3 jam</td><td>9</td></tr>
+          <tr><td>4 jam</td><td>5</td></tr>
+          <tr><td>5 jam</td><td>2</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>1.</strong> Berapa rata-rata waktu belajar siswa per hari?</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(30,1,this,'wrong')">A. 2,5 jam</button>
+      <button class="opt-btn" onclick="checkQ(30,1,this,'correct')">B. 2,7 jam</button>
+      <button class="opt-btn" onclick="checkQ(30,1,this,'wrong')">C. 3 jam</button>
+      <button class="opt-btn" onclick="checkQ(30,1,this,'wrong')">D. 2 jam</button>
+    </div>
+    <div class="feedback" id="fb30-1"></div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>2.</strong> Diagram yang paling tepat untuk menampilkan data ini adalah...</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(30,2,this,'correct')">A. Diagram Batang (perbandingan antar kategori)</button>
+      <button class="opt-btn" onclick="checkQ(30,2,this,'wrong')">B. Diagram Garis (tren waktu)</button>
+      <button class="opt-btn" onclick="checkQ(30,2,this,'wrong')">C. Hanya tabel saja</button>
+      <button class="opt-btn" onclick="checkQ(30,2,this,'wrong')">D. Scatter plot</button>
+    </div>
+    <div class="feedback" id="fb30-2"></div>
+  </div>
+
+  <div class="card">
+    <h3>🎯 Interpretasi</h3>
+    <p>Modus = <strong>2 jam</strong> (frekuensi tertinggi = 10). Artinya kebanyakan siswa belajar 2 jam per hari. Ini bisa jadi masukan buat kebijakan sekolah!</p>
+  </div>
+</div>
+
+<!-- ===== PAGE 31: REFLEKSI ===== -->
+<div class="page" id="p31">
+  <div class="page-tag purple">Refleksi</div>
+  <h2>Saatnya Refleksi! 🪞</h2>
+  <p>Sebelum penutup, yuk cek seberapa dalam pemahamanmu. Jawaban ini hanya untukmu sendiri — jujur aja!</p>
+
+  <div class="reflect-card">
+    <div class="emoji-big">🤔</div>
+    <h3>Apa yang sudah aku mengerti?</h3>
+    <p>Tanda centang materi yang sudah kamu kuasai:</p>
+    <div id="checklist" style="display:flex;flex-direction:column;gap:10px;margin-top:10px">
+      <label style="display:flex;align-items:center;gap:10px;cursor:pointer"><input type="checkbox" id="ck1" style="accent-color:var(--accent);width:18px;height:18px"> <span>Membuat dan membaca tabel frekuensi</span></label>
+      <label style="display:flex;align-items:center;gap:10px;cursor:pointer"><input type="checkbox" id="ck2" style="accent-color:var(--accent);width:18px;height:18px"> <span>Membaca diagram batang</span></label>
+      <label style="display:flex;align-items:center;gap:10px;cursor:pointer"><input type="checkbox" id="ck3" style="accent-color:var(--accent);width:18px;height:18px"> <span>Membaca diagram garis (tren)</span></label>
+      <label style="display:flex;align-items:center;gap:10px;cursor:pointer"><input type="checkbox" id="ck4" style="accent-color:var(--accent);width:18px;height:18px"> <span>Menghitung % dan sudut diagram lingkaran</span></label>
+      <label style="display:flex;align-items:center;gap:10px;cursor:pointer"><input type="checkbox" id="ck5" style="accent-color:var(--accent);width:18px;height:18px"> <span>Menghitung Mean (rata-rata)</span></label>
+      <label style="display:flex;align-items:center;gap:10px;cursor:pointer"><input type="checkbox" id="ck6" style="accent-color:var(--accent);width:18px;height:18px"> <span>Menentukan Median</span></label>
+      <label style="display:flex;align-items:center;gap:10px;cursor:pointer"><input type="checkbox" id="ck7" style="accent-color:var(--accent);width:18px;height:18px"> <span>Menentukan Modus</span></label>
+      <label style="display:flex;align-items:center;gap:10px;cursor:pointer"><input type="checkbox" id="ck8" style="accent-color:var(--accent);width:18px;height:18px"> <span>Menghitung jangkauan data</span></label>
+      <label style="display:flex;align-items:center;gap:10px;cursor:pointer"><input type="checkbox" id="ck9" style="accent-color:var(--accent);width:18px;height:18px"> <span>Memilih ukuran yang tepat (mean/median/modus)</span></label>
+    </div>
+    <button class="check-btn" style="margin-top:16px" onclick="hitungChecklist()">Lihat Hasilku!</button>
+    <div id="ck-result" style="display:none;margin-top:14px;font-weight:700;font-size:1.05rem"></div>
+  </div>
+
+  <div class="reflect-card" style="margin-top:14px">
+    <div class="emoji-big">💬</div>
+    <h3>Apa yang masih membingungkan?</h3>
+    <textarea class="text-input" style="min-height:80px" placeholder="Tulis di sini... misalnya 'Aku masih bingung cara ngitung median kalau data genap'"></textarea>
+    <p style="font-size:.85rem;color:var(--muted);margin-top:6px">📝 Catat ini dan tanyakan ke guru atau teman!</p>
+  </div>
+</div>
+
+<!-- ===== PAGE 32: LATIHAN AKHIR PART 1 ===== -->
+<div class="page" id="p32">
+  <div class="page-tag rose">Latihan Akhir</div>
+  <h2>Latihan Akhir — Bagian 1 🏁</h2>
+  <p>Soal-soal terakhir untuk mengunci pemahamanmu. Semangat! 💪</p>
+
+  <div class="quiz-q">
+    <p><strong>1.</strong> Data: 3, 7, 5, 9, 7, 4, 7, 8. Nilai median-nya adalah...</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(32,1,this,'wrong')">A. 7.5</button>
+      <button class="opt-btn" onclick="checkQ(32,1,this,'correct')">B. 7</button>
+      <button class="opt-btn" onclick="checkQ(32,1,this,'wrong')">C. 6</button>
+      <button class="opt-btn" onclick="checkQ(32,1,this,'wrong')">D. 5</button>
+    </div>
+    <div class="feedback" id="fb32-1"></div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>2.</strong> Diagram lingkaran menunjukkan 45° untuk kategori "Voli". Jika total 40 siswa, berapa siswa yang memilih Voli?</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(32,2,this,'wrong')">A. 4 siswa</button>
+      <button class="opt-btn" onclick="checkQ(32,2,this,'correct')">B. 5 siswa</button>
+      <button class="opt-btn" onclick="checkQ(32,2,this,'wrong')">C. 6 siswa</button>
+      <button class="opt-btn" onclick="checkQ(32,2,this,'wrong')">D. 8 siswa</button>
+    </div>
+    <div class="feedback" id="fb32-2"></div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>3.</strong> Jika rata-rata dari 6 bilangan adalah 15, berapakah jumlah keenam bilangan tersebut?</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(32,3,this,'wrong')">A. 75</button>
+      <button class="opt-btn" onclick="checkQ(32,3,this,'correct')">B. 90</button>
+      <button class="opt-btn" onclick="checkQ(32,3,this,'wrong')">C. 85</button>
+      <button class="opt-btn" onclick="checkQ(32,3,this,'wrong')">D. 100</button>
+    </div>
+    <div class="feedback" id="fb32-3"></div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>4.</strong> Data nilai: 60, 70, 80, 90, 80. Mana yang BENAR?</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(32,4,this,'wrong')">A. Mean = 75, Modus = 80, Median = 80</button>
+      <button class="opt-btn" onclick="checkQ(32,4,this,'correct')">B. Mean = 76, Modus = 80, Median = 80</button>
+      <button class="opt-btn" onclick="checkQ(32,4,this,'wrong')">C. Mean = 80, Modus = 70, Median = 75</button>
+      <button class="opt-btn" onclick="checkQ(32,4,this,'wrong')">D. Mean = 76, Modus = 70, Median = 80</button>
+    </div>
+    <div class="feedback" id="fb32-4"></div>
+  </div>
+</div>
+
+<!-- ===== PAGE 33: LATIHAN AKHIR PART 2 ===== -->
+<div class="page" id="p33">
+  <div class="page-tag rose">Latihan Akhir</div>
+  <h2>Latihan Akhir — Bagian 2 🏁</h2>
+
+  <div class="card glow" style="margin-bottom:16px">
+    <h3>📋 Tabel untuk soal 1–3: Pengeluaran Harian (ribu rupiah)</h3>
+    <div class="table-wrap">
+      <table class="stat-table">
+        <thead><tr><th>Pengeluaran (Rp)</th><th>Frekuensi</th></tr></thead>
+        <tbody>
+          <tr><td>5.000</td><td>6</td></tr>
+          <tr><td>10.000</td><td>10</td></tr>
+          <tr><td>15.000</td><td>8</td></tr>
+          <tr><td>20.000</td><td>4</td></tr>
+          <tr><td>25.000</td><td>2</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>1.</strong> Total berapa hari data dikumpulkan?</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(33,1,this,'wrong')">A. 25 hari</button>
+      <button class="opt-btn" onclick="checkQ(33,1,this,'correct')">B. 30 hari</button>
+      <button class="opt-btn" onclick="checkQ(33,1,this,'wrong')">C. 28 hari</button>
+      <button class="opt-btn" onclick="checkQ(33,1,this,'wrong')">D. 32 hari</button>
+    </div>
+    <div class="feedback" id="fb33-1"></div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>2.</strong> Mean pengeluaran harian adalah...</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(33,2,this,'wrong')">A. Rp 11.000</button>
+      <button class="opt-btn" onclick="checkQ(33,2,this,'correct')">B. Rp 11.667</button>
+      <button class="opt-btn" onclick="checkQ(33,2,this,'wrong')">C. Rp 12.500</button>
+      <button class="opt-btn" onclick="checkQ(33,2,this,'wrong')">D. Rp 13.000</button>
+    </div>
+    <div class="feedback" id="fb33-2"></div>
+  </div>
+
+  <div class="quiz-q">
+    <p><strong>3.</strong> Jangkauan pengeluaran adalah...</p>
+    <div class="options-wrap">
+      <button class="opt-btn" onclick="checkQ(33,3,this,'correct')">A. Rp 20.000</button>
+      <button class="opt-btn" onclick="checkQ(33,3,this,'wrong')">B. Rp 15.000</button>
+      <button class="opt-btn" onclick="checkQ(33,3,this,'wrong')">C. Rp 25.000</button>
+      <button class="opt-btn" onclick="checkQ(33,3,this,'wrong')">D. Rp 10.000</button>
+    </div>
+    <div class="feedback" id="fb33-3"></div>
+  </div>
+</div>
+
+<!-- ===== PAGE 34: KESIMPULAN ===== -->
+<div class="page" id="p34">
+  <div class="page-tag green">Kesimpulan</div>
+  <h2>Kesimpulan — Yang Sudah Kamu Kuasai! 🏆</h2>
+
+  <div class="card green-glow">
+    <h3>📊 Ringkasan Materi Statistika Kelas 7</h3>
+    <div class="step-list">
+      <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Data</strong> = kumpulan fakta/angka. Ada data kuantitatif (angka) dan kualitatif (kategori).</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Tabel Frekuensi</strong> = cara menyusun data agar rapi dengan kolom turus dan frekuensi.</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Diagram Batang</strong> = bagus untuk membandingkan kategori. Batang lebih tinggi = frekuensi lebih besar.</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Diagram Garis</strong> = bagus untuk menunjukkan tren/perubahan dari waktu ke waktu.</div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-text"><strong>Diagram Lingkaran</strong> = bagus untuk proporsi. Sudut sektor = frekuensi/total × 360°.</div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-text"><strong>Mean</strong> $\bar{x} = \frac{\sum x}{n}$ = rata-rata. Sensitif terhadap nilai ekstrem.</div></div>
+      <div class="step"><div class="step-num">7</div><div class="step-text"><strong>Median</strong> = nilai tengah setelah diurutkan. Tahan terhadap outlier.</div></div>
+      <div class="step"><div class="step-num">8</div><div class="step-text"><strong>Modus</strong> = nilai yang paling sering muncul. Cocok untuk data kategori.</div></div>
+      <div class="step"><div class="step-num">9</div><div class="step-text"><strong>Jangkauan</strong> $= x_{maks} - x_{min}$ = ukuran sebaran data.</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🔗 Koneksi Antar Konsep</h3>
+    <p>Semua ini berkaitan: <span class="text-accent">data mentah</span> → <span class="text-amber">tabel frekuensi</span> → <span class="text-green">diagram/grafik</span> → <span class="text-rose">analisis ukuran pemusatan</span> → <span class="text-accent">kesimpulan/keputusan</span></p>
+  </div>
+</div>
+
+<!-- ===== PAGE 35: PENUTUP ===== -->
+<div class="page" id="p35">
+  <div class="hero-wrap">
+    <!-- 3D Trophy SVG -->
+    <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="trophyGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fbbf24"/><stop offset="100%" stop-color="#d97706"/></linearGradient>
+        <linearGradient id="trophyGrad2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#fde68a"/><stop offset="50%" stop-color="#fbbf24"/><stop offset="100%" stop-color="#d97706"/></linearGradient>
+        <filter id="glow3"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <radialGradient id="glowBg" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#fbbf24" stop-opacity=".2"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </radialGradient>
+      </defs>
+      <!-- Glow bg -->
+      <circle cx="100" cy="100" r="90" fill="url(#glowBg)"/>
+      <!-- Base -->
+      <rect x="70" y="155" width="60" height="10" rx="3" fill="url(#trophyGrad)"/>
+      <rect x="60" y="163" width="80" height="8" rx="3" fill="url(#trophyGrad)"/>
+      <!-- Stem -->
+      <rect x="92" y="130" width="16" height="26" rx="4" fill="url(#trophyGrad)"/>
+      <!-- Cup body -->
+      <path d="M 55,50 Q 55,130 100,130 Q 145,130 145,50 Z" fill="url(#trophyGrad)" filter="url(#glow3)"/>
+      <!-- Cup shine -->
+      <path d="M 65,58 Q 65,110 85,120" stroke="rgba(255,255,255,.4)" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <!-- Handles -->
+      <path d="M 55,70 Q 30,70 30,90 Q 30,110 55,110" stroke="url(#trophyGrad2)" stroke-width="8" fill="none" stroke-linecap="round"/>
+      <path d="M 145,70 Q 170,70 170,90 Q 170,110 145,110" stroke="url(#trophyGrad2)" stroke-width="8" fill="none" stroke-linecap="round"/>
+      <!-- Star on cup -->
+      <text x="100" y="100" text-anchor="middle" font-size="30">⭐</text>
+      <!-- Sparkles -->
+      <text x="30" y="40" font-size="16">✨</text>
+      <text x="155" y="55" font-size="14">✨</text>
+      <text x="165" y="140" font-size="12">🌟</text>
+      <text x="20" y="130" font-size="12">🌟</text>
+    </svg>
+
+    <div class="page-tag green">Penutup</div>
+    <h1>Selamat!<br><span style="background:linear-gradient(90deg,#fbbf24,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Kamu Hebat! 🎉</span></h1>
+    <p class="hero-accent" style="margin-top:14px">Kamu telah menyelesaikan seluruh modul Statistika Kelas 7</p>
+
+    <div class="card" style="max-width:500px;text-align:left;margin-top:8px">
+      <h3>🎯 Yang Sudah Kamu Capai</h3>
+      <ul class="nice-list">
+        <li>Memahami jenis dan pengumpulan data</li>
+        <li>Membuat & membaca tabel frekuensi</li>
+        <li>Menginterpretasi diagram batang, garis, lingkaran</li>
+        <li>Menghitung mean, median, modus, jangkauan</li>
+        <li>Memecahkan soal cerita dari konteks nyata</li>
+      </ul>
+    </div>
+
+    <div id="final-score-wrap" style="margin-top:20px">
+      <div class="card amber-glow" style="text-align:center">
+        <h3>📊 Skor Latihan Interaktif Kamu</h3>
+        <div style="font-size:3rem;font-weight:900;font-family:'Nunito',sans-serif;color:var(--accent)" id="final-score-display">0</div>
+        <div style="color:var(--muted);font-size:.9rem">jawaban benar dari latihan</div>
+        <div id="final-msg" style="margin-top:12px;font-weight:600;color:#fbbf24"></div>
+      </div>
+    </div>
+
+    <div class="card" style="max-width:500px;margin-top:16px;text-align:center">
+      <h3>🚀 Tantangan Selanjutnya</h3>
+      <p style="font-size:.9rem">Coba buat statistik kehidupanmu sendiri! Catat nilai, waktu main game, atau pengeluaran jajan selama seminggu, lalu analisis!</p>
+    </div>
+
+    <button class="btn-main" style="margin-top:20px" onclick="restartAll()">🔄 Mulai Ulang dari Awal</button>
+  </div>
+</div>
+
+</div><!-- /#app -->
+
+<!-- Bottom Nav -->
+<div id="bottom-nav">
+  <button class="btn-sec" id="btn-prev" onclick="navigate(-1)">← Sebelumnya</button>
+  <span id="page-counter">1 / 35</span>
+  <button class="btn-main" id="btn-next" onclick="navigate(1)">Lanjut →</button>
+</div>
+
+<script>
+// ===== STATE =====
+let currentPage = 1;
+const totalPages = 35;
+let score = 0;
+let answered = {};
+
+// ===== NAVIGATION =====
+function navigate(dir) {
+  const newPage = currentPage + dir;
+  if (newPage < 1 || newPage > totalPages) return;
+  document.getElementById('p' + currentPage).classList.remove('active');
+  currentPage = newPage;
+  document.getElementById('p' + currentPage).classList.add('active');
+  updateNav();
+  window.scrollTo(0,0);
+  if (currentPage === 35) showFinalScore();
+  // animate bars if on relevant pages
+  if (currentPage === 10 || currentPage === 26 || currentPage === 28) {
+    setTimeout(animateBars, 100);
+  }
+}
+
+function updateNav() {
+  document.getElementById('nav-page-label').textContent = currentPage + ' / ' + totalPages;
+  document.getElementById('page-counter').textContent = currentPage + ' / ' + totalPages;
+  document.getElementById('progress-bar').style.width = ((currentPage / totalPages) * 100) + '%';
+  document.getElementById('btn-prev').disabled = currentPage === 1;
+  document.getElementById('btn-prev').style.opacity = currentPage === 1 ? '.4' : '1';
+  // Update scoreboard
+  if (score > 0) {
+    document.getElementById('scoreboard').style.display = 'block';
+    document.getElementById('score-val').textContent = score;
+  }
+}
+
+// ===== QUIZ LOGIC =====
+function checkQ(page, qNum, btn, result) {
+  const key = page + '-' + qNum;
+  if (answered[key]) return;
+  answered[key] = true;
+
+  const fbEl = document.getElementById('fb' + page + '-' + qNum);
+  const siblings = btn.parentElement.querySelectorAll('.opt-btn');
+  siblings.forEach(b => b.disabled = true);
+
+  if (result === 'correct') {
+    btn.classList.add('correct');
+    score++;
+    document.getElementById('score-val').textContent = score;
+    document.getElementById('scoreboard').style.display = 'block';
+    fbEl.textContent = '✅ Benar! Keren! +1 poin';
+    fbEl.className = 'feedback ok';
+    spawnMini();
+  } else {
+    btn.classList.add('wrong');
+    // highlight correct
+    siblings.forEach(b => {
+      if (b.onclick && b.onclick.toString().includes("'correct'")) b.classList.add('correct');
+    });
+    fbEl.textContent = '❌ Belum tepat. Coba review materinya ya!';
+    fbEl.className = 'feedback no';
+  }
+}
+
+// Warm-up check
+function checkWU(id, btn, result, fbId) {
+  if (answered[id]) return;
+  answered[id] = true;
+  const fbEl = document.getElementById(fbId);
+  const siblings = btn.parentElement.querySelectorAll('.opt-btn');
+  siblings.forEach(b => b.disabled = true);
+  if (result === 'correct') {
+    btn.classList.add('correct');
+    score++;
+    document.getElementById('score-val').textContent = score;
+    document.getElementById('scoreboard').style.display = 'block';
+    fbEl.textContent = '✅ Tepat! (70+80+85+65+90)÷5 = 390÷5 = 80';
+    fbEl.className = 'feedback ok';
+  } else {
+    btn.classList.add('wrong');
+    siblings.forEach(b => { if(b.onclick && b.onclick.toString().includes("'correct'")) b.classList.add('correct'); });
+    fbEl.textContent = '❌ Belum. Jumlahkan semua nilai lalu bagi 5.';
+    fbEl.className = 'feedback no';
+  }
+}
+
+function checkSort() {
+  const ans = document.getElementById('sort-ans').value.trim().replace(/\s+/g,'').replace(/,+/g,',');
+  const correct = '4,8,11,15,17,22';
+  const fb = document.getElementById('sort-fb');
+  if (ans === correct || ans === '4,8,11,15,17,22') {
+    fb.textContent = '✅ Benar! 4, 8, 11, 15, 17, 22';
+    fb.className = 'feedback ok';
+    if (!answered['sort']) { score++; document.getElementById('score-val').textContent = score; document.getElementById('scoreboard').style.display='block'; answered['sort']=true; spawnMini(); }
+  } else {
+    fb.textContent = '❌ Coba lagi! Urutkan: 4, 8, 11, 15, 17, 22';
+    fb.className = 'feedback no';
+  }
+}
+
+// ===== CHECKLIST =====
+function hitungChecklist() {
+  let count = 0;
+  for (let i = 1; i <= 9; i++) {
+    if (document.getElementById('ck'+i) && document.getElementById('ck'+i).checked) count++;
+  }
+  const el = document.getElementById('ck-result');
+  el.style.display = 'block';
+  let msg, color;
+  if (count >= 8) { msg = '🔥 LUAR BIASA! Kamu sudah siap banget buat kelas 7!'; color='#34d399'; }
+  else if (count >= 6) { msg = '💪 Bagus! Tinggal sedikit lagi, review yang belum dicentang ya!'; color='#fbbf24'; }
+  else if (count >= 4) { msg = '📚 Lumayan! Baca ulang materi yang belum dicentang.'; color='#a78bfa'; }
+  else { msg = '🧩 Masih perlu banyak latihan. Ulang dari awal yuk!'; color='#fb7185'; }
+  el.style.color = color;
+  el.textContent = count + '/9 dikuasai — ' + msg;
+}
+
+// ===== FINAL SCORE =====
+function showFinalScore() {
+  const el = document.getElementById('final-score-display');
+  const msg = document.getElementById('final-msg');
+  el.textContent = score;
+  let txt;
+  if (score >= 25) txt = '🏆 Luar biasa! Statistik Expert!';
+  else if (score >= 18) txt = '⭐ Bagus sekali! Terus tingkatkan!';
+  else if (score >= 10) txt = '📊 Lumayan! Latihan lagi biar makin mantap!';
+  else txt = '💡 Masih perlu belajar lebih. Ulang materinya ya!';
+  msg.textContent = txt;
+}
+
+// ===== MINI CONFETTI =====
+function spawnMini() {
+  const wrap = document.getElementById('confetti-wrap');
+  for (let i = 0; i < 8; i++) {
+    const d = document.createElement('div');
+    const colors = ['#00e5ff','#7c3aed','#f59e0b','#10b981','#f43f5e'];
+    d.style.cssText = `position:absolute;width:8px;height:8px;border-radius:2px;background:${colors[Math.floor(Math.random()*colors.length)]};left:${Math.random()*100}%;top:0;animation:fall ${1+Math.random()}s ease-out forwards;opacity:1`;
+    wrap.appendChild(d);
+    setTimeout(() => d.remove(), 2000);
+  }
+}
+// Add confetti keyframes
+const style = document.createElement('style');
+style.textContent = `@keyframes fall{from{transform:translateY(0) rotate(0deg);opacity:1}to{transform:translateY(${window.innerHeight}px) rotate(720deg);opacity:0}}`;
+document.head.appendChild(style);
+
+// ===== BAR ANIMATION =====
+function animateBars() {
+  const fills = document.querySelectorAll('.bar-fill');
+  fills.forEach(f => {
+    const w = f.style.width;
+    f.style.width = '0';
+    setTimeout(() => f.style.width = w, 100);
+  });
+}
+
+// ===== RESTART =====
+function restartAll() {
+  currentPage = 1;
+  score = 0;
+  answered = {};
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('p1').classList.add('active');
+  document.querySelectorAll('.opt-btn').forEach(b => { b.classList.remove('correct','wrong'); b.disabled = false; });
+  document.querySelectorAll('.feedback').forEach(f => { f.className='feedback'; f.textContent=''; });
+  document.getElementById('scoreboard').style.display = 'none';
+  document.getElementById('score-val').textContent = '0';
+  updateNav();
+  window.scrollTo(0,0);
+}
+
+// ===== KEYBOARD NAV =====
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); navigate(1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); navigate(-1); }
+});
+
+// Init
+updateNav();
+// Animate bars on page load if relevant
+setTimeout(animateBars, 300);
+
+// KaTeX render after load
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.renderMathInElement) {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false}
+      ]
+    });
+  }
+});
+</script>
+</body>
+</html>
